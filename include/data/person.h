@@ -24,8 +24,8 @@ public:
     QString getPassword() const;
     void setPassword(const QString &value);
 
-    uint64_t getNumber() const;
-    void setNumber(const uint64_t &value);
+    quint64 getIdentifier() const;
+    void setIdentifier(const quint64 &value);
 
     QPixmap getPhoto() const;
     void setPhoto(const QPixmap &value);
@@ -35,19 +35,19 @@ public:
     friend QDebug operator<<(QDebug debugger, const Person &data);
 
 signals:
+    void identifierChanged(const quint64 &identifier);
     void firstNameChanged(const QString &firstName);
     void lastNameChanged(const QString &lastName);
     void userNameChanged(const QString &userName);
     void passwordChanged(const QString &password);
-    void numberChanged(const uint64_t &number);
     void photoChanged(const QPixmap &photo);
 
 private:
+    quint64     identifier;
     QString     firstName;
     QString     lastName;
     QString     userName;
     QString     password;
-    quint64     number;
     QPixmap     photo;
 };
 

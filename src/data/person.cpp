@@ -8,11 +8,11 @@ Person::Person(const Person &person, QObject *parent) : Person{parent}
 Person::Person(QObject *parent) : QObject{parent} {}
 Person &Person::operator=(const Person &person)
 {
+    this->identifier = person.identifier;
     this->firstName = person.firstName;
     this->lastName = person.lastName;
     this->userName = person.userName;
     this->password = person.password;
-    this->number = person.number;
     this->photo = person.photo;
     return *this;
 }
@@ -57,14 +57,14 @@ void Person::setPassword(const QString &value)
     emit passwordChanged(password);
 }
 
-uint64_t Person::getNumber() const
+quint64 Person::getIdentifier() const
 {
-    return number;
+    return identifier;
 }
-void Person::setNumber(const uint64_t &value)
+void Person::setIdentifier(const quint64 &value)
 {
-    number = value;
-    emit numberChanged(number);
+    identifier = value;
+    emit identifierChanged(identifier);
 }
 
 QPixmap Person::getPhoto() const
@@ -81,24 +81,24 @@ QDataStream& operator<<(QDataStream &stream, const Person &data)
 {
     stream << data.firstName << data.lastName;
     stream << data.userName << data.password;
-    stream << data.number << data.photo;
+    stream << data.identifier << data.photo;
     return stream;
 }
 QDataStream& operator>>(QDataStream &stream, Person &data)
 {
     stream >> data.firstName >> data.lastName;
     stream >> data.userName >> data.password;
-    stream >> data.number >> data.photo;
+    stream >> data.identifier >> data.photo;
     return stream;
 }
 
 QDebug operator<<(QDebug debugger, const Person &data)
 {
     QDebug environment = debugger.noquote();
+    environment << "Identifier:" << data.identifier;
     environment << "First name:" << data.firstName;
     environment << "Last name:" << data.lastName;
     environment << "User name:" << data.userName;
     environment << "Password:" << data.password;
-    environment << "Number:" << data.number;
     return debugger;
 }
