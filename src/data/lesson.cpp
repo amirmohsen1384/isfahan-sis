@@ -16,6 +16,7 @@ Lesson &Lesson::operator=(const Lesson &other)
     setBranchNumber(other.branchNumber);
     setCreditUnit(other.creditUnit);
     setFinalExam(other.finalExam);
+    setName(other.name);
 
     this->teacher = other.teacher;
     emit teacherChanged(teacher);
@@ -48,6 +49,17 @@ Entity Lesson::getTeacher() const
 EntityList Lesson::getEnrolledStudents() const
 {
     return enrolledStudents;
+}
+
+QString Lesson::getName() const
+{
+    return name;
+}
+
+void Lesson::setName(const QString &value)
+{
+    name = value;
+    emit nameChanged(name);
 }
 
 quint8 Lesson::getCreditUnit() const
@@ -123,6 +135,37 @@ Lesson Lesson::loadFromRecord(const Entity &value)
     return target;
 }
 
+#include <QDebug>
+
+LessonList Lesson::getExistingLessons()
+{
+    QDir directory = Entity::getEntityDirectory();
+    if(!directory.cd("Lessons")) {
+        return LessonList();
+    }
+
+    QFileInfoList entries = directory.entryInfoList(
+        {"*.lss"},
+        QDir::AllEntries | QDir::NoDotAndDotDot,
+        QDir::SortFlag::Name
+    );
+
+    LessonList result;
+    for(QFileInfo entry : entries) {
+        QFile file(entry.absoluteFilePath());
+        if(!file.open(QFile::ReadOnly)) {
+            continue;
+        }
+
+        Lesson lesson;
+        QDataStream stream(&file);
+        stream >> lesson;
+        result.append(lesson);
+    }
+
+    return result;
+}
+
 void Lesson::setTeacher(const Teacher &value)
 {
     this->teacher = static_cast<const Entity&>(value);
@@ -172,9 +215,11 @@ QDataStream &operator<<(QDataStream &stream, const Lesson &data)
     stream << static_cast<const Entity&>(data);
     stream << data.enrolledStudents;
     stream << data.branchNumber;
+    stream << data.creditUnit;
     stream << data.totalCapacity;
     stream << data.finalExam;
     stream << data.teacher;
+    stream << data.name;
     return stream;
 }
 
@@ -183,8 +228,10 @@ QDataStream &operator>>(QDataStream &stream, Lesson &data)
     stream >> static_cast<Entity&>(data);
     stream >> data.enrolledStudents;
     stream >> data.branchNumber;
+    stream >> data.creditUnit;
     stream >> data.totalCapacity;
     stream >> data.finalExam;
     stream >> data.teacher;
+    stream >> data.name;
     return stream;
 }

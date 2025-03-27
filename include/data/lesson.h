@@ -4,8 +4,11 @@
 #include <QDate>
 #include "entity.h"
 
+class Lesson;
 class Teacher;
 class Student;
+
+using LessonList = QList<Lesson>;
 
 class Lesson : public Entity
 {
@@ -32,7 +35,11 @@ public:
 
     EntityList getEnrolledStudents() const;
 
+    QString getName() const;
+
 public slots:
+    void setName(const QString &value);
+
     void setCreditUnit(quint8 value);
 
     void setBranchNumber(quint64 value);
@@ -47,6 +54,8 @@ public slots:
     friend QDataStream& operator>>(QDataStream &stream, Lesson &data);
     static Lesson loadFromRecord(const Entity &value);
 
+    static LessonList getExistingLessons();
+
 private slots:
     void setTeacher(const Teacher &value);
 
@@ -59,6 +68,7 @@ private slots:
 
 signals:
     void enrolledStudentsChanged();
+    void nameChanged(QString value);
     void teacherChanged(Entity value);
     void creditUnitChanged(quint8 value);
     void branchNumberChanged(quint8 value);
@@ -72,13 +82,12 @@ private:
     QDateTime finalExam;
     quint8 creditUnit;
     Entity teacher;
+    QString name;
 };
 
 QDataStream& operator<<(QDataStream &stream, const Lesson &data);
 QDataStream& operator>>(QDataStream &stream, Lesson &data);
 
 Q_DECLARE_METATYPE(Lesson)
-
-using LessonList = QList<Lesson>;
 
 #endif // LESSON_H
