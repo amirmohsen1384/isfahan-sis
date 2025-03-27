@@ -4,15 +4,7 @@
 #include "include/errors/resource.h"
 #include "include/errors/education.h"
 
-Lesson::Lesson(QObject *parent) : Entity{parent}
-{
-    connect(this, &Lesson::teacherChanged, this, &Lesson::commitToRecord);
-    connect(this, &Lesson::branchNumberChanged, this, &Lesson::commitToRecord);
-    connect(this, &Lesson::totalCapacityChanged, this, &Lesson::commitToRecord);
-    connect(this, &Lesson::finalExamChanged, this, &Lesson::commitToRecord);
-    connect(this, &Lesson::creditUnitChanged, this, &Lesson::commitToRecord);
-    connect(this, &Lesson::enrolledStudentsChanged, this, &Lesson::commitToRecord);
-}
+Lesson::Lesson(QObject *parent) : Entity{parent} {}
 Lesson::Lesson(const Lesson &other, QObject *parent) : Lesson{parent}
 {
     *this = other;

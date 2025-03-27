@@ -2,10 +2,7 @@
 #include <QDataStream>
 #include <QFile>
 
-Entity::Entity(QObject *parent) : QObject{parent}
-{
-    connect(this, &Entity::identifierChanged, this, &Entity::commitToRecord);
-}
+Entity::Entity(QObject *parent) : QObject{parent} {}
 
 Entity::Entity(const Entity &another, QObject *parent) : Entity{parent}
 {

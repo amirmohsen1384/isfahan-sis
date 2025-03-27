@@ -4,15 +4,7 @@
 #include <QDebug>
 #include <QFile>
 
-Person::Person(QObject *parent) : Entity{parent}
-{
-    connect(this, &Person::firstNameChanged, this, &Person::commitToRecord);
-    connect(this, &Person::lastNameChanged, this, &Person::commitToRecord);
-    connect(this, &Person::userNameChanged, this, &Person::commitToRecord);
-    connect(this, &Person::passwordChanged, this, &Person::commitToRecord);
-    connect(this, &Person::lessonChanged, this, &Person::commitToRecord);
-    connect(this, &Person::photoChanged, this, &Person::commitToRecord);
-}
+Person::Person(QObject *parent) : Entity{parent} {}
 
 Person::Person(const Person &person, QObject *parent) : Person{parent}
 {
