@@ -108,6 +108,11 @@ quint64 Person::getCreditCount() const
     return total;
 }
 
+QString Person::getFullName() const
+{
+    return QString("%1 %2").arg(firstName).arg(lastName);
+}
+
 LessonList Person::getLessons() const
 {
     QList<Lesson> container;

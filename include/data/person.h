@@ -27,6 +27,8 @@ public:
 
     virtual quint64 getCreditCount() const;
 
+    QString getFullName() const;
+
 public slots:
     void setFirstName(const QString &value);
 
