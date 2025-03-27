@@ -128,11 +128,34 @@ quint8 Student::getMaximumCredits() const
 
 void Student::addCredit(Lesson &lesson)
 {
+    if(!lesson.isAbleToEnroll()) {
+        throw OutOfCapacityException();
+    }
+
+    quint64 credits = 0;
+    LessonList container = this->getLessons();
+
+    for(const Lesson &l : container) {
+        if(l.getFinalExam() == lesson.getFinalExam()) {
+            throw OverlapException();
+        }
+        credits += l.getCreditUnit();
+    }
+
+    if(credits < getMinimumCredits() || credits > getMaximumCredits()) {
+        throw CreditsOutOfBoundException();
+    }
+
+    lesson.addStudent(*this);
+    lesson.commitToRecord();
+
     Person::addCredit(lesson);
 }
 
 void Student::removeCredit(Lesson &lesson)
 {
+    lesson.removeStudent(*this);
+    lesson.commitToRecord();
     Person::removeCredit(lesson);
 }
 
