@@ -1,13 +1,14 @@
 #ifndef PERSON_H
 #define PERSON_H
 
-#include <QObject>
+#include "lesson.h"
+#include <QPixmap>
 
-class Person : public QObject
+class Person : public Entity
 {
     Q_OBJECT
 public:
-    explicit Person(QObject *parent = nullptr);
+    explicit Person(QObject *parent = nullptr) : Entity{parent} {}
     Person(const Person &person, QObject *parent = nullptr);
 
     Person& operator=(const Person &person);
@@ -24,30 +25,34 @@ public:
     QString getPassword() const;
     void setPassword(const QString &value);
 
-    quint64 getIdentifier() const;
-    void setIdentifier(const quint64 &value);
-
     QPixmap getPhoto() const;
     void setPhoto(const QPixmap &value);
+
+    virtual void addCredit(Lesson &lesson);
+    virtual void removeCredit(Lesson &lesson);
+
+    virtual QList<Lesson> getLessons() const;
+    virtual quint64 getCreditCount() const;
 
     friend QDataStream& operator<<(QDataStream &stream, const Person &data);
     friend QDataStream& operator>>(QDataStream &stream, Person &data);
     friend QDebug operator<<(QDebug debugger, const Person &data);
 
 signals:
-    void identifierChanged(const quint64 &identifier);
     void firstNameChanged(const QString &firstName);
     void lastNameChanged(const QString &lastName);
     void userNameChanged(const QString &userName);
     void passwordChanged(const QString &password);
     void photoChanged(const QPixmap &photo);
+    void lessonRemoved();
+    void lessonAdded();
 
-private:
-    quint64     identifier;
+protected:
     QString     firstName;
     QString     lastName;
     QString     userName;
     QString     password;
+    EntityList  lessons;
     QPixmap     photo;
 };
 

@@ -1,19 +1,23 @@
 #include "include/data/person.h"
+#include "include/data/lesson.h"
+#include <QDataStream>
 #include <QDebug>
+#include <QFile>
 
 Person::Person(const Person &person, QObject *parent) : Person{parent}
 {
     *this = person;
 }
-Person::Person(QObject *parent) : QObject{parent} {}
+
 Person &Person::operator=(const Person &person)
 {
-    this->identifier = person.identifier;
-    this->firstName = person.firstName;
-    this->lastName = person.lastName;
-    this->userName = person.userName;
-    this->password = person.password;
-    this->photo = person.photo;
+    static_cast<Entity&>(*this) = static_cast<const Entity&>(person);
+    this->lessons = person.lessons;
+    setFirstName(person.firstName);
+    setLastName(person.lastName);
+    setUserName(person.userName);
+    setPassword(person.password);
+    setPhoto(person.photo);
     return *this;
 }
 
@@ -31,7 +35,7 @@ QString Person::getLastName() const
 {
     return lastName;
 }
-QString Person::setLastName(const QString &value)
+void Person::setLastName(const QString &value)
 {
     lastName = value;
     emit lastNameChanged(lastName);
@@ -57,16 +61,6 @@ void Person::setPassword(const QString &value)
     emit passwordChanged(password);
 }
 
-quint64 Person::getIdentifier() const
-{
-    return identifier;
-}
-void Person::setIdentifier(const quint64 &value)
-{
-    identifier = value;
-    emit identifierChanged(identifier);
-}
-
 QPixmap Person::getPhoto() const
 {
     return photo;
@@ -77,18 +71,65 @@ void Person::setPhoto(const QPixmap &value)
     emit photoChanged(photo);
 }
 
+void Person::addCredit(Lesson &lesson)
+{
+    Entity &entity = static_cast<Entity&>(lesson);
+    auto it = std::lower_bound(lessons.begin(), lessons.end(), entity);
+    int index = std::distance(lessons.begin(), it);
+    lessons.insert(index, entity);
+    emit lessonAdded();
+}
+
+void Person::removeCredit(Lesson &lesson)
+{
+    Entity &entity = static_cast<Entity&>(lesson);
+    auto it = std::lower_bound(lessons.begin(), lessons.end(), entity);
+    if(it != lessons.end() && it->getIdentifier() == lesson.getIdentifier()) {
+        int index = std::distance(lessons.begin(), it);
+        lessons.removeAt(index);
+        lessons.squeeze();
+    }
+    emit lessonRemoved();
+}
+
+quint64 Person::getCreditCount() const
+{
+    quint64 total = 0;
+    for(const Entity &entity : lessons)
+    {
+        total += Lesson::loadFromRecord(entity).getCreditUnit();
+    }
+    return total;
+}
+
+QList<Lesson> Person::getLessons() const
+{
+    QList<Lesson> container;
+    for(const Entity &entity : lessons) {
+        Lesson lesson = Lesson::loadFromRecord(entity);
+        if(!lesson.isNull()) {
+            container.append(lesson);
+        }
+    }
+    return container;
+}
+
 QDataStream& operator<<(QDataStream &stream, const Person &data)
 {
+    stream << static_cast<const Entity&>(data);
     stream << data.firstName << data.lastName;
     stream << data.userName << data.password;
-    stream << data.identifier << data.photo;
+    stream << data.lessons;
+    stream << data.photo;
     return stream;
 }
 QDataStream& operator>>(QDataStream &stream, Person &data)
 {
+    stream >> static_cast<Entity&>(data);
     stream >> data.firstName >> data.lastName;
     stream >> data.userName >> data.password;
-    stream >> data.identifier >> data.photo;
+    stream >> data.lessons;
+    stream >> data.photo;
     return stream;
 }
 
