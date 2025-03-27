@@ -12,6 +12,8 @@ Lesson::Lesson(const Lesson &other, QObject *parent) : Lesson{parent}
 
 Lesson &Lesson::operator=(const Lesson &other)
 {
+    static_cast<Entity&>(*this) = static_cast<const Entity&>(other);
+
     setTotalCapacity(other.totalCapacity);
     setBranchNumber(other.branchNumber);
     setCreditUnit(other.creditUnit);
