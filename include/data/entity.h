@@ -14,18 +14,19 @@ public:
 
     Entity& operator=(const Entity &another);
 
-    virtual void commitToRecord() const;
-
-    void setIdentifier(const qint64 &identifier);
+    bool isNull() const;
     qint64 getIdentifier() const;
 
-    bool isNull() const;
+public slots:
+    virtual void commitToRecord() const;
+    void setIdentifier(const qint64 &identifier);
 
     friend QDataStream& operator<<(QDataStream &stream, const Entity &data);
     friend QDataStream& operator>>(QDataStream &stream, Entity &data);
 
     friend bool operator==(const Entity &one, const Entity &two);
     friend bool operator!=(const Entity &one, const Entity &two);
+    friend bool operator<(const Entity &one, const Entity &two);
 
     static QDir getEntityDirectory();
 
@@ -43,6 +44,7 @@ QDataStream& operator>>(QDataStream &stream, Entity &data);
 
 bool operator==(const Entity &one, const Entity &two);
 bool operator!=(const Entity &one, const Entity &two);
+bool operator<(const Entity &one, const Entity &two);
 
 Q_DECLARE_METATYPE(Entity)
 

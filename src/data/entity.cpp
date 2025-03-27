@@ -52,6 +52,11 @@ bool operator!=(const Entity &one, const Entity &two)
     return !(one == two);
 }
 
+bool operator<(const Entity &one, const Entity &two)
+{
+    return one.identifier < two.identifier;
+}
+
 QDir Entity::getEntityDirectory()
 {
     const QString directory = "Isfahan";
