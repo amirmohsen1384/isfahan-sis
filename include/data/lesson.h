@@ -79,4 +79,6 @@ QDataStream& operator>>(QDataStream &stream, Lesson &data);
 
 Q_DECLARE_METATYPE(Lesson)
 
+using LessonList = QList<Lesson>;
+
 #endif // LESSON_H

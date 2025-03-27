@@ -170,6 +170,7 @@ void Lesson::removeStudent(const Student &value)
     auto it = std::lower_bound(enrolledStudents.begin(), enrolledStudents.end(), entity);
     if(it != enrolledStudents.end() && *it == *this) {
         enrolledStudents.removeAt(std::distance(enrolledStudents.begin(), it));
+        enrolledStudents.squeeze();
         emit enrolledStudentsChanged();
     }
 }
