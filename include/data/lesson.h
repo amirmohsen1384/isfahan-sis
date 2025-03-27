@@ -18,6 +18,7 @@ public:
     Lesson(const Lesson &other, QObject *parent = nullptr);
 
     Lesson& operator=(const Lesson &other);
+    ~Lesson();
 
     Entity getTeacher() const;
 

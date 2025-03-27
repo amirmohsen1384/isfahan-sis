@@ -24,6 +24,12 @@ Lesson &Lesson::operator=(const Lesson &other)
     enrolledStudents = other.enrolledStudents;
     emit enrolledStudentsChanged();
     return *this;
+
+}
+
+Lesson::~Lesson()
+{
+    commitToRecord();
 }
 
 quint64 Lesson::getBranchNumber() const
