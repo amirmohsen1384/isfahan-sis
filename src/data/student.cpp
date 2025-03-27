@@ -22,6 +22,11 @@ Student& Student::operator=(const Student &another)
     return *this;
 }
 
+Student::~Student()
+{
+    commitToRecord();
+}
+
 void Student::commitToRecord() const
 {
     QFile file(getStudentFileName(*this));

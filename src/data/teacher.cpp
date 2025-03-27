@@ -16,6 +16,11 @@ Teacher& Teacher::operator=(const Teacher &another)
     return *this;
 }
 
+Teacher::~Teacher()
+{
+    commitToRecord();
+}
+
 QString getTeacherFileName(const Entity &value)
 {
     QDir mainDirectory = Entity::getEntityDirectory();
