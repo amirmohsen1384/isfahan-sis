@@ -9,6 +9,11 @@ Entity::Entity(const Entity &another, QObject *parent) : Entity{parent}
     *this = another;
 }
 
+Entity::Entity(qint64 identifier, QObject *parent) : Entity{parent}
+{
+    setIdentifier(identifier);
+}
+
 Entity &Entity::operator=(const Entity &another)
 {
     setIdentifier(another.identifier);

@@ -11,6 +11,7 @@ class Entity : public QObject
 public:
     explicit Entity(QObject *parent = nullptr);
     Entity(const Entity &another, QObject *parent = nullptr);
+    explicit Entity(qint64 identifier, QObject *parent = nullptr);
 
     Entity& operator=(const Entity &another);
     ~Entity();
