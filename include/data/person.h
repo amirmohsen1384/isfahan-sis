@@ -8,31 +8,39 @@ class Person : public Entity
 {
     Q_OBJECT
 public:
-    explicit Person(QObject *parent = nullptr) : Entity{parent} {}
+    explicit Person(QObject *parent = nullptr);
     Person(const Person &person, QObject *parent = nullptr);
 
     Person& operator=(const Person &person);
 
     QString getFirstName() const;
-    void setFirstName(const QString &value);
 
     QString getLastName() const;
-    void setLastName(const QString &value);
 
     QString getUserName() const;
-    void setUserName(const QString &value);
 
     QString getPassword() const;
-    void setPassword(const QString &value);
 
     QPixmap getPhoto() const;
+
+    virtual LessonList getLessons() const;
+
+    virtual quint64 getCreditCount() const;
+
+public slots:
+    void setFirstName(const QString &value);
+
+    void setLastName(const QString &value);
+
+    void setUserName(const QString &value);
+
+    void setPassword(const QString &value);
+
     void setPhoto(const QPixmap &value);
 
     virtual void addCredit(Lesson &lesson);
-    virtual void removeCredit(Lesson &lesson);
 
-    virtual QList<Lesson> getLessons() const;
-    virtual quint64 getCreditCount() const;
+    virtual void removeCredit(Lesson &lesson);
 
     friend QDataStream& operator<<(QDataStream &stream, const Person &data);
     friend QDataStream& operator>>(QDataStream &stream, Person &data);
@@ -44,8 +52,7 @@ signals:
     void userNameChanged(const QString &userName);
     void passwordChanged(const QString &password);
     void photoChanged(const QPixmap &photo);
-    void lessonRemoved();
-    void lessonAdded();
+    void lessonChanged();
 
 protected:
     QString     firstName;

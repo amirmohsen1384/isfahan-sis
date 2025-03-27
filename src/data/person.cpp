@@ -4,6 +4,16 @@
 #include <QDebug>
 #include <QFile>
 
+Person::Person(QObject *parent) : Entity{parent}
+{
+    connect(this, &Person::firstNameChanged, this, &Person::commitToRecord);
+    connect(this, &Person::lastNameChanged, this, &Person::commitToRecord);
+    connect(this, &Person::userNameChanged, this, &Person::commitToRecord);
+    connect(this, &Person::passwordChanged, this, &Person::commitToRecord);
+    connect(this, &Person::lessonChanged, this, &Person::commitToRecord);
+    connect(this, &Person::photoChanged, this, &Person::commitToRecord);
+}
+
 Person::Person(const Person &person, QObject *parent) : Person{parent}
 {
     *this = person;
@@ -18,6 +28,7 @@ Person &Person::operator=(const Person &person)
     setUserName(person.userName);
     setPassword(person.password);
     setPhoto(person.photo);
+    emit lessonChanged();
     return *this;
 }
 
@@ -77,19 +88,19 @@ void Person::addCredit(Lesson &lesson)
     auto it = std::lower_bound(lessons.begin(), lessons.end(), entity);
     int index = std::distance(lessons.begin(), it);
     lessons.insert(index, entity);
-    emit lessonAdded();
+    emit lessonChanged();
 }
 
 void Person::removeCredit(Lesson &lesson)
 {
     Entity &entity = static_cast<Entity&>(lesson);
     auto it = std::lower_bound(lessons.begin(), lessons.end(), entity);
-    if(it != lessons.end() && it->getIdentifier() == lesson.getIdentifier()) {
+    if(it != lessons.end() && *it == lesson) {
         int index = std::distance(lessons.begin(), it);
         lessons.removeAt(index);
         lessons.squeeze();
+        emit lessonChanged();
     }
-    emit lessonRemoved();
 }
 
 quint64 Person::getCreditCount() const
@@ -97,12 +108,15 @@ quint64 Person::getCreditCount() const
     quint64 total = 0;
     for(const Entity &entity : lessons)
     {
-        total += Lesson::loadFromRecord(entity).getCreditUnit();
+        Lesson lesson = Lesson::loadFromRecord(entity);
+        if(!lesson.isNull()) {
+            total += lesson.getCreditUnit();
+        }
     }
     return total;
 }
 
-QList<Lesson> Person::getLessons() const
+LessonList Person::getLessons() const
 {
     QList<Lesson> container;
     for(const Entity &entity : lessons) {
