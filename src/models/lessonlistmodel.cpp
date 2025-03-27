@@ -37,7 +37,13 @@ QVariant LessonListModel::data(const QModelIndex &index, int role) const
     if(role == Qt::UserRole) {
         return QVariant::fromValue(lesson);
 
-    } else if(role != Qt::DisplayRole) {
+    }
+
+    else if(role == Qt::TextAlignmentRole) {
+        return Qt::AlignCenter;
+    }
+
+    else if(role != Qt::DisplayRole) {
         return QVariant();
 
     }
@@ -52,7 +58,7 @@ QVariant LessonListModel::data(const QModelIndex &index, int role) const
         return identifier;
     }
     case 2: {
-        const QString name = Teacher::loadFromRecord(lesson.getTeacher()).getFullName();
+        const QString name = lesson.getTeacher().getFullName();
         return name;
     }
     case 3: {
