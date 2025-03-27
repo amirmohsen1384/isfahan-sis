@@ -9,7 +9,7 @@ class Entity : public QObject
     Q_OBJECT
 
 public:
-    explicit Entity(QObject *parent = nullptr) : QObject{parent} {}
+    explicit Entity(QObject *parent = nullptr);
     Entity(const Entity &another, QObject *parent = nullptr);
 
     Entity& operator=(const Entity &another);
