@@ -20,7 +20,7 @@ public:
     Lesson& operator=(const Lesson &other);
     ~Lesson();
 
-    Entity getTeacher() const;
+    Teacher getTeacher() const;
 
     bool isAbleToEnroll() const;
 
@@ -34,7 +34,7 @@ public:
 
     quint8 getTotalCapacity() const;
 
-    EntityList getEnrolledStudents() const;
+    QList<Student> getEnrolledStudents() const;
 
     QString getName() const;
 

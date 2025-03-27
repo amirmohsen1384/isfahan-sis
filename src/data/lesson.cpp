@@ -49,14 +49,18 @@ QDateTime Lesson::getFinalExam() const
     return finalExam;
 }
 
-Entity Lesson::getTeacher() const
+Teacher Lesson::getTeacher() const
 {
-    return teacher;
+    return Teacher::loadFromRecord(teacher);
 }
 
-EntityList Lesson::getEnrolledStudents() const
+StudentList Lesson::getEnrolledStudents() const
 {
-    return enrolledStudents;
+    StudentList result;
+    for(Entity s : enrolledStudents) {
+        result.append(Student::loadFromRecord(s));
+    }
+    return result;
 }
 
 QString Lesson::getName() const
