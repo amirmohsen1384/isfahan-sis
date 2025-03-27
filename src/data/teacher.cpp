@@ -76,6 +76,35 @@ void Teacher::removeCredit(Lesson &lesson)
     Person::removeCredit(lesson);
 }
 
+TeacherList Teacher::getExistingTeachers()
+{
+    QDir directory = Entity::getEntityDirectory();
+    if(!directory.cd("Teachers")) {
+        return TeacherList();
+    }
+
+    QFileInfoList entries = directory.entryInfoList(
+        {"*.tcd"},
+        QDir::AllEntries | QDir::NoDotAndDotDot,
+        QDir::SortFlag::Name
+        );
+
+    TeacherList result;
+    for(QFileInfo entry : entries) {
+        QFile file(entry.absoluteFilePath());
+        if(!file.open(QFile::ReadOnly)) {
+            continue;
+        }
+
+        Teacher teacher;
+        QDataStream stream(&file);
+        stream >> teacher;
+        result.append(teacher);
+    }
+
+    return result;
+}
+
 void Teacher::commitToRecord() const
 {
     const QString fileName = getTeacherFileName(*this);

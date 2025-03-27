@@ -4,13 +4,18 @@
 #include "person.h"
 #include "lesson.h"
 
+class Teacher;
+using TeacherList = QList<Teacher>;
+
 class Teacher : public Person
 {
     Q_OBJECT
 public:
     explicit Teacher(QObject *parent = nullptr);
     Teacher(const Teacher &another, QObject *parent = nullptr);
+
     Teacher& operator=(const Teacher &another);
+    ~Teacher();
 
     virtual void commitToRecord() const override;
     static Teacher loadFromRecord(const Entity &value);
@@ -20,6 +25,8 @@ public:
 
     friend QDataStream& operator<<(QDataStream &stream, const Teacher &data);
     friend QDataStream& operator>>(QDataStream &stream, Teacher &data);
+
+    static TeacherList getExistingTeachers();
 };
 
 QDataStream& operator<<(QDataStream &stream, const Teacher &data);
