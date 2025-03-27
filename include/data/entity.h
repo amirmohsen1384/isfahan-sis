@@ -13,6 +13,7 @@ public:
     Entity(const Entity &another, QObject *parent = nullptr);
 
     Entity& operator=(const Entity &another);
+    ~Entity();
 
     bool isNull() const;
     qint64 getIdentifier() const;

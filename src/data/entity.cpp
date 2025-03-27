@@ -15,6 +15,11 @@ Entity &Entity::operator=(const Entity &another)
     return *this;
 }
 
+Entity::~Entity()
+{
+    commitToRecord();
+}
+
 void Entity::commitToRecord() const {}
 
 void Entity::setIdentifier(const qint64 &identifier)
