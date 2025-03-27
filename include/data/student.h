@@ -11,6 +11,7 @@ public:
 
 public:
     explicit Student(QObject *parent = nullptr);
+    Student(float score, QObject *parent = nullptr);
     Student(const Student &another, QObject *parent = nullptr);
 
     Student& operator=(const Student &another);

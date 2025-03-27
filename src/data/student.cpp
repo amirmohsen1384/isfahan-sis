@@ -11,6 +11,11 @@ QString getStudentFileName(const Entity &value)
 
 Student::Student(QObject *parent) : Person{parent} {}
 
+Student::Student(float score, QObject *parent) : Student{parent}
+{
+    setScore(score);
+}
+
 Student::Student(const Student &another, QObject *parent) : Student{parent}
 {
     *this = another;
