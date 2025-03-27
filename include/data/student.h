@@ -3,6 +3,9 @@
 
 #include "person.h"
 
+class Student;
+using StudentList = QList<Student>;
+
 class Student : public Person
 {
     Q_OBJECT
@@ -33,6 +36,8 @@ public:
 
     virtual void addCredit(Lesson &lesson) override;
     virtual void removeCredit(Lesson &lesson) override;
+
+    static StudentList getExistingStudents();
 
 signals:
     void scoreChanged(float score);

@@ -148,3 +148,32 @@ QDataStream& operator>>(QDataStream &stream, Student &data)
     stream >> data.score;
     return stream;
 }
+
+StudentList Student::getExistingStudents()
+{
+    QDir directory = Entity::getEntityDirectory();
+    if(!directory.cd("Students")) {
+        return StudentList();
+    }
+
+    QFileInfoList entries = directory.entryInfoList(
+        {"*.stf"},
+        QDir::AllEntries | QDir::NoDotAndDotDot,
+        QDir::SortFlag::Name
+    );
+
+    StudentList result;
+    for(QFileInfo entry : entries) {
+        QFile file(entry.absoluteFilePath());
+        if(!file.open(QFile::ReadOnly)) {
+            continue;
+        }
+
+        Student student;
+        QDataStream stream(&file);
+        stream >> student;
+        result.append(student);
+    }
+
+    return result;
+}
