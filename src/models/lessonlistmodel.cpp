@@ -8,6 +8,7 @@ LessonListModel::LessonListModel(QObject *parent) : QAbstractTableModel(parent)
         inspector.addPath(directory.absolutePath());
         connect(&inspector, &QFileSystemWatcher::directoryChanged, this, &LessonListModel::updateList);
     }
+    updateList();
 }
 
 int LessonListModel::rowCount(const QModelIndex &parent) const
@@ -97,7 +98,7 @@ QVariant LessonListModel::headerData(int section, Qt::Orientation orientation, i
         }
     }
 
-    else if(orientation == Qt::Vertical) {
+    else {
         return section + 1;
     }
 }
