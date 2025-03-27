@@ -12,7 +12,8 @@ SOURCES += \
     src/data/lesson.cpp \
     src/data/person.cpp \
     src/data/teacher.cpp \
-    src/data/student.cpp
+    src/data/student.cpp \
+    src/models/lessonlistmodel.cpp
 
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
@@ -26,4 +27,5 @@ HEADERS += \
     include/data/student.h \
     include/errors/education.h \
     include/errors/resource.h \
-    include/errors/general.h
+    include/errors/general.h \
+    include/models/lessonlistmodel.h
