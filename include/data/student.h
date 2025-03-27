@@ -32,6 +32,9 @@ public:
     virtual void addCredit(Lesson &lesson) override;
     virtual void removeCredit(Lesson &lesson) override;
 
+signals:
+    void scoreChanged(float score);
+
 private:
     float score = 0.00;
 };
