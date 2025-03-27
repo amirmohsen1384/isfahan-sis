@@ -142,10 +142,10 @@ QDataStream& operator>>(QDataStream &stream, Person &data)
 QDebug operator<<(QDebug debugger, const Person &data)
 {
     QDebug environment = debugger.noquote();
-    environment << "Identifier:" << data.identifier;
-    environment << "First name:" << data.firstName;
-    environment << "Last name:" << data.lastName;
-    environment << "User name:" << data.userName;
-    environment << "Password:" << data.password;
+    environment << "Identifier:" << data.identifier << '\n';
+    environment << "First name:" << data.firstName << '\n';
+    environment << "Last name:" << data.lastName << '\n';
+    environment << "User name:" << data.userName << '\n';
+    environment << "Password:" << data.password << '\n';
     return debugger;
 }
