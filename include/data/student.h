@@ -18,7 +18,6 @@ public:
     Student(const Student &another, QObject *parent = nullptr);
 
     Student& operator=(const Student &another);
-    ~Student();
 
     friend QDataStream& operator<<(QDataStream &stream, const Student &data);
     friend QDataStream& operator>>(QDataStream &stream, Student &data);
@@ -37,7 +36,10 @@ public:
     virtual void addCredit(Lesson &lesson) override;
     virtual void removeCredit(Lesson &lesson) override;
 
+    static QDir getStudentDirectory();
+    static QFileInfoList getStudentFiles();
     static StudentList getExistingStudents();
+    static QString getStudentFileName(const Entity &entity);
 
 signals:
     void scoreChanged(float score);
