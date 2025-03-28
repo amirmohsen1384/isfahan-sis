@@ -18,7 +18,6 @@ public:
     Lesson(const Lesson &other, QObject *parent = nullptr);
 
     Lesson& operator=(const Lesson &other);
-    ~Lesson();
 
     Teacher getTeacher() const;
 
@@ -56,6 +55,8 @@ public slots:
     friend QDataStream& operator<<(QDataStream &stream, const Lesson &data);
     friend QDataStream& operator>>(QDataStream &stream, Lesson &data);
     static Lesson loadFromRecord(const Entity &value);
+
+    static QString getLessonFileName(const Lesson &value);
 
     static LessonList getExistingLessons();
 

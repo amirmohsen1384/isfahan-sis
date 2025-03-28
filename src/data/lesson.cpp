@@ -21,18 +21,14 @@ Lesson &Lesson::operator=(const Lesson &other)
     setFinalExam(other.finalExam);
     setName(other.name);
 
-    this->teacher = other.teacher;
+    teacher = other.teacher;
     emit teacherChanged(teacher);
 
     enrolledStudents = other.enrolledStudents;
     emit enrolledStudentsChanged();
+
     return *this;
 
-}
-
-Lesson::~Lesson()
-{
-    commitToRecord();
 }
 
 quint64 Lesson::getBranchNumber() const
@@ -114,7 +110,7 @@ void Lesson::setFinalExam(const QDateTime &value)
     emit finalExamChanged(value);
 }
 
-QString getLessonFileName(const Entity &value)
+QString getLessonFileName(const Lesson &value)
 {
     QDir root = Lesson::getLessonsDirectory();
     return root.absoluteFilePath(QString("%1.lss").arg(value.getIdentifier()));
@@ -125,7 +121,7 @@ void Lesson::commitToRecord() const
     if(isNull()) {
         return;
     }
-    QFile file(getLessonFileName(*this));
+    QFile file(Lesson::getLessonFileName(*this));
     if(!file.open(QFile::WriteOnly)) {
         return;
     }
@@ -138,27 +134,42 @@ void Lesson::commitToRecord() const
 void Lesson::setIdentifier(const qint64 &value)
 {
     QDir root = Lesson::getLessonsDirectory();
-    QFileInfoList entries = root.entryInfoList({"*.lss"}, QDir::NoDotAndDotDot | QDir::AllEntries, QDir::Name);
+    QFileInfoList entries = root.entryInfoList(
+        {"*.lss"},
+        QDir::NoDotAndDotDot | QDir::AllEntries,
+        QDir::Name
+    );
+
     for(QFileInfo entry : entries) {
         if(entry.baseName().toLongLong() == value) {
             throw DuplicateEntityException();
         }
     }
-    Entity::setIdentifier(value);
+
+    QFile::remove(Lesson::getLessonFileName(*this));
+    this->identifier = value;
     commitToRecord();
+
+    emit identifierChanged(identifier);
 }
 
 Lesson Lesson::loadFromRecord(const Entity &value)
 {
+    if(value.isNull()) {
+        return;
+    }
+
     QFile file(getLessonFileName(value));
     if(!file.open(QFile::ReadOnly)) {
         return Lesson();
     }
+
     Lesson target;
     QDataStream stream(&file);
     if((stream >> target).status() != QDataStream::Ok) {
         throw ReadFileException();
     }
+
     return target;
 }
 
