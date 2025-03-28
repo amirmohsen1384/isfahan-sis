@@ -162,8 +162,6 @@ Lesson Lesson::loadFromRecord(const Entity &value)
     return target;
 }
 
-#include <QDebug>
-
 LessonList Lesson::getExistingLessons()
 {
     QFileInfoList entries = Lesson::getLessonsDirectory().entryInfoList(
