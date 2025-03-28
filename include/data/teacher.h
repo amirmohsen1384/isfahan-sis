@@ -15,7 +15,6 @@ public:
     Teacher(const Teacher &another, QObject *parent = nullptr);
 
     Teacher& operator=(const Teacher &another);
-    ~Teacher();
 
     virtual void commitToRecord() const override;
     static Teacher loadFromRecord(const Entity &value);
@@ -26,7 +25,10 @@ public:
     friend QDataStream& operator<<(QDataStream &stream, const Teacher &data);
     friend QDataStream& operator>>(QDataStream &stream, Teacher &data);
 
+    static QDir getTeacherDirectory();
+    static QFileInfoList getTeacherFiles();
     static TeacherList getExistingTeachers();
+    static QString getTeacherFileName(const Entity &entity);
 };
 
 QDataStream& operator<<(QDataStream &stream, const Teacher &data);

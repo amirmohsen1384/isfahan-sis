@@ -1,6 +1,6 @@
-#include <QDir>
 #include "include/data/teacher.h"
 #include "include/data/student.h"
+#include "include/errors/resource.h"
 #include "include/errors/education.h"
 
 Teacher::Teacher(QObject *parent) : Person{parent} {}
@@ -16,22 +16,18 @@ Teacher& Teacher::operator=(const Teacher &another)
     return *this;
 }
 
-Teacher::~Teacher()
+QString Teacher::getTeacherFileName(const Entity &value)
 {
-    commitToRecord();
-}
-
-QString getTeacherFileName(const Entity &value)
-{
-    QDir mainDirectory = Entity::getEntityDirectory();
-    mainDirectory.mkdir("Teachers");
-    mainDirectory.cd("Teachers");
-    return mainDirectory.absoluteFilePath(QString("%1.tch").arg(value.getIdentifier()));
+    return getTeacherDirectory().absoluteFilePath(QString("%1.tch").arg(value.getIdentifier()));
 }
 
 Teacher Teacher::loadFromRecord(const Entity &value)
 {
-    QFile file(getTeacherFileName(value));
+    if(value.isNull()) {
+        return Teacher();
+    }
+
+    QFile file(Teacher::getTeacherFileName(value));
     if(!file.open(QFile::ReadOnly)) {
         return Teacher();
     }
@@ -42,8 +38,6 @@ Teacher Teacher::loadFromRecord(const Entity &value)
 
     return target;
 }
-
-QString getLessonFileName(const Entity &value);
 
 void Teacher::addCredit(Lesson &lesson)
 {
@@ -67,29 +61,33 @@ void Teacher::removeCredit(Lesson &lesson)
         s.removeCredit(lesson);
         s.commitToRecord();
     }
-
-    const QString &name = getLessonFileName(lesson);
-    QFile file(name);
-    file.remove();
-    file.close();
-
+    QFile::remove(Lesson::getLessonFileName(lesson));
     Person::removeCredit(lesson);
+}
+
+QDir Teacher::getTeacherDirectory()
+{
+    QDir directory = Entity::getEntityDirectory();
+    directory.mkdir("Teachers");
+    directory.cd("Teachers");
+    return directory;
+}
+
+QFileInfoList Teacher::getTeacherFiles()
+{
+    QFileInfoList entries = Teacher::getTeacherDirectory().entryInfoList(
+        {"*.tcd"},
+        QDir::AllEntries | QDir::NoDotAndDotDot,
+        QDir::SortFlag::Name
+    );
+    return entries;
 }
 
 TeacherList Teacher::getExistingTeachers()
 {
-    QDir directory = Entity::getEntityDirectory();
-    if(!directory.cd("Teachers")) {
-        return TeacherList();
-    }
-
-    QFileInfoList entries = directory.entryInfoList(
-        {"*.tcd"},
-        QDir::AllEntries | QDir::NoDotAndDotDot,
-        QDir::SortFlag::Name
-        );
-
     TeacherList result;
+    QFileInfoList entries = Teacher::getTeacherFiles();
+
     for(QFileInfo entry : entries) {
         QFile file(entry.absoluteFilePath());
         if(!file.open(QFile::ReadOnly)) {
@@ -98,8 +96,13 @@ TeacherList Teacher::getExistingTeachers()
 
         Teacher teacher;
         QDataStream stream(&file);
-        stream >> teacher;
-        result.append(teacher);
+        if((stream >> teacher).status() != QDataStream::Ok) {
+            continue;
+        }
+
+        if(!teacher.isNull()) {
+            result.append(teacher);
+        }
     }
 
     return result;
@@ -107,13 +110,16 @@ TeacherList Teacher::getExistingTeachers()
 
 void Teacher::commitToRecord() const
 {
-    const QString fileName = getTeacherFileName(*this);
-    QFile file(fileName);
+    QFile file(getTeacherFileName(*this));
     if(!file.open(QFile::WriteOnly)) {
         return;
     }
+
     QDataStream stream(&file);
-    stream << *this;
+    if((stream << *this).status() != QDataStream::Ok) {
+        throw WriteFileException();
+    }
+
     return;
 }
 
