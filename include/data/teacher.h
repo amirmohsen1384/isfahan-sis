@@ -19,6 +19,8 @@ public:
     virtual void commitToRecord() const override;
     static Teacher loadFromRecord(const Entity &value);
 
+    virtual void setIdentifier(const qint64 &value) override;
+
     virtual void addCredit(Lesson &lesson) override;
     virtual void removeCredit(Lesson &lesson) override;
 

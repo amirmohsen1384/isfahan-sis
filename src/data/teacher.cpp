@@ -39,6 +39,18 @@ Teacher Teacher::loadFromRecord(const Entity &value)
     return target;
 }
 
+void Teacher::setIdentifier(const qint64 &value)
+{
+    QFileInfoList entries = Teacher::getTeacherFiles();
+    for(QFileInfo entry : entries) {
+        if(entry.baseName().toLongLong() == value) {
+            throw DuplicateEntityException();
+        }
+    }
+    identifier = value;
+    emit identifierChanged(value);
+}
+
 void Teacher::addCredit(Lesson &lesson)
 {
     QList<Lesson> lessons = this->getLessons();
