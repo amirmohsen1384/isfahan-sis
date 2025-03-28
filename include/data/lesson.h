@@ -56,10 +56,10 @@ public slots:
     friend QDataStream& operator>>(QDataStream &stream, Lesson &data);
     static Lesson loadFromRecord(const Entity &value);
 
-    static QString getLessonFileName(const Lesson &value);
 
+    static QString getLessonFileName(const Entity &value);
     static LessonList getExistingLessons();
-
+    static QFileInfoList getLessonFiles();
     static QDir getLessonsDirectory();
 
 private slots:

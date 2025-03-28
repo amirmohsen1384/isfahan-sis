@@ -14,21 +14,14 @@ Lesson::Lesson(const Lesson &other, QObject *parent) : Lesson{parent}
 Lesson &Lesson::operator=(const Lesson &other)
 {
     static_cast<Entity&>(*this) = static_cast<const Entity&>(other);
-
-    setTotalCapacity(other.totalCapacity);
-    setBranchNumber(other.branchNumber);
-    setCreditUnit(other.creditUnit);
-    setFinalExam(other.finalExam);
-    setName(other.name);
-
-    teacher = other.teacher;
-    emit teacherChanged(teacher);
-
     enrolledStudents = other.enrolledStudents;
-    emit enrolledStudentsChanged();
-
+    totalCapacity = other.totalCapacity;
+    branchNumber = other.branchNumber;
+    creditUnit = other.creditUnit;
+    finalExam = other.finalExam;
+    teacher = other.teacher;
+    name = other.name;
     return *this;
-
 }
 
 quint64 Lesson::getBranchNumber() const
@@ -55,7 +48,10 @@ StudentList Lesson::getEnrolledStudents() const
 {
     StudentList result;
     for(Entity s : enrolledStudents) {
-        result.append(Student::loadFromRecord(s));
+        Student s = Student::loadFromRecord(s);
+        if(!s.isNull()) {
+            result.append(s);
+        }
     }
     return result;
 }
@@ -110,7 +106,7 @@ void Lesson::setFinalExam(const QDateTime &value)
     emit finalExamChanged(value);
 }
 
-QString getLessonFileName(const Lesson &value)
+QString Lesson::getLessonFileName(const Entity &value)
 {
     QDir root = Lesson::getLessonsDirectory();
     return root.absoluteFilePath(QString("%1.lss").arg(value.getIdentifier()));
@@ -133,13 +129,7 @@ void Lesson::commitToRecord() const
 
 void Lesson::setIdentifier(const qint64 &value)
 {
-    QDir root = Lesson::getLessonsDirectory();
-    QFileInfoList entries = root.entryInfoList(
-        {"*.lss"},
-        QDir::NoDotAndDotDot | QDir::AllEntries,
-        QDir::Name
-    );
-
+    QFileInfoList entries = Lesson::getLessonFiles();
     for(QFileInfo entry : entries) {
         if(entry.baseName().toLongLong() == value) {
             throw DuplicateEntityException();
@@ -175,13 +165,9 @@ Lesson Lesson::loadFromRecord(const Entity &value)
 
 LessonList Lesson::getExistingLessons()
 {
-    QFileInfoList entries = Lesson::getLessonsDirectory().entryInfoList(
-        {"*.lss"},
-        QDir::AllEntries | QDir::NoDotAndDotDot,
-        QDir::SortFlag::Name
-    );
-
     LessonList result;
+    QFileInfoList entries = Lesson::getLessonFiles();
+
     for(QFileInfo entry : entries) {
         QFile file(entry.absoluteFilePath());
         if(!file.open(QFile::ReadOnly)) {
@@ -195,6 +181,17 @@ LessonList Lesson::getExistingLessons()
     }
 
     return result;
+}
+
+QFileInfoList Lesson::getLessonFiles()
+{
+    QDir root = Lesson::getLessonsDirectory();
+    QFileInfoList entries = root.entryInfoList(
+        {"*.lss"},
+        QDir::NoDotAndDotDot | QDir::AllEntries,
+        QDir::Name
+        );
+    return entries;
 }
 
 QDir Lesson::getLessonsDirectory()
