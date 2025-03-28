@@ -115,10 +115,8 @@ void Lesson::setFinalExam(const QDateTime &value)
 
 QString getLessonFileName(const Entity &value)
 {
-    QDir mainDirectory = Entity::getEntityDirectory();
-    mainDirectory.mkdir("Lessons");
-    mainDirectory.cd("Lessons");
-    return mainDirectory.absoluteFilePath(QString("%1.lss").arg(value.getIdentifier()));
+    QDir root = Lesson::getLessonsDirectory();
+    return root.absoluteFilePath(QString("%1.lss").arg(value.getIdentifier()));
 }
 
 void Lesson::commitToRecord() const
@@ -151,12 +149,7 @@ Lesson Lesson::loadFromRecord(const Entity &value)
 
 LessonList Lesson::getExistingLessons()
 {
-    QDir directory = Entity::getEntityDirectory();
-    if(!directory.cd("Lessons")) {
-        return LessonList();
-    }
-
-    QFileInfoList entries = directory.entryInfoList(
+    QFileInfoList entries = Lesson::getLessonsDirectory().entryInfoList(
         {"*.lss"},
         QDir::AllEntries | QDir::NoDotAndDotDot,
         QDir::SortFlag::Name
@@ -176,6 +169,19 @@ LessonList Lesson::getExistingLessons()
     }
 
     return result;
+}
+
+QDir Lesson::getLessonsDirectory()
+{
+    QDir directory = Entity::getEntityDirectory();
+    if(directory.mkdir("Lessons")) {
+        directory.cd("Lessons");
+        return directory;
+
+    } else {
+        return QDir();
+
+    }
 }
 
 void Lesson::setTeacher(const Teacher &value)

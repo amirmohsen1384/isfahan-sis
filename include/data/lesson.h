@@ -57,6 +57,8 @@ public slots:
 
     static LessonList getExistingLessons();
 
+    static QDir getLessonsDirectory();
+
 private slots:
     void setTeacher(const Teacher &value);
 
