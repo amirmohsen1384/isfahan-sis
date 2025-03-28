@@ -48,9 +48,9 @@ StudentList Lesson::getEnrolledStudents() const
 {
     StudentList result;
     for(Entity s : enrolledStudents) {
-        Student s = Student::loadFromRecord(s);
-        if(!s.isNull()) {
-            result.append(s);
+        Student target = Student::loadFromRecord(s);
+        if(!target.isNull()) {
+            result.append(target);
         }
     }
     return result;
