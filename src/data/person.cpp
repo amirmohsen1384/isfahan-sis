@@ -14,13 +14,12 @@ Person::Person(const Person &person, QObject *parent) : Person{parent}
 Person &Person::operator=(const Person &person)
 {
     static_cast<Entity&>(*this) = static_cast<const Entity&>(person);
-    this->lessons = person.lessons;
-    setFirstName(person.firstName);
-    setLastName(person.lastName);
-    setUserName(person.userName);
-    setPassword(person.password);
-    setPhoto(person.photo);
-    emit lessonChanged();
+    firstName = person.firstName;
+    userName = person.userName;
+    password = person.password;
+    lastName = person.lastName;
+    lessons = person.lessons;
+    photo = person.photo;
     return *this;
 }
 
