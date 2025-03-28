@@ -10,6 +10,7 @@ class LessonListModel : public QAbstractTableModel
     Q_OBJECT
     QFileSystemWatcher inspector;
 public:
+    Q_DISABLE_COPY_MOVE(LessonListModel)
     explicit LessonListModel(QObject *parent = nullptr);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
