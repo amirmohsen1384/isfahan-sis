@@ -132,7 +132,7 @@ void Lesson::setIdentifier(const qint64 &value)
     QFileInfoList entries = Lesson::getLessonFiles();
     for(QFileInfo entry : entries) {
         if(entry.baseName().toLongLong() == value) {
-            throw DuplicateEntityException();
+            return;
         }
     }
 

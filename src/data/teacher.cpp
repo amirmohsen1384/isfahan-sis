@@ -1,5 +1,6 @@
 #include "include/data/teacher.h"
 #include "include/data/student.h"
+#include "include/errors/general.h"
 #include "include/errors/resource.h"
 #include "include/errors/education.h"
 
@@ -44,7 +45,7 @@ void Teacher::setIdentifier(const qint64 &value)
     QFileInfoList entries = Teacher::getTeacherFiles();
     for(QFileInfo entry : entries) {
         if(entry.baseName().toLongLong() == value) {
-            throw DuplicateEntityException();
+            return;
         }
     }
     identifier = value;
@@ -122,6 +123,10 @@ TeacherList Teacher::getExistingTeachers()
 
 void Teacher::commitToRecord() const
 {
+    if(isNull()) {
+        return;
+    }
+
     QFile file(getTeacherFileName(*this));
     if(!file.open(QFile::WriteOnly)) {
         return;

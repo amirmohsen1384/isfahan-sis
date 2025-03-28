@@ -62,7 +62,7 @@ void Student::setIdentifier(const qint64 &value)
     QFileInfoList entries = Student::getStudentFiles();
     for(QFileInfo entry : entries) {
         if(entry.baseName().toLongLong() == value) {
-            throw DuplicateEntityException();
+            return;
         }
     }
     identifier = value;
