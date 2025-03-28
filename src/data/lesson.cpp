@@ -1,6 +1,7 @@
 #include "include/data/lesson.h"
 #include "include/data/teacher.h"
 #include "include/data/student.h"
+#include "include/errors/general.h"
 #include "include/errors/resource.h"
 #include "include/errors/education.h"
 
@@ -13,25 +14,14 @@ Lesson::Lesson(const Lesson &other, QObject *parent) : Lesson{parent}
 Lesson &Lesson::operator=(const Lesson &other)
 {
     static_cast<Entity&>(*this) = static_cast<const Entity&>(other);
-
-    setTotalCapacity(other.totalCapacity);
-    setBranchNumber(other.branchNumber);
-    setCreditUnit(other.creditUnit);
-    setFinalExam(other.finalExam);
-    setName(other.name);
-
-    this->teacher = other.teacher;
-    emit teacherChanged(teacher);
-
     enrolledStudents = other.enrolledStudents;
-    emit enrolledStudentsChanged();
+    totalCapacity = other.totalCapacity;
+    branchNumber = other.branchNumber;
+    creditUnit = other.creditUnit;
+    finalExam = other.finalExam;
+    teacher = other.teacher;
+    name = other.name;
     return *this;
-
-}
-
-Lesson::~Lesson()
-{
-    commitToRecord();
 }
 
 quint64 Lesson::getBranchNumber() const
@@ -58,7 +48,10 @@ StudentList Lesson::getEnrolledStudents() const
 {
     StudentList result;
     for(Entity s : enrolledStudents) {
-        result.append(Student::loadFromRecord(s));
+        Student target = Student::loadFromRecord(s);
+        if(!target.isNull()) {
+            result.append(target);
+        }
     }
     return result;
 }
@@ -113,17 +106,18 @@ void Lesson::setFinalExam(const QDateTime &value)
     emit finalExamChanged(value);
 }
 
-QString getLessonFileName(const Entity &value)
+QString Lesson::getLessonFileName(const Entity &value)
 {
-    QDir mainDirectory = Entity::getEntityDirectory();
-    mainDirectory.mkdir("Lessons");
-    mainDirectory.cd("Lessons");
-    return mainDirectory.absoluteFilePath(QString("%1.lss").arg(value.getIdentifier()));
+    QDir root = Lesson::getLessonsDirectory();
+    return root.absoluteFilePath(QString("%1.lss").arg(value.getIdentifier()));
 }
 
 void Lesson::commitToRecord() const
 {
-    QFile file(getLessonFileName(*this));
+    if(isNull()) {
+        return;
+    }
+    QFile file(Lesson::getLessonFileName(*this));
     if(!file.open(QFile::WriteOnly)) {
         return;
     }
@@ -133,36 +127,47 @@ void Lesson::commitToRecord() const
     }
 }
 
+void Lesson::setIdentifier(const qint64 &value)
+{
+    QFileInfoList entries = Lesson::getLessonFiles();
+    for(QFileInfo entry : entries) {
+        if(entry.baseName().toLongLong() == value) {
+            throw DuplicateEntityException();
+        }
+    }
+
+    QFile::remove(Lesson::getLessonFileName(*this));
+    this->identifier = value;
+    commitToRecord();
+
+    emit identifierChanged(identifier);
+}
+
 Lesson Lesson::loadFromRecord(const Entity &value)
 {
+    if(value.isNull()) {
+        return Lesson();
+    }
+
     QFile file(getLessonFileName(value));
     if(!file.open(QFile::ReadOnly)) {
         return Lesson();
     }
+
     Lesson target;
     QDataStream stream(&file);
     if((stream >> target).status() != QDataStream::Ok) {
         throw ReadFileException();
     }
+
     return target;
 }
 
-#include <QDebug>
-
 LessonList Lesson::getExistingLessons()
 {
-    QDir directory = Entity::getEntityDirectory();
-    if(!directory.cd("Lessons")) {
-        return LessonList();
-    }
-
-    QFileInfoList entries = directory.entryInfoList(
-        {"*.lss"},
-        QDir::AllEntries | QDir::NoDotAndDotDot,
-        QDir::SortFlag::Name
-    );
-
     LessonList result;
+    QFileInfoList entries = Lesson::getLessonFiles();
+
     for(QFileInfo entry : entries) {
         QFile file(entry.absoluteFilePath());
         if(!file.open(QFile::ReadOnly)) {
@@ -170,12 +175,35 @@ LessonList Lesson::getExistingLessons()
         }
 
         Lesson lesson;
+
         QDataStream stream(&file);
         stream >> lesson;
-        result.append(lesson);
+
+        if(!lesson.isNull()) {
+            result.append(lesson);
+        }
     }
 
     return result;
+}
+
+QFileInfoList Lesson::getLessonFiles()
+{
+    QDir root = Lesson::getLessonsDirectory();
+    QFileInfoList entries = root.entryInfoList(
+        {"*.lss"},
+        QDir::NoDotAndDotDot | QDir::AllEntries,
+        QDir::Name
+        );
+    return entries;
+}
+
+QDir Lesson::getLessonsDirectory()
+{
+    QDir directory = Entity::getEntityDirectory();
+    directory.mkdir("Lessons");
+    directory.cd("Lessons");
+    return directory;
 }
 
 void Lesson::setTeacher(const Teacher &value)

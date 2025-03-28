@@ -1,13 +1,7 @@
 #include "include/data/student.h"
+#include "include/errors/general.h"
+#include "include/errors/resource.h"
 #include "include/errors/education.h"
-
-QString getStudentFileName(const Entity &value)
-{
-    QDir mainDirectory = Entity::getEntityDirectory();
-    mainDirectory.mkdir("Students");
-    mainDirectory.cd("Students");
-    return mainDirectory.absoluteFilePath(QString("%1.stf").arg(value.getIdentifier()));
-}
 
 Student::Student(QObject *parent) : Person{parent} {}
 
@@ -23,29 +17,35 @@ Student::Student(const Student &another, QObject *parent) : Student{parent}
 
 Student& Student::operator=(const Student &another)
 {
-    this->score = another.score;
+    static_cast<Person&>(*this) = static_cast<const Person&>(another);
+    score = another.score;
     return *this;
-}
-
-Student::~Student()
-{
-    commitToRecord();
 }
 
 void Student::commitToRecord() const
 {
-    QFile file(getStudentFileName(*this));
+    if(isNull()) {
+        return;
+    }
+
+    QFile file(Student::getStudentFileName(*this));
     if(!file.open(QFile::WriteOnly)) {
         return;
     }
+
     QDataStream stream(&file);
-    stream << *this;
-    return;
+    if((stream << *this).status() != QDataStream::Ok) {
+        throw WriteFileException();
+    }
 }
 
 Student Student::loadFromRecord(const Entity &value)
 {
-    QFile file(getStudentFileName(value));
+    if(value.isNull()) {
+        return Student();
+    }
+
+    QFile file(Student::getStudentFileName(value));
     if(!file.open(QFile::ReadOnly)) {
         return Student();
     }
@@ -55,6 +55,18 @@ Student Student::loadFromRecord(const Entity &value)
     stream >> target;
 
     return target;
+}
+
+void Student::setIdentifier(const qint64 &value)
+{
+    QFileInfoList entries = Student::getStudentFiles();
+    for(QFileInfo entry : entries) {
+        if(entry.baseName().toLongLong() == value) {
+            throw DuplicateEntityException();
+        }
+    }
+    identifier = value;
+    emit identifierChanged(value);
 }
 
 void Student::setScore(float value)
@@ -69,6 +81,7 @@ void Student::setScore(float value)
         score = value;
 
     }
+    emit scoreChanged(score);
 }
 
 float Student::getScore() const
@@ -159,6 +172,19 @@ void Student::removeCredit(Lesson &lesson)
     Person::removeCredit(lesson);
 }
 
+QDir Student::getStudentDirectory()
+{
+    QDir directory = Entity::getEntityDirectory();
+    directory.mkdir("Students");
+    directory.cd("Students");
+    return directory;
+}
+
+QFileInfoList Student::getStudentFiles()
+{
+    return Student::getStudentDirectory().entryInfoList({"*.stf"}, QDir::AllEntries | QDir::NoDotAndDotDot, QDir::Name);
+}
+
 QDataStream& operator<<(QDataStream &stream, const Student &data)
 {
     stream << static_cast<const Person&>(data);
@@ -174,18 +200,9 @@ QDataStream& operator>>(QDataStream &stream, Student &data)
 
 StudentList Student::getExistingStudents()
 {
-    QDir directory = Entity::getEntityDirectory();
-    if(!directory.cd("Students")) {
-        return StudentList();
-    }
-
-    QFileInfoList entries = directory.entryInfoList(
-        {"*.stf"},
-        QDir::AllEntries | QDir::NoDotAndDotDot,
-        QDir::SortFlag::Name
-    );
-
     StudentList result;
+    QFileInfoList entries = Student::getStudentFiles();
+
     for(QFileInfo entry : entries) {
         QFile file(entry.absoluteFilePath());
         if(!file.open(QFile::ReadOnly)) {
@@ -195,8 +212,16 @@ StudentList Student::getExistingStudents()
         Student student;
         QDataStream stream(&file);
         stream >> student;
-        result.append(student);
+
+        if(!student.isNull()) {
+            result.append(student);
+        }
     }
 
     return result;
+}
+
+QString Student::getStudentFileName(const Entity &entity)
+{
+    return Student::getStudentDirectory().absoluteFilePath(QString("%1.stf").arg(entity.getIdentifier()));
 }

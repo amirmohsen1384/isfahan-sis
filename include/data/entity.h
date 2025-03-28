@@ -21,7 +21,7 @@ public:
 
 public slots:
     virtual void commitToRecord() const;
-    void setIdentifier(const qint64 &identifier);
+    virtual void setIdentifier(const qint64 &identifier);
 
     friend QDataStream& operator<<(QDataStream &stream, const Entity &data);
     friend QDataStream& operator>>(QDataStream &stream, Entity &data);

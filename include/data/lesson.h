@@ -18,7 +18,6 @@ public:
     Lesson(const Lesson &other, QObject *parent = nullptr);
 
     Lesson& operator=(const Lesson &other);
-    ~Lesson();
 
     Teacher getTeacher() const;
 
@@ -51,11 +50,17 @@ public slots:
 
     virtual void commitToRecord() const override;
 
+    virtual void setIdentifier(const qint64 &value) override;
+
     friend QDataStream& operator<<(QDataStream &stream, const Lesson &data);
     friend QDataStream& operator>>(QDataStream &stream, Lesson &data);
     static Lesson loadFromRecord(const Entity &value);
 
+
+    static QString getLessonFileName(const Entity &value);
     static LessonList getExistingLessons();
+    static QFileInfoList getLessonFiles();
+    static QDir getLessonsDirectory();
 
 private slots:
     void setTeacher(const Teacher &value);

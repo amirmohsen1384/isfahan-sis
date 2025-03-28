@@ -18,13 +18,14 @@ public:
     Student(const Student &another, QObject *parent = nullptr);
 
     Student& operator=(const Student &another);
-    ~Student();
 
     friend QDataStream& operator<<(QDataStream &stream, const Student &data);
     friend QDataStream& operator>>(QDataStream &stream, Student &data);
 
     virtual void commitToRecord() const override;
     static Student loadFromRecord(const Entity &value);
+
+    virtual void setIdentifier(const qint64 &value) override;
 
     float getScore() const;
     void setScore(float value);
@@ -37,7 +38,10 @@ public:
     virtual void addCredit(Lesson &lesson) override;
     virtual void removeCredit(Lesson &lesson) override;
 
+    static QDir getStudentDirectory();
+    static QFileInfoList getStudentFiles();
     static StudentList getExistingStudents();
+    static QString getStudentFileName(const Entity &entity);
 
 signals:
     void scoreChanged(float score);
