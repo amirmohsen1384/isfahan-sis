@@ -156,7 +156,7 @@ void Lesson::setIdentifier(const qint64 &value)
 Lesson Lesson::loadFromRecord(const Entity &value)
 {
     if(value.isNull()) {
-        return;
+        return Lesson();
     }
 
     QFile file(getLessonFileName(value));
