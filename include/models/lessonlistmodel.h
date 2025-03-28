@@ -20,6 +20,7 @@ public:
 
 protected slots:
     void updateList();
+    void updateInspector();
 
 private:
     LessonList container;

@@ -3,12 +3,12 @@
 
 LessonListModel::LessonListModel(QObject *parent) : QAbstractTableModel(parent)
 {
-    QDir directory = Entity::getEntityDirectory();
-    if(directory.cd("Lessons")) {
-        inspector.addPath(directory.absolutePath());
-        connect(&inspector, &QFileSystemWatcher::directoryChanged, this, &LessonListModel::updateList);
-    }
     updateList();
+    updateInspector();
+    inspector.addPath(Lesson::getLessonsDirectory().absolutePath());
+    connect(&inspector, &QFileSystemWatcher::fileChanged, this, &LessonListModel::updateList);
+    connect(&inspector, &QFileSystemWatcher::directoryChanged, this, &LessonListModel::updateList);
+    connect(&inspector, &QFileSystemWatcher::directoryChanged, this, &LessonListModel::updateInspector);
 }
 
 int LessonListModel::rowCount(const QModelIndex &parent) const
@@ -39,10 +39,6 @@ QVariant LessonListModel::data(const QModelIndex &index, int role) const
 
     }
 
-    else if(role == Qt::TextAlignmentRole) {
-        return Qt::AlignCenter;
-    }
-
     else if(role != Qt::DisplayRole) {
         return QVariant();
 
@@ -51,23 +47,20 @@ QVariant LessonListModel::data(const QModelIndex &index, int role) const
     switch(index.column()) {
     case 0: {
         const QString &name = lesson.getName();
-        return name;
+        return (!name.isEmpty() ? name : "Unnamed Lesson");
     }
     case 1: {
-        const quint64 identifier = lesson.getIdentifier();
-        return identifier;
+        return lesson.getIdentifier();
     }
     case 2: {
-        const QString name = lesson.getTeacher().getFullName();
-        return name;
+        const QString &name = lesson.getTeacher().getFullName();
+        return (!name.isEmpty() ? name : "Unknown Teacher");
     }
     case 3: {
-        const quint64 number = lesson.getBranchNumber();
-        return number;
+        return lesson.getBranchNumber();
     }
     case 4: {
-        const quint64 remaining = lesson.getLeftCapacity();
-        return remaining;
+        return lesson.getLeftCapacity();
     }
     default: {
         return QVariant();
@@ -114,4 +107,15 @@ void LessonListModel::updateList()
     beginResetModel();
     container = Lesson::getExistingLessons();
     endResetModel();
+}
+
+void LessonListModel::updateInspector()
+{
+    if(!inspector.files().isEmpty()) {
+        inspector.removePaths(inspector.files());
+    }
+    QFileInfoList entries = Lesson::getLessonFiles();
+    for(QFileInfo entry : entries) {
+        inspector.addPath(entry.absoluteFilePath());
+    }
 }
