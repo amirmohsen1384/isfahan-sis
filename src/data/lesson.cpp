@@ -24,6 +24,11 @@ Lesson &Lesson::operator=(const Lesson &other)
     return *this;
 }
 
+bool Lesson::hasTeacher() const
+{
+    return teacher.isNull();
+}
+
 quint64 Lesson::getBranchNumber() const
 {
     return branchNumber;

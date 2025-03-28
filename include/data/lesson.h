@@ -19,6 +19,8 @@ public:
 
     Lesson& operator=(const Lesson &other);
 
+    bool hasTeacher() const;
+
     Teacher getTeacher() const;
 
     bool isAbleToEnroll() const;
