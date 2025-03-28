@@ -25,6 +25,8 @@ public:
     virtual void commitToRecord() const override;
     static Student loadFromRecord(const Entity &value);
 
+    virtual void setIdentifier(const qint64 &value) override;
+
     float getScore() const;
     void setScore(float value);
 

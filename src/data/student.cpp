@@ -1,4 +1,5 @@
 #include "include/data/student.h"
+#include "include/errors/general.h"
 #include "include/errors/resource.h"
 #include "include/errors/education.h"
 
@@ -54,6 +55,18 @@ Student Student::loadFromRecord(const Entity &value)
     stream >> target;
 
     return target;
+}
+
+void Student::setIdentifier(const qint64 &value)
+{
+    QFileInfoList entries = Student::getStudentFiles();
+    for(QFileInfo entry : entries) {
+        if(entry.baseName().toLongLong() == value) {
+            throw DuplicateEntityException();
+        }
+    }
+    identifier = value;
+    emit identifierChanged(value);
 }
 
 void Student::setScore(float value)
