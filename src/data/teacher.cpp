@@ -42,13 +42,14 @@ Teacher Teacher::loadFromRecord(const Entity &value)
 
 void Teacher::setIdentifier(const qint64 &value)
 {
-    QFileInfoList entries = Teacher::getTeacherFiles();
-    for(QFileInfo entry : entries) {
-        if(entry.baseName().toLongLong() == value) {
-            return;
-        }
+    if(QFile::exists(Teacher::getTeacherFileName(Entity(value)))) {
+        return;
     }
+
+    QFile::remove(Teacher::getTeacherFileName(*this));
     identifier = value;
+    commitToRecord();
+
     emit identifierChanged(value);
 }
 

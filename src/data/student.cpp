@@ -59,13 +59,14 @@ Student Student::loadFromRecord(const Entity &value)
 
 void Student::setIdentifier(const qint64 &value)
 {
-    QFileInfoList entries = Student::getStudentFiles();
-    for(QFileInfo entry : entries) {
-        if(entry.baseName().toLongLong() == value) {
-            return;
-        }
+    if(QFile::exists(Student::getStudentFileName(Entity(value)))) {
+        return;
     }
+
+    QFile::remove(Student::getStudentFileName(*this));
     identifier = value;
+    commitToRecord();
+
     emit identifierChanged(value);
 }
 

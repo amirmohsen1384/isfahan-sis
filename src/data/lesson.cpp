@@ -134,11 +134,8 @@ void Lesson::commitToRecord() const
 
 void Lesson::setIdentifier(const qint64 &value)
 {
-    QFileInfoList entries = Lesson::getLessonFiles();
-    for(QFileInfo entry : entries) {
-        if(entry.baseName().toLongLong() == value) {
-            return;
-        }
+    if(QFile::exists(Lesson::getLessonFileName(Entity(value)))) {
+        return;
     }
 
     QFile::remove(Lesson::getLessonFileName(*this));
