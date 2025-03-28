@@ -1,6 +1,7 @@
 #include "include/data/lesson.h"
 #include "include/data/teacher.h"
 #include "include/data/student.h"
+#include "include/errors/general.h"
 #include "include/errors/resource.h"
 #include "include/errors/education.h"
 
@@ -121,6 +122,9 @@ QString getLessonFileName(const Entity &value)
 
 void Lesson::commitToRecord() const
 {
+    if(isNull()) {
+        return;
+    }
     QFile file(getLessonFileName(*this));
     if(!file.open(QFile::WriteOnly)) {
         return;
@@ -129,6 +133,19 @@ void Lesson::commitToRecord() const
     if((stream << *this).status() != QDataStream::Ok) {
         throw WriteFileException();
     }
+}
+
+void Lesson::setIdentifier(const qint64 &value)
+{
+    QDir root = Lesson::getLessonsDirectory();
+    QFileInfoList entries = root.entryInfoList({"*.lss"}, QDir::NoDotAndDotDot | QDir::AllEntries, QDir::Name);
+    for(QFileInfo entry : entries) {
+        if(entry.baseName().toLongLong() == value) {
+            throw DuplicateEntityException();
+        }
+    }
+    Entity::setIdentifier(value);
+    commitToRecord();
 }
 
 Lesson Lesson::loadFromRecord(const Entity &value)
@@ -174,14 +191,9 @@ LessonList Lesson::getExistingLessons()
 QDir Lesson::getLessonsDirectory()
 {
     QDir directory = Entity::getEntityDirectory();
-    if(directory.mkdir("Lessons")) {
-        directory.cd("Lessons");
-        return directory;
-
-    } else {
-        return QDir();
-
-    }
+    directory.mkdir("Lessons");
+    directory.cd("Lessons");
+    return directory;
 }
 
 void Lesson::setTeacher(const Teacher &value)

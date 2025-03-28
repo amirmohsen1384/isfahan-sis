@@ -51,6 +51,8 @@ public slots:
 
     virtual void commitToRecord() const override;
 
+    virtual void setIdentifier(const qint64 &value) override;
+
     friend QDataStream& operator<<(QDataStream &stream, const Lesson &data);
     friend QDataStream& operator>>(QDataStream &stream, Lesson &data);
     static Lesson loadFromRecord(const Entity &value);
