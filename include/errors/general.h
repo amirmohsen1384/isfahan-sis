@@ -10,5 +10,11 @@ class NullEntityException : public std::exception
     }
 };
 
+class DuplicateEntityException : public std::exception {
+    inline const char* what() const noexcept override {
+        return "There's already another entity with this identifier.";
+    }
+};
+
 #endif // GENERAL_H
 
