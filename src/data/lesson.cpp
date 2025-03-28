@@ -175,9 +175,13 @@ LessonList Lesson::getExistingLessons()
         }
 
         Lesson lesson;
+
         QDataStream stream(&file);
         stream >> lesson;
-        result.append(lesson);
+
+        if(!lesson.isNull()) {
+            result.append(lesson);
+        }
     }
 
     return result;
