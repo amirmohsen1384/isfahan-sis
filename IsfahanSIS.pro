@@ -1,8 +1,6 @@
 QT += core
 QT += gui
-
-greaterThan(QT_MAJOR_VERSION, 4):
-QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
 
@@ -13,11 +11,10 @@ SOURCES += \
     src/data/person.cpp \
     src/data/teacher.cpp \
     src/data/student.cpp \
-    src/models/lessonlistmodel.cpp
-
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+    src/models/enrolledmodel.cpp \
+    src/models/entityitem.cpp \
+    src/models/lessonlistmodel.cpp \
+    src/models/teachingloadmodel.cpp
 
 HEADERS += \
     include/data/entity.h \
@@ -28,4 +25,11 @@ HEADERS += \
     include/errors/education.h \
     include/errors/resource.h \
     include/errors/general.h \
-    include/models/lessonlistmodel.h
+    include/models/enrolledmodel.h \
+    include/models/entityitem.h \
+    include/models/lessonlistmodel.h \
+    include/models/teachingloadmodel.h
+
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target
