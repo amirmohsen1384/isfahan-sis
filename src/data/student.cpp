@@ -166,10 +166,6 @@ void Student::addCredit(Lesson &lesson)
             credits += temp.getCreditUnit();
         }
 
-        if(credits < getMinimumCredits() || credits > getMaximumCredits()) {
-            throw CreditsOutOfBoundException();
-        }
-
         // Inserts the student into the lesson's list.
         lesson.addStudent(*this);
         lesson.commitToRecord();

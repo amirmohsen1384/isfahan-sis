@@ -219,14 +219,6 @@ void Lesson::addStudent(const Student &value)
     const auto minimum = value.getMinimumCredits();
     const auto maximum = value.getMaximumCredits();
 
-    if(count < minimum || count > maximum) {
-        throw CreditsOutOfBoundException();
-    }
-
-    if(!isAbleToEnroll()) {
-        throw OutOfCapacityException();
-    }
-
     QList<Lesson> lessons = value.getLessons();
     for(const Lesson &target : lessons) {
         if(target.getFinalExam() == getFinalExam()) {
