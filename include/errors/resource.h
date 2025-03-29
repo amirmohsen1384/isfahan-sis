@@ -2,6 +2,7 @@
 #define RESOURCE_H
 
 #include <exception>
+#include "general.h"
 
 class FileNotFoundException : public std::exception
 {

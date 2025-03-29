@@ -2,6 +2,7 @@
 #define EDUCATION_H
 
 #include <exception>
+#include "general.h"
 
 class OverlapException : public std::exception
 {
