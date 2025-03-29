@@ -1,5 +1,4 @@
 #include "include/data/student.h"
-#include "include/errors/general.h"
 #include "include/errors/resource.h"
 #include "include/errors/education.h"
 
@@ -142,28 +141,45 @@ quint8 Student::getMaximumCredits() const
 
 void Student::addCredit(Lesson &lesson)
 {
-    if(!lesson.isAbleToEnroll()) {
-        throw OutOfCapacityException();
-    }
+    // Converts the lesson into its entity
+    Entity &entity = static_cast<Entity&>(lesson);
 
-    quint64 credits = 0;
-    LessonList container = this->getLessons();
+    // Searchs for the lesson in the list
+    auto it = std::lower_bound(lessons.begin(), lessons.end(), entity);
 
-    for(const Lesson &l : container) {
-        if(l.getFinalExam() == lesson.getFinalExam()) {
-            throw OverlapException();
+    // If there's no item matching the lesson
+    if(it == lessons.end() || *it != entity) {
+
+        // Checks for the ability to enroll.
+        if(!lesson.isAbleToEnroll()) {
+            throw OutOfCapacityException();
         }
-        credits += l.getCreditUnit();
+
+        // Checks for the bounds of credits and time overlapping
+        LessonList container = this->getLessons();
+        quint64 credits = 0;
+
+        for(const Lesson &temp : container) {
+            if(temp.getFinalExam() == lesson.getFinalExam()) {
+                throw OverlapException();
+            }
+            credits += temp.getCreditUnit();
+        }
+
+        if(credits < getMinimumCredits() || credits > getMaximumCredits()) {
+            throw CreditsOutOfBoundException();
+        }
+
+        // Inserts the student into the lesson's list.
+        lesson.addStudent(*this);
+        lesson.commitToRecord();
+
+        // Inserts the lesson into the student's list.
+        int index = std::distance(lessons.begin(), it);
+        lessons.insert(index, entity);
+
+        emit lessonChanged();
     }
-
-    if(credits < getMinimumCredits() || credits > getMaximumCredits()) {
-        throw CreditsOutOfBoundException();
-    }
-
-    lesson.addStudent(*this);
-    lesson.commitToRecord();
-
-    Person::addCredit(lesson);
 }
 
 void Student::removeCredit(Lesson &lesson)

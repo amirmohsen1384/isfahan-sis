@@ -1,7 +1,6 @@
 #include "include/data/lesson.h"
 #include "include/data/teacher.h"
 #include "include/data/student.h"
-#include "include/errors/general.h"
 #include "include/errors/resource.h"
 #include "include/errors/education.h"
 

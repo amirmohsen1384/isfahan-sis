@@ -1,6 +1,5 @@
 #include "include/data/teacher.h"
 #include "include/data/student.h"
-#include "include/errors/general.h"
 #include "include/errors/resource.h"
 #include "include/errors/education.h"
 
@@ -55,26 +54,55 @@ void Teacher::setIdentifier(const qint64 &value)
 
 void Teacher::addCredit(Lesson &lesson)
 {
-    QList<Lesson> lessons = this->getLessons();
-    for(const Lesson &target : lessons) {
-        if(target.getFinalExam() == lesson.getFinalExam()) {
-            throw OverlapException();
-        }
+    // Checks if the lesson is null
+    if(lesson.isNull()) {
+        return;
     }
 
-    lesson.teacher = static_cast<Entity>(*this);
-    lesson.commitToRecord();
-    Person::addCredit(lesson);
+    // Converts the lessons into an entity
+    Entity &entity = static_cast<Entity&>(lesson);
+
+    // Searchs for the lesson in the container
+    auto it = std::lower_bound(lessons.begin(), lessons.end(), entity);
+
+    // If there's no target matching the lesson
+    if(it == lessons.end() || *it != entity) {
+
+        // Checks for time overlapping
+        LessonList container = getLessons();
+        for(Lesson temp : container) {
+            if(temp.getFinalExam() == lesson.getFinalExam()) {
+                throw OverlapException();
+            }
+        }
+
+        // Assign the teacher to the lesson
+        lesson.setTeacher(*this);
+        lesson.commitToRecord();
+
+        // Inserts the lesson to the list
+        int index = std::distance(lessons.begin(), it);
+        lessons.insert(index, entity);
+
+        emit lessonChanged();
+    }
 }
 
 void Teacher::removeCredit(Lesson &lesson)
 {
-    EntityList students = lesson.enrolledStudents;
-    for(const Entity &entity : students) {
-        Student s = Student::loadFromRecord(entity);
-        s.removeCredit(lesson);
-        s.commitToRecord();
+    // Checks if the lesson is null
+    if(lesson.isNull()) {
+        return;
     }
+
+    // Removes the lesson from the credits of enrolled students
+    StudentList students = lesson.getEnrolledStudents();
+    for(Student &target : students) {
+        target.removeCredit(lesson);
+        target.commitToRecord();
+    }
+
+    // Removes the lesson file from the disk and the list.
     QFile::remove(Lesson::getLessonFileName(lesson));
     Person::removeCredit(lesson);
 }
@@ -90,7 +118,7 @@ QDir Teacher::getTeacherDirectory()
 QFileInfoList Teacher::getTeacherFiles()
 {
     QFileInfoList entries = Teacher::getTeacherDirectory().entryInfoList(
-        {"*.tcd"},
+        {"*.tch"},
         QDir::AllEntries | QDir::NoDotAndDotDot,
         QDir::SortFlag::Name
     );
