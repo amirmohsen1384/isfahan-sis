@@ -5,52 +5,9 @@ EnrolledModel::EnrolledModel(const Teacher &teacher, QObject *parent) : Enrolled
     setTeacher(teacher);
 }
 
-EnrolledModel::EnrolledModel(QObject *parent) : QAbstractItemModel(parent)
+EnrolledModel::EnrolledModel(QObject *parent) : LectureTreeModel(parent)
 {
-    connect(this, &EnrolledModel::teacherChanged, this, &EnrolledModel::populateModel);
-}
-
-EnrolledModel::~EnrolledModel()
-{
-    resetModel();
-}
-
-QModelIndex EnrolledModel::index(int row, int column, const QModelIndex &parent) const
-{
-    if(!hasIndex(row, column, parent)) {
-        return {};
-    }
-
-    EntityItem *parentItem = (parent.isValid() ? static_cast<EntityItem*>(parent.internalPointer()) : root);
-    EntityItem *item = parentItem->child(row);
-
-    return (item != nullptr ? createIndex(row, column, item) : QModelIndex());
-}
-
-QModelIndex EnrolledModel::parent(const QModelIndex &index) const
-{
-    if(!index.isValid()) {
-        return {};
-    }
-    EntityItem *item = static_cast<EntityItem*>(index.internalPointer());
-    EntityItem *parent = item->parentItem();
-    return (parent != nullptr ? createIndex(parent->row(), 0, parent) : QModelIndex{});
-}
-
-int EnrolledModel::rowCount(const QModelIndex &parent) const
-{
-    if (!parent.isValid()) {
-        return root->childCount();
-    }
-    return static_cast<EntityItem*>(parent.internalPointer())->childCount();
-}
-
-int EnrolledModel::columnCount(const QModelIndex &parent) const
-{
-    if (!parent.isValid()) {
-        return root->columnCount();
-    }
-    return static_cast<EntityItem*>(parent.internalPointer())->columnCount();
+    connect(this, &EnrolledModel::teacherChanged, this, &EnrolledModel::setupModel);
 }
 
 QVariant EnrolledModel::data(const QModelIndex &index, int role) const
@@ -75,26 +32,6 @@ QVariant EnrolledModel::data(const QModelIndex &index, int role) const
     return item->data(index.column());
 }
 
-QVariant EnrolledModel::headerData(int section, Qt::Orientation orientation, int role) const
-{
-    if(role == Qt::DisplayRole) {
-        switch(orientation) {
-        case Qt::Horizontal: {
-            return root->data(section);
-        }
-        case Qt::Vertical: {
-            return section + 1;
-        }
-        }
-    }
-    return {};
-}
-
-Qt::ItemFlags EnrolledModel::flags(const QModelIndex &index) const
-{
-    return !index.isValid() ? Qt::NoItemFlags : QAbstractItemModel::flags(index);
-}
-
 Teacher EnrolledModel::getTeacher() const
 {
     return target;
@@ -106,15 +43,7 @@ void EnrolledModel::setTeacher(const Teacher &teacher)
     emit teacherChanged(target);
 }
 
-void EnrolledModel::resetModel()
-{
-    if(root != nullptr) {
-        delete root;
-        root = nullptr;
-    }
-}
-
-void EnrolledModel::populateModel()
+void EnrolledModel::setupModel()
 {
     beginResetModel();
 

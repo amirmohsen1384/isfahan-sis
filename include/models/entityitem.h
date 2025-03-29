@@ -21,6 +21,7 @@ public:
     int row() const;
 
     friend class EnrolledModel;
+    friend class LectureTreeModel;
     friend class TeachingLoadModel;
 
 private:
