@@ -27,7 +27,7 @@ void Student::commitToRecord() const
         return;
     }
 
-    QFile file(Student::getStudentFileName(*this));
+    QFile file(Student::getFileName(*this));
     if(!file.open(QFile::WriteOnly)) {
         return;
     }
@@ -44,7 +44,7 @@ Student Student::loadFromRecord(const Entity &value)
         return Student();
     }
 
-    QFile file(Student::getStudentFileName(value));
+    QFile file(Student::getFileName(value));
     if(!file.open(QFile::ReadOnly)) {
         return Student();
     }
@@ -58,11 +58,11 @@ Student Student::loadFromRecord(const Entity &value)
 
 void Student::setIdentifier(const qint64 &value)
 {
-    if(QFile::exists(Student::getStudentFileName(Entity(value)))) {
+    if(QFile::exists(Student::getFileName(Entity(value)))) {
         return;
     }
 
-    QFile::remove(Student::getStudentFileName(*this));
+    QFile::remove(Student::getFileName(*this));
     identifier = value;
     commitToRecord();
 
@@ -189,17 +189,17 @@ void Student::removeCredit(Lesson &lesson)
     Person::removeCredit(lesson);
 }
 
-QDir Student::getStudentDirectory()
+QDir Student::getRoot()
 {
-    QDir directory = Entity::getEntityDirectory();
+    QDir directory = Entity::getRoot();
     directory.mkdir("Students");
     directory.cd("Students");
     return directory;
 }
 
-QFileInfoList Student::getStudentFiles()
+QFileInfoList Student::getFiles()
 {
-    return Student::getStudentDirectory().entryInfoList({"*.stf"}, QDir::AllEntries | QDir::NoDotAndDotDot, QDir::Name);
+    return Student::getRoot().entryInfoList({"*.stf"}, QDir::AllEntries | QDir::NoDotAndDotDot, QDir::Name);
 }
 
 QDataStream& operator<<(QDataStream &stream, const Student &data)
@@ -215,10 +215,10 @@ QDataStream& operator>>(QDataStream &stream, Student &data)
     return stream;
 }
 
-StudentList Student::getExistingStudents()
+StudentList Student::getEntities()
 {
     StudentList result;
-    QFileInfoList entries = Student::getStudentFiles();
+    QFileInfoList entries = Student::getFiles();
 
     for(QFileInfo entry : entries) {
         QFile file(entry.absoluteFilePath());
@@ -238,7 +238,7 @@ StudentList Student::getExistingStudents()
     return result;
 }
 
-QString Student::getStudentFileName(const Entity &entity)
+QString Student::getFileName(const Entity &entity)
 {
-    return Student::getStudentDirectory().absoluteFilePath(QString("%1.stf").arg(entity.getIdentifier()));
+    return Student::getRoot().absoluteFilePath(QString("%1.stf").arg(entity.getIdentifier()));
 }

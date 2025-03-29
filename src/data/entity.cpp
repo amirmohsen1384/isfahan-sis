@@ -69,7 +69,7 @@ bool operator<(const Entity &one, const Entity &two)
     return one.identifier < two.identifier;
 }
 
-QDir Entity::getEntityDirectory()
+QDir Entity::getRoot()
 {
     const QString directory = "Isfahan";
     QDir temporary = QDir::temp();

@@ -110,9 +110,9 @@ void Lesson::setFinalExam(const QDateTime &value)
     emit finalExamChanged(value);
 }
 
-QString Lesson::getLessonFileName(const Entity &value)
+QString Lesson::getFileName(const Entity &value)
 {
-    QDir root = Lesson::getLessonsDirectory();
+    QDir root = Lesson::getDirectory();
     return root.absoluteFilePath(QString("%1.lss").arg(value.getIdentifier()));
 }
 
@@ -121,7 +121,7 @@ void Lesson::commitToRecord() const
     if(isNull()) {
         return;
     }
-    QFile file(Lesson::getLessonFileName(*this));
+    QFile file(Lesson::getFileName(*this));
     if(!file.open(QFile::WriteOnly)) {
         return;
     }
@@ -133,11 +133,11 @@ void Lesson::commitToRecord() const
 
 void Lesson::setIdentifier(const qint64 &value)
 {
-    if(QFile::exists(Lesson::getLessonFileName(Entity(value)))) {
+    if(QFile::exists(Lesson::getFileName(Entity(value)))) {
         return;
     }
 
-    QFile::remove(Lesson::getLessonFileName(*this));
+    QFile::remove(Lesson::getFileName(*this));
     this->identifier = value;
     commitToRecord();
 
@@ -150,7 +150,7 @@ Lesson Lesson::loadFromRecord(const Entity &value)
         return Lesson();
     }
 
-    QFile file(getLessonFileName(value));
+    QFile file(getFileName(value));
     if(!file.open(QFile::ReadOnly)) {
         return Lesson();
     }
@@ -164,10 +164,10 @@ Lesson Lesson::loadFromRecord(const Entity &value)
     return target;
 }
 
-LessonList Lesson::getExistingLessons()
+LessonList Lesson::getEntities()
 {
     LessonList result;
-    QFileInfoList entries = Lesson::getLessonFiles();
+    QFileInfoList entries = Lesson::getFiles();
 
     for(QFileInfo entry : entries) {
         QFile file(entry.absoluteFilePath());
@@ -188,9 +188,9 @@ LessonList Lesson::getExistingLessons()
     return result;
 }
 
-QFileInfoList Lesson::getLessonFiles()
+QFileInfoList Lesson::getFiles()
 {
-    QDir root = Lesson::getLessonsDirectory();
+    QDir root = Lesson::getDirectory();
     QFileInfoList entries = root.entryInfoList(
         {"*.lss"},
         QDir::NoDotAndDotDot | QDir::AllEntries,
@@ -199,9 +199,9 @@ QFileInfoList Lesson::getLessonFiles()
     return entries;
 }
 
-QDir Lesson::getLessonsDirectory()
+QDir Lesson::getDirectory()
 {
-    QDir directory = Entity::getEntityDirectory();
+    QDir directory = Entity::getRoot();
     directory.mkdir("Lessons");
     directory.cd("Lessons");
     return directory;

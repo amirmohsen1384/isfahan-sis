@@ -27,10 +27,10 @@ public:
     friend QDataStream& operator<<(QDataStream &stream, const Teacher &data);
     friend QDataStream& operator>>(QDataStream &stream, Teacher &data);
 
-    static QDir getTeacherDirectory();
-    static QFileInfoList getTeacherFiles();
-    static TeacherList getExistingTeachers();
-    static QString getTeacherFileName(const Entity &entity);
+    static QDir getRoot();
+    static QFileInfoList getFiles();
+    static TeacherList getEntities();
+    static QString getFileName(const Entity &entity);
 };
 
 QDataStream& operator<<(QDataStream &stream, const Teacher &data);

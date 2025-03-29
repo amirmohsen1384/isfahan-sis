@@ -38,10 +38,10 @@ public:
     virtual void addCredit(Lesson &lesson) override;
     virtual void removeCredit(Lesson &lesson) override;
 
-    static QDir getStudentDirectory();
-    static QFileInfoList getStudentFiles();
-    static StudentList getExistingStudents();
-    static QString getStudentFileName(const Entity &entity);
+    static QDir getRoot();
+    static QFileInfoList getFiles();
+    static StudentList getEntities();
+    static QString getFileName(const Entity &entity);
 
 signals:
     void scoreChanged(float score);

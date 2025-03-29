@@ -5,7 +5,7 @@ LessonListModel::LessonListModel(QObject *parent) : QAbstractTableModel(parent)
 {
     updateList();
     updateInspector();
-    inspector.addPath(Lesson::getLessonsDirectory().absolutePath());
+    inspector.addPath(Lesson::getDirectory().absolutePath());
     connect(&inspector, &QFileSystemWatcher::fileChanged, this, &LessonListModel::updateList);
     connect(&inspector, &QFileSystemWatcher::directoryChanged, this, &LessonListModel::updateList);
     connect(&inspector, &QFileSystemWatcher::directoryChanged, this, &LessonListModel::updateInspector);
@@ -105,7 +105,7 @@ QVariant LessonListModel::headerData(int section, Qt::Orientation orientation, i
 void LessonListModel::updateList()
 {
     beginResetModel();
-    container = Lesson::getExistingLessons();
+    container = Lesson::getEntities();
     endResetModel();
 }
 
@@ -114,7 +114,7 @@ void LessonListModel::updateInspector()
     if(!inspector.files().isEmpty()) {
         inspector.removePaths(inspector.files());
     }
-    QFileInfoList entries = Lesson::getLessonFiles();
+    QFileInfoList entries = Lesson::getFiles();
     for(QFileInfo entry : entries) {
         inspector.addPath(entry.absoluteFilePath());
     }

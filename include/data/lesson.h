@@ -59,10 +59,10 @@ public slots:
     static Lesson loadFromRecord(const Entity &value);
 
 
-    static QString getLessonFileName(const Entity &value);
-    static LessonList getExistingLessons();
-    static QFileInfoList getLessonFiles();
-    static QDir getLessonsDirectory();
+    static QString getFileName(const Entity &value);
+    static LessonList getEntities();
+    static QFileInfoList getFiles();
+    static QDir getDirectory();
 
 private slots:
     void setTeacher(const Teacher &value);

@@ -30,7 +30,7 @@ public slots:
     friend bool operator!=(const Entity &one, const Entity &two);
     friend bool operator<(const Entity &one, const Entity &two);
 
-    static QDir getEntityDirectory();
+    static QDir getRoot();
 
 signals:
     void identifierChanged(const qint64 &identifier);
