@@ -12,7 +12,8 @@ SOURCES += \
     src/data/teacher.cpp \
     src/data/student.cpp \
     src/models/enrolledmodel.cpp \
-    src/models/entityitem.cpp \
+    src/models/core/entityitem.cpp \
+    src/models/core/lecturetreemodel.cpp \
     src/models/lessonlistmodel.cpp \
     src/models/teachingloadmodel.cpp
 
@@ -26,7 +27,8 @@ HEADERS += \
     include/errors/resource.h \
     include/errors/general.h \
     include/models/enrolledmodel.h \
-    include/models/entityitem.h \
+    include/models/core/entityitem.h \
+    include/models/core/lecturetreemodel.h \
     include/models/lessonlistmodel.h \
     include/models/teachingloadmodel.h
 
