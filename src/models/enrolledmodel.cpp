@@ -64,8 +64,15 @@ QVariant EnrolledModel::data(const QModelIndex &index, int role) const
 
 QVariant EnrolledModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
-    if(orientation == Qt::Horizontal && role == Qt::DisplayRole) {
-        return root->data(section);
+    if(role == Qt::DisplayRole) {
+        switch(orientation) {
+        case Qt::Horizontal: {
+            return root->data(section);
+        }
+        case Qt::Vertical: {
+            return section + 1;
+        }
+        }
     }
     return {};
 }
