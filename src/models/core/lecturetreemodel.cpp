@@ -1,4 +1,4 @@
-#include "include/models/lecture-tree/lecturetreemodel.h"
+#include "include/models/core/lecturetreemodel.h"
 
 LectureTreeModel::LectureTreeModel(QObject *parent) : QAbstractItemModel(parent)
 {}

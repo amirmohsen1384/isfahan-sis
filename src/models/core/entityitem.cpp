@@ -1,4 +1,4 @@
-#include "include/models/entityitem.h"
+#include "include/models/core/entityitem.h"
 
 EntityItem::EntityItem() {}
 

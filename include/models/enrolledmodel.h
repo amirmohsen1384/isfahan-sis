@@ -1,13 +1,13 @@
 #ifndef ENROLLEDMODEL_H
 #define ENROLLEDMODEL_H
 
-#include "entityitem.h"
+#include "core/entityitem.h"
 #include <QFileSystemWatcher>
 #include <QAbstractItemModel>
 #include "include/data/lesson.h"
 #include "include/data/student.h"
 #include "include/data/teacher.h"
-#include "lecture-tree/lecturetreemodel.h"
+#include "core/lecturetreemodel.h"
 
 class EnrolledModel : public LectureTreeModel
 {

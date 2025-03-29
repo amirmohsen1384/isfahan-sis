@@ -2,7 +2,7 @@
 #define LECTURETREEMODEL_H
 
 #include <QAbstractItemModel>
-#include "include/models/entityitem.h"
+#include "entityitem.h"
 
 class LectureTreeModel : public QAbstractItemModel
 {

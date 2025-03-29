@@ -1,9 +1,9 @@
 #ifndef TEACHINGLOADMODEL_H
 #define TEACHINGLOADMODEL_H
 
-#include "entityitem.h"
+#include "core/entityitem.h"
 #include <QAbstractItemModel>
-#include "lecture-tree/lecturetreemodel.h"
+#include "core/lecturetreemodel.h"
 
 class TeachingLoadModel : public LectureTreeModel
 {
