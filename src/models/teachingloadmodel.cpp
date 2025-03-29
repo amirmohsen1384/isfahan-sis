@@ -37,21 +37,15 @@ void TeachingLoadModel::setupModel()
 
     TeacherList container = Teacher::getEntities();
     for(Teacher one : container) {
-        EntityItem *parent = new EntityItem;
-        parent->name = one.getFullName();
-        parent->entity = one.getIdentifier();
+        EntityItem *parent = new EntityItem(one.getFullName(), one.getIdentifier());
 
         LessonList lectures = one.getLessons();
         for(Lesson lecture : lectures) {
-            EntityItem *item = new EntityItem;
-
-            item->parent = parent;
-            item->name = lecture.getName();
-            item->entity = lecture.getIdentifier();
-
-            parent->children.append(item);
+            EntityItem *item = new EntityItem(lecture.getName(), lecture.getIdentifier());
+            parent->appendChild(item);
         }
-        root->children.append(parent);
+
+        root->appendChild(parent);
     }
 
     endResetModel();

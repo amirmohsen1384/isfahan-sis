@@ -52,24 +52,15 @@ void EnrolledModel::setupModel()
 
     LessonList lessons = target.getLessons();
     for(Lesson lesson : lessons) {
-        EntityItem *parent = new EntityItem;
-
-        parent->name = lesson.getName();
-        parent->entity = lesson.getIdentifier();
+        EntityItem *parent = new EntityItem(lesson.getName(), lesson.getIdentifier());
 
         StudentList container = lesson.getEnrolledStudents();
-
         for(Student data : container) {
-            EntityItem *child = new EntityItem;
-
-            child->parent = parent;
-            child->name = data.getFullName();
-            child->entity = data.getIdentifier();
-
-            parent->children.append(child);
+            EntityItem *child = new EntityItem(data.getFullName(), data.getIdentifier());
+            parent->appendChild(child);
         }
 
-        root->children.append(parent);
+        root->appendChild(parent);
     }
 
     endResetModel();
