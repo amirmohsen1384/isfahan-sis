@@ -1,7 +1,7 @@
 #ifndef ENROLLEDMODEL_H
 #define ENROLLEDMODEL_H
 
-#include "enrolleditem.h"
+#include "entityitem.h"
 #include <QFileSystemWatcher>
 #include <QAbstractItemModel>
 #include "include/data/lesson.h"
@@ -41,7 +41,7 @@ protected:
     void resetModel();
 
 private:
-    EnrolledItem *root = nullptr;
+    EntityItem *root = nullptr;
     Teacher target;
 };
 

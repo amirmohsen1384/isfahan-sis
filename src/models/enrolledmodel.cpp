@@ -1,4 +1,4 @@
-#inclsude "include/models/enrolledmodel.h"
+#include "include/models/enrolledmodel.h"
 
 EnrolledModel::EnrolledModel(const Teacher &teacher, QObject *parent) : EnrolledModel(parent)
 {
@@ -21,8 +21,8 @@ QModelIndex EnrolledModel::index(int row, int column, const QModelIndex &parent)
         return {};
     }
 
-    EnrolledItem *parentItem = (parent.isValid() ? static_cast<EnrolledItem*>(parent.internalPointer()) : root);
-    EnrolledItem *item = parentItem->child(row);
+    EntityItem *parentItem = (parent.isValid() ? static_cast<EntityItem*>(parent.internalPointer()) : root);
+    EntityItem *item = parentItem->child(row);
 
     return (item != nullptr ? createIndex(row, column, item) : QModelIndex());
 }
@@ -32,8 +32,8 @@ QModelIndex EnrolledModel::parent(const QModelIndex &index) const
     if(!index.isValid()) {
         return {};
     }
-    EnrolledItem *item = static_cast<EnrolledItem*>(index.internalPointer());
-    EnrolledItem *parent = item->parentItem();
+    EntityItem *item = static_cast<EntityItem*>(index.internalPointer());
+    EntityItem *parent = item->parentItem();
     return (parent != nullptr ? createIndex(parent->row(), 0, parent) : QModelIndex{});
 }
 
@@ -42,7 +42,7 @@ int EnrolledModel::rowCount(const QModelIndex &parent) const
     if (!parent.isValid()) {
         return root->childCount();
     }
-    return static_cast<EnrolledItem*>(parent.internalPointer())->childCount();
+    return static_cast<EntityItem*>(parent.internalPointer())->childCount();
 }
 
 int EnrolledModel::columnCount(const QModelIndex &parent) const
@@ -50,7 +50,7 @@ int EnrolledModel::columnCount(const QModelIndex &parent) const
     if (!parent.isValid()) {
         return root->columnCount();
     }
-    return static_cast<EnrolledItem*>(parent.internalPointer())->columnCount();
+    return static_cast<EntityItem*>(parent.internalPointer())->columnCount();
 }
 
 QVariant EnrolledModel::data(const QModelIndex &index, int role) const
@@ -71,7 +71,7 @@ QVariant EnrolledModel::data(const QModelIndex &index, int role) const
     else if(role != Qt::DisplayRole) {
         return {};
     }
-    EnrolledItem *item = static_cast<EnrolledItem*>(index.internalPointer());
+    EntityItem *item = static_cast<EntityItem*>(index.internalPointer());
     return item->data(index.column());
 }
 
@@ -119,11 +119,11 @@ void EnrolledModel::populateModel()
     beginResetModel();
 
     resetModel();
-    root = new EnrolledItem("Name", "ID Number");
+    root = new EntityItem("Name", "ID Number");
 
     LessonList lessons = target.getLessons();
     for(Lesson lesson : lessons) {
-        EnrolledItem *parent = new EnrolledItem;
+        EntityItem *parent = new EntityItem;
 
         parent->name = lesson.getName();
         parent->entity = lesson.getIdentifier();
@@ -131,7 +131,7 @@ void EnrolledModel::populateModel()
         StudentList container = lesson.getEnrolledStudents();
 
         for(Student data : container) {
-            EnrolledItem *child = new EnrolledItem;
+            EntityItem *child = new EntityItem;
 
             child->parent = parent;
             child->name = data.getFullName();

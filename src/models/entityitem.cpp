@@ -1,26 +1,26 @@
-#include "include/models/enrolleditem.h"
+#include "include/models/entityitem.h"
 
-EnrolledItem::EnrolledItem() {}
+EntityItem::EntityItem() {}
 
-EnrolledItem::EnrolledItem(QVariant name, QVariant entity) : EnrolledItem()
+EntityItem::EntityItem(QVariant name, QVariant entity) : EntityItem()
 {
     this->name = name;
     this->entity = entity;
 }
 
-EnrolledItem::~EnrolledItem()
+EntityItem::~EntityItem()
 {
-    for(EnrolledItem *item : children) {
+    for(EntityItem *item : children) {
         delete item;
     }
 }
 
-EnrolledItem *EnrolledItem::child(int row)
+EntityItem *EntityItem::child(int row)
 {
     return children.value(row, nullptr);
 }
 
-QVariant EnrolledItem::data(int column) const
+QVariant EntityItem::data(int column) const
 {
     switch(column)
     {
@@ -36,29 +36,29 @@ QVariant EnrolledItem::data(int column) const
     }
 }
 
-int EnrolledItem::columnCount() const
+int EntityItem::columnCount() const
 {
     return 2;
 }
 
-int EnrolledItem::childCount() const
+int EntityItem::childCount() const
 {
     return children.size();
 }
 
-EnrolledItem *EnrolledItem::parentItem()
+EntityItem *EntityItem::parentItem()
 {
     return parent;
 }
 
-int EnrolledItem::row() const
+int EntityItem::row() const
 {
     if(parent == nullptr) {
         return 0;
     }
 
-    QList<EnrolledItem*> &container = parent->children;
-    auto it = std::find_if(container.cbegin(), container.cend(), [this](EnrolledItem *item)
+    QList<EntityItem*> &container = parent->children;
+    auto it = std::find_if(container.cbegin(), container.cend(), [this](EntityItem *item)
     {
         return item == this;
     });
