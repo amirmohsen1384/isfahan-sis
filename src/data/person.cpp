@@ -73,15 +73,6 @@ void Person::setPhoto(const QPixmap &value)
     emit photoChanged(photo);
 }
 
-void Person::addCredit(Lesson &lesson)
-{
-    Entity &entity = static_cast<Entity&>(lesson);
-    auto it = std::lower_bound(lessons.begin(), lessons.end(), entity);
-    int index = std::distance(lessons.begin(), it);
-    lessons.insert(index, entity);
-    emit lessonChanged();
-}
-
 void Person::removeCredit(Lesson &lesson)
 {
     Entity &entity = static_cast<Entity&>(lesson);
