@@ -71,3 +71,9 @@ int EntityItem::row() const
 
     }
 }
+
+void EntityItem::appendChild(EntityItem *item)
+{
+    item->parent = this;
+    children.append(item);
+}

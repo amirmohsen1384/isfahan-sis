@@ -24,6 +24,9 @@ public:
     friend class LectureTreeModel;
     friend class TeachingLoadModel;
 
+protected:
+    void appendChild(EntityItem *item);
+
 private:
     QVariant name;
     QVariant entity;
