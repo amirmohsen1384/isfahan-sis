@@ -13,8 +13,10 @@ class EnrolledModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    Q_DISABLE_COPY_MOVE(EnrolledModel)
+    explicit EnrolledModel(const Teacher &teacher, QObject *parent = nullptr);
     explicit EnrolledModel(QObject *parent = nullptr);
+    Q_DISABLE_COPY_MOVE(EnrolledModel)
+    ~EnrolledModel();
 
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
     QModelIndex parent(const QModelIndex &index) const override;
@@ -26,7 +28,6 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
     Qt::ItemFlags flags(const QModelIndex &index) const;
-
     Teacher getTeacher() const;
 
 public slots:
@@ -36,12 +37,10 @@ signals:
     void teacherChanged(const Teacher &value);
 
 protected:
-    void resetModel();
-    void updateInspector();
     void populateModel();
+    void resetModel();
 
 private:
-    QFileSystemWatcher inspector;
     EnrolledItem *root = nullptr;
     Teacher target;
 };

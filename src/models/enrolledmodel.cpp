@@ -1,9 +1,18 @@
-#include "include/models/enrolledmodel.h"
+#inclsude "include/models/enrolledmodel.h"
+
+EnrolledModel::EnrolledModel(const Teacher &teacher, QObject *parent) : EnrolledModel(parent)
+{
+    setTeacher(teacher);
+}
 
 EnrolledModel::EnrolledModel(QObject *parent) : QAbstractItemModel(parent)
 {
     connect(this, &EnrolledModel::teacherChanged, this, &EnrolledModel::populateModel);
-    populateModel();
+}
+
+EnrolledModel::~EnrolledModel()
+{
+    resetModel();
 }
 
 QModelIndex EnrolledModel::index(int row, int column, const QModelIndex &parent) const
@@ -46,20 +55,24 @@ int EnrolledModel::columnCount(const QModelIndex &parent) const
 
 QVariant EnrolledModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || role != Qt::DisplayRole) {
+    if(!index.isValid()) {
         return {};
     }
-
+    else if(role == Qt::UserRole) {
+        QModelIndex target = this->index(index.row(), 1, index.parent());
+        Entity entity(target.data().toLongLong());
+        if(index.parent().isValid()) {
+            return QVariant::fromValue(Student::loadFromRecord(entity));
+        }
+        else {
+            return QVariant::fromValue(Lesson::loadFromRecord(entity));
+        }
+    }
+    else if(role != Qt::DisplayRole) {
+        return {};
+    }
     EnrolledItem *item = static_cast<EnrolledItem*>(index.internalPointer());
-    if(index.column() == 1) {
-        return qvariant_cast<Entity>(item->data(1)).getIdentifier();
-
-    } else if(index.column() == 0) {
-        return item->data(0);
-    }
-    else {
-        return {};
-    }
+    return item->data(index.column());
 }
 
 QVariant EnrolledModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -101,21 +114,6 @@ void EnrolledModel::resetModel()
     }
 }
 
-void EnrolledModel::updateInspector()
-{
-    QStringList files = inspector.files();
-    if(!files.isEmpty()) {
-        inspector.removePaths(files);
-    }
-
-    inspector.addPath(Teacher::getFileName(target));
-
-    LessonList lessons = target.getLessons();
-    for(Lesson value : lessons) {
-        inspector.addPath(Lesson::getFileName(value));
-    }
-}
-
 void EnrolledModel::populateModel()
 {
     beginResetModel();
@@ -128,7 +126,7 @@ void EnrolledModel::populateModel()
         EnrolledItem *parent = new EnrolledItem;
 
         parent->name = lesson.getName();
-        parent->entity = QVariant::fromValue(Entity(lesson));
+        parent->entity = lesson.getIdentifier();
 
         StudentList container = lesson.getEnrolledStudents();
 
@@ -137,7 +135,7 @@ void EnrolledModel::populateModel()
 
             child->parent = parent;
             child->name = data.getFullName();
-            child->entity = QVariant::fromValue(Entity(data));
+            child->entity = data.getIdentifier();
 
             parent->children.append(child);
         }
