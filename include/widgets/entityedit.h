@@ -20,10 +20,13 @@ public:
     explicit EntityEdit(QWidget *parent = nullptr);
     ~EntityEdit();
 
-    qint64 getIdentifier();
-    EntityList getForbiddenEntities();
+    qint64 getInitial() const;
+    qint64 getIdentifier() const;
+    EntityList getForbiddenEntities() const;
 
 public slots:
+    void resetIdentifier();
+    void setInitial(qint64 value);
     void setIdentifier(qint64 value);
     void setForbiddenEntities(const EntityList &entities);
 
@@ -33,10 +36,12 @@ private slots:
 
 signals:
     void identifierRejected();
+    void initialChanged(qint64 value);
     void identifierAccepted(qint64 value);
     void entitiesChanged(const EntityList &entity);
 
 private:
+    qint64 initial;
     Ui::EntityEdit *ui;
     EntityList container;
     QIntValidator *validator;

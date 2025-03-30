@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>412</width>
+    <width>443</width>
     <height>79</height>
    </rect>
   </property>
@@ -14,12 +14,8 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0" colspan="2">
-    <widget class="QCheckBox" name="randomCheckBox">
-     <property name="text">
-      <string>Generate an ID number automatically (Recommended)</string>
-     </property>
-    </widget>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="identifierEdit"/>
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="identifierLabel">
@@ -36,8 +32,12 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="identifierEdit"/>
+   <item row="1" column="0" colspan="2">
+    <widget class="QCheckBox" name="randomCheckBox">
+     <property name="text">
+      <string>Generate an ID number automatically (Recommended)</string>
+     </property>
+    </widget>
    </item>
    <item row="0" column="2">
     <widget class="QToolButton" name="identifierResetButton">
@@ -81,8 +81,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>identifierResetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>EntityEdit</receiver>
+   <slot>resetIdentifier()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>411</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>420</x>
+     <y>50</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>setRandomIdentifier(Qt::CheckState)</slot>
+  <slot>resetIdentifier()</slot>
  </slots>
 </ui>

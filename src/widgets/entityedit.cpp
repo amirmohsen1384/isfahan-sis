@@ -41,7 +41,12 @@ EntityEdit::~EntityEdit()
     delete ui;
 }
 
-qint64 EntityEdit::getIdentifier()
+qint64 EntityEdit::getInitial() const
+{
+    return initial;
+}
+
+qint64 EntityEdit::getIdentifier() const
 {
     return ui->identifierEdit->text().toLongLong();
 }
@@ -79,9 +84,20 @@ void EntityEdit::validateIdentifier(const QString &text)
     emit identifierAccepted(number);
 }
 
-EntityList EntityEdit::getForbiddenEntities()
+EntityList EntityEdit::getForbiddenEntities() const
 {
     return container;
+}
+
+void EntityEdit::resetIdentifier()
+{
+    setIdentifier(initial);
+}
+
+void EntityEdit::setInitial(qint64 value)
+{
+    initial = value;
+    emit initialChanged(value);
 }
 
 void EntityEdit::setForbiddenEntities(const EntityList &entities)
