@@ -11,6 +11,8 @@ SOURCES += \
     src/data/person.cpp \
     src/data/teacher.cpp \
     src/data/student.cpp \
+    src/widgets/entityedit.cpp \
+    src/widgets/personedit.cpp \
     src/models/enrolledmodel.cpp \
     src/models/core/entityitem.cpp \
     src/models/core/lecturetreemodel.cpp \
@@ -26,6 +28,8 @@ HEADERS += \
     include/errors/education.h \
     include/errors/resource.h \
     include/errors/general.h \
+    include/widgets/entityedit.h \
+    include/widgets/personedit.h \
     include/models/enrolledmodel.h \
     include/models/core/entityitem.h \
     include/models/core/lecturetreemodel.h \
@@ -35,3 +39,10 @@ HEADERS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+FORMS += \
+    ui/widgets/entityedit.ui \
+    ui/widgets/personedit.ui
+
+RESOURCES += \
+    resources/main.qrc
