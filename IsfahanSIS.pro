@@ -11,15 +11,21 @@ SOURCES += \
     src/data/person.cpp \
     src/data/teacher.cpp \
     src/data/student.cpp \
-    src/widgets/entityedit.cpp \
-    src/widgets/personedit.cpp \
+    src/widgets/core/firstnamevalidator.cpp \
+    src/widgets/core/lastnamevalidator.cpp \
+    src/widgets/core/entityedit.cpp \
+    src/widgets/lessonedit.cpp \
+    src/widgets/core/personedit.cpp \
     src/models/enrolledmodel.cpp \
     src/models/core/entityitem.cpp \
     src/models/core/lecturetreemodel.cpp \
     src/models/lessonlistmodel.cpp \
-    src/models/teachingloadmodel.cpp
+    src/models/teachingloadmodel.cpp \
+    studentedit.cpp \
+    teacheredit.cpp
 
 HEADERS += \
+    include/data/core/queue.h \
     include/data/entity.h \
     include/data/lesson.h \
     include/data/teacher.h \
@@ -27,22 +33,31 @@ HEADERS += \
     include/data/student.h \
     include/errors/education.h \
     include/errors/resource.h \
+    include/widgets/core/firstnamevalidator.h \
+    include/widgets/core/lastnamevalidator.h \
+    include/widgets/lessonedit.h \
     include/errors/general.h \
-    include/widgets/entityedit.h \
-    include/widgets/personedit.h \
+    include/widgets/core/entityedit.h \
+    include/widgets/core/personedit.h \
     include/models/enrolledmodel.h \
     include/models/core/entityitem.h \
     include/models/core/lecturetreemodel.h \
     include/models/lessonlistmodel.h \
-    include/models/teachingloadmodel.h
+    include/models/teachingloadmodel.h \
+    studentedit.h \
+    teacheredit.h
+
 
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
-    ui/widgets/entityedit.ui \
-    ui/widgets/personedit.ui
+    studentedit.ui \
+    teacheredit.ui \
+    ui/widgets/lessonedit.ui \
+    ui/widgets/core/entityedit.ui \
+    ui/widgets/core/personedit.ui
 
 RESOURCES += \
     resources/main.qrc
