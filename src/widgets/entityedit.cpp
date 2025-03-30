@@ -1,5 +1,15 @@
-#include "entityedit.h"
+#include "include/widgets/entityedit.h"
 #include "ui_entityedit.h"
+
+qint64 EntityEdit::generateRandomNumber() const
+{
+    qint64 target;
+    do {
+        target = generator->generate();
+    }
+    while(std::find(container.cbegin(), container.cend(), Entity(target)) != container.cend());
+    return target;
+}
 
 EntityEdit::EntityEdit(QWidget *parent) : QWidget(parent), ui(new Ui::EntityEdit)
 {
@@ -10,10 +20,19 @@ EntityEdit::EntityEdit(QWidget *parent) : QWidget(parent), ui(new Ui::EntityEdit
     validator->setBottom(1);
     ui->identifierEdit->setValidator(validator);
 
-    connect(ui->identifierEdit, &QLineEdit::textChanged, [this](const QString &value)
+    connect(ui->identifierEdit, &QLineEdit::textChanged, this, &EntityEdit::validateIdentifier);
+    connect(this, &EntityEdit::identifierAccepted, [this](qint64 value)
     {
-        qint64 number = value.toLongLong();
-        emit identifierChanged(number);
+        Q_UNUSED(value)
+        ui->identifierEdit->setStyleSheet("color: black");
+    });
+    connect(this, &EntityEdit::identifierRejected, [this]()
+    {
+        ui->identifierEdit->setStyleSheet("color: red");
+    });
+    connect(this, &EntityEdit::entitiesChanged, [this]()
+    {
+        validateIdentifier(ui->identifierEdit->text());
     });
 }
 
@@ -36,9 +55,9 @@ void EntityEdit::setRandomIdentifier(const Qt::CheckState &state)
 {
     switch(state) {
     case Qt::Checked: {
-        qint64 value = generator->generate();
+        qint64 value = generateRandomNumber();
         ui->identifierEdit->setDisabled(true);
-        ui->identifierEdit->setText(QString::number(value));
+        setIdentifier(value);
         break;
     }
     case Qt::Unchecked: {
@@ -49,3 +68,24 @@ void EntityEdit::setRandomIdentifier(const Qt::CheckState &state)
     }
 }
 
+void EntityEdit::validateIdentifier(const QString &text)
+{
+    qint64 number = text.toLongLong();
+    if(std::find(container.cbegin(), container.cend(), Entity(number)) != container.cend()) {
+        emit identifierRejected();
+        return;
+
+    }
+    emit identifierAccepted(number);
+}
+
+EntityList EntityEdit::getForbiddenEntities()
+{
+    return container;
+}
+
+void EntityEdit::setForbiddenEntities(const EntityList &entities)
+{
+    this->container = entities;
+    emit entitiesChanged(this->container);
+}
