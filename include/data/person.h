@@ -40,7 +40,7 @@ public slots:
 
     void setPhoto(const QPixmap &value);
 
-    virtual void addCredit(Lesson &lesson) = 0;
+    virtual void addCredit(Lesson &lesson);
 
     virtual void removeCredit(Lesson &lesson);
 

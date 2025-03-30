@@ -73,6 +73,8 @@ void Person::setPhoto(const QPixmap &value)
     emit photoChanged(photo);
 }
 
+void Person::addCredit(Lesson &lesson) {}
+
 void Person::removeCredit(Lesson &lesson)
 {
     Entity &entity = static_cast<Entity&>(lesson);
