@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EntityEdit</class>
+ <widget class="QWidget" name="EntityEdit">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>412</width>
+    <height>79</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="identifierLabel">
+     <property name="font">
+      <font>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>ID Number: </string>
+     </property>
+     <property name="buddy">
+      <cstring>identifierEdit</cstring>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="identifierEdit"/>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="QCheckBox" name="randomCheckBox">
+     <property name="text">
+      <string>Generate an ID number automatically (Recommended)</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>randomCheckBox</sender>
+   <signal>checkStateChanged(Qt::CheckState)</signal>
+   <receiver>EntityEdit</receiver>
+   <slot>setRandomIdentifier(Qt::CheckState)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>302</x>
+     <y>56</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>319</x>
+     <y>70</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>setRandomIdentifier(Qt::CheckState)</slot>
+ </slots>
+</ui>
