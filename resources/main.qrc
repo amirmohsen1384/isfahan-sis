@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/root">
+        <file>dialogs/accept.ico</file>
+        <file>dialogs/folder.ico</file>
+        <file>dialogs/reject.ico</file>
+        <file>dialogs/reset.ico</file>
+        <file>dialogs/password-hide.png</file>
+        <file>dialogs/password-show.png</file>
+    </qresource>
+</RCC>
