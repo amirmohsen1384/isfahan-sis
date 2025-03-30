@@ -14,6 +14,13 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0" colspan="2">
+    <widget class="QCheckBox" name="randomCheckBox">
+     <property name="text">
+      <string>Generate an ID number automatically (Recommended)</string>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QLabel" name="identifierLabel">
      <property name="font">
@@ -32,16 +39,31 @@
    <item row="0" column="1">
     <widget class="QLineEdit" name="identifierEdit"/>
    </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="QCheckBox" name="randomCheckBox">
+   <item row="0" column="2">
+    <widget class="QToolButton" name="identifierResetButton">
      <property name="text">
-      <string>Generate an ID number automatically (Recommended)</string>
+      <string>...</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../../resources/main.qrc">
+       <normaloff>:/root/dialogs/reset.ico</normaloff>:/root/dialogs/reset.ico</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+     <property name="autoRaise">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../resources/main.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>randomCheckBox</sender>
