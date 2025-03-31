@@ -64,7 +64,6 @@ void Student::setIdentifier(const qint64 &value)
 
     QFile::remove(Student::getFileName(*this));
     identifier = value;
-    commitToRecord();
 
     emit identifierChanged(value);
 }
