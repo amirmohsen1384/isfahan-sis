@@ -3,6 +3,7 @@
 
 #include <QDate>
 #include "entity.h"
+#include "include/data/core/queue.h"
 
 class Lesson;
 class Teacher;
@@ -84,6 +85,7 @@ signals:
     void totalCapacityChanged(quint64 value);
 
 private:
+    CircularQueue<Entity> waitingList;
     EntityList enrolledStudents;
     quint64 branchNumber = 0;
     quint8 totalCapacity;
