@@ -1,6 +1,5 @@
-#include "include/widgets/core/firstnamevalidator.h"
-#include "include/widgets/core/lastnamevalidator.h"
-#include "include/widgets/personedit.h"
+#include "include/widgets/core/namevalidator.h"
+#include "include/widgets/core/personedit.h"
 #include "ui_personedit.h"
 
 PersonEdit::PersonEdit(const Person &initial, QWidget *parent) : PersonEdit(parent)
@@ -18,11 +17,9 @@ PersonEdit::PersonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::PersonEdit
     connect(ui->passwordEdit, &QLineEdit::textChanged, this, &PersonEdit::passwordChanged);
     connect(this, &PersonEdit::initialChanged, this, &PersonEdit::resetProperties);
 
-    FirstNameValidator *one = new FirstNameValidator(this);
-    ui->firstNameEdit->setValidator(one);
-
-    LastNameValidator *two = new LastNameValidator(this);
-    ui->lastNameEdit->setValidator(two);
+    NameValidator *validator = new NameValidator(this);
+    ui->firstNameEdit->setValidator(validator);
+    ui->lastNameEdit->setValidator(validator);
 }
 
 PersonEdit::~PersonEdit()
@@ -32,7 +29,7 @@ PersonEdit::~PersonEdit()
 
 Person PersonEdit::getInformation() const
 {
-    Person target;
+    Person target = initial;
     target.setFirstName(ui->firstNameEdit->text());
     target.setLastName(ui->lastNameEdit->text());
     target.setUserName(ui->userNameEdit->text());
