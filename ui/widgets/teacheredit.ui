@@ -23,7 +23,7 @@
   <customwidget>
    <class>PersonEdit</class>
    <extends>QWidget</extends>
-   <header location="global">include/widgets/personedit.h</header>
+   <header location="global">include/widgets/core/personedit.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

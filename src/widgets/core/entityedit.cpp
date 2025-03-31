@@ -1,4 +1,4 @@
-#include "include/widgets/entityedit.h"
+#include "include/widgets/core/entityedit.h"
 #include "ui_entityedit.h"
 
 qint64 EntityEdit::generateRandomNumber() const

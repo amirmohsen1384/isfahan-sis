@@ -48,7 +48,7 @@
       <string>...</string>
      </property>
      <property name="icon">
-      <iconset resource="../../resources/main.qrc">
+      <iconset resource="../../../resources/main.qrc">
        <normaloff>:/root/dialogs/reset.ico</normaloff>:/root/dialogs/reset.ico</iconset>
      </property>
      <property name="iconSize">
@@ -65,7 +65,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../resources/main.qrc"/>
+  <include location="../../../resources/main.qrc"/>
  </resources>
  <connections>
   <connection>
