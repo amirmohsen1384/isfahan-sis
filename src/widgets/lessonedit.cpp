@@ -1,5 +1,6 @@
 #include "include/widgets/lessonedit.h"
 #include "ui_lessonedit.h"
+#include <QIntValidator>
 
 LessonEdit::LessonEdit(const Lesson &lesson, QWidget *parent) : LessonEdit(parent)
 {
@@ -8,7 +9,11 @@ LessonEdit::LessonEdit(const Lesson &lesson, QWidget *parent) : LessonEdit(paren
 
 LessonEdit::LessonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::LessonEdit)
 {
+    QIntValidator *validator = new QIntValidator(this);
+    validator->setBottom(1);
+
     ui->setupUi(this);
+    ui->branchNumberEdit->setValidator(validator);
     connect(this, &LessonEdit::initialChanged, this, &LessonEdit::resetProperties);
     connect(ui->nameEdit, &QLineEdit::textChanged, this, &LessonEdit::nameChanged);
     connect(ui->capacityEdit, &QSpinBox::valueChanged, this, &LessonEdit::capacityChanged);
@@ -55,7 +60,7 @@ QDateTime LessonEdit::getFinalExam() const
 
 Lesson LessonEdit::getInformation() const
 {
-    Lesson lesson;
+    Lesson lesson = initial;
     lesson.setName(getName());
     lesson.setBranchNumber(getBranchNumber());
     lesson.setTotalCapacity(getCapacity());
