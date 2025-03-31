@@ -1,4 +1,4 @@
-#include "teacheredit.h"
+#include "include/widgets/teacheredit.h"
 #include "ui_teacheredit.h"
 
 TeacherEdit::TeacherEdit(const Teacher &initial, QWidget *parent) : TeacherEdit(parent)

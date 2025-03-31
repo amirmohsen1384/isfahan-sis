@@ -1,4 +1,4 @@
-#include "studentedit.h"
+#include "include/widgets/studentedit.h"
 #include "ui_studentedit.h"
 
 StudentEdit::StudentEdit(const Student &initial, QWidget *parent) : StudentEdit(parent)
@@ -44,6 +44,11 @@ void StudentEdit::resetProperties()
 {
     ui->infoEditor->resetProperties();
     this->resetScore();
+}
+
+void StudentEdit::setScore(float score)
+{
+    ui->scoreEdit->setValue(score);
 }
 
 void StudentEdit::setInitial(const Student &info)
