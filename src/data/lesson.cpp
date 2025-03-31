@@ -214,17 +214,16 @@ void Lesson::setTeacher(const Teacher &value)
 
 void Lesson::addStudent(const Student &value)
 {
-    const auto count = value.getCreditCount();
-    const auto minimum = value.getMinimumCredits();
-    const auto maximum = value.getMaximumCredits();
-
     QList<Lesson> lessons = value.getLessons();
     for(const Lesson &target : lessons) {
         if(target.getFinalExam() == getFinalExam()) {
             throw OverlapException();
         }
     }
-
+    if(!isAbleToEnroll()) {
+        waitingList.enqueue(value);
+        return;
+    }
     const Entity &entity = static_cast<const Entity&>(value);
     auto it = std::lower_bound(enrolledStudents.begin(), enrolledStudents.end(), entity);
     enrolledStudents.insert(std::distance(enrolledStudents.begin(), it), entity);
@@ -238,8 +237,11 @@ void Lesson::removeStudent(const Student &value)
     if(it != enrolledStudents.end() && *it == *this) {
         enrolledStudents.removeAt(std::distance(enrolledStudents.begin(), it));
         enrolledStudents.squeeze();
-        emit enrolledStudentsChanged();
     }
+    if(isAbleToEnroll() && !waitingList.isEmpty()) {
+        this->addStudent(waitingList.dequeue());
+    }
+    emit enrolledStudentsChanged();
 }
 
 QDataStream &operator<<(QDataStream &stream, const Lesson &data)
