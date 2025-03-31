@@ -1,6 +1,6 @@
-#include "include/widgets/core/lastnamevalidator.h"
+#include "include/widgets/core/namevalidator.h"
 
-QValidator::State LastNameValidator::validate(QString &input, int &pos) const {
+QValidator::State NameValidator::validate(QString &input, int &pos) const {
     if(input.isEmpty()) {
         return QValidator::Acceptable;
 
