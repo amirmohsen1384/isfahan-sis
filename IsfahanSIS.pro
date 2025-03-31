@@ -24,6 +24,7 @@ SOURCES += \
     src/widgets/teacheredit.cpp
 
 HEADERS += \
+    include/data/core/queue.h \
     include/data/entity.h \
     include/data/lesson.h \
     include/data/teacher.h \
