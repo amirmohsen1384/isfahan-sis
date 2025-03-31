@@ -139,7 +139,6 @@ void Lesson::setIdentifier(const qint64 &value)
 
     QFile::remove(Lesson::getFileName(*this));
     this->identifier = value;
-    commitToRecord();
 
     emit identifierChanged(identifier);
 }
