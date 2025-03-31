@@ -24,7 +24,7 @@ public:
 
 protected:
     inline virtual size_t maximumSize() const {
-        return 5;
+        return 128;
     }
 
 private:
