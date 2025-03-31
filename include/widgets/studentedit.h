@@ -16,21 +16,65 @@ public:
     explicit StudentEdit(QWidget *parent = nullptr);
     ~StudentEdit();
 
+    QString getFirstName() const;
+
+    QString getLastName() const;
+
+    QString getUserName() const;
+
+    QString getPassword() const;
+
+    qint64 getIdentifier() const;
+
     float getScore() const;
 
     Student getInitial() const;
+
     Student getInformation() const;
 
 public slots:
-    void resetScore();
-    void resetProperties();
+    void setFirstName(const QString &value);
+
+    void setLastName(const QString &value);
+
+    void setUserName(const QString &value);
+
+    void setPassword(const QString &value);
+
+    void setIdentifier(qint64 value);
 
     void setScore(float score);
 
     void setInitial(const Student &info);
+
     void setInformation(const Student &info);
 
+public slots:
+    void resetFirstName();
+
+    void resetLastName();
+
+    void resetUserName();
+
+    void resetPassword();
+
+    void resetIdentifier();
+
+    void resetScore();
+
+    void resetProperties();
+
 signals:
+    void firstNameChanged(QString value);
+
+    void lastNameChanged(QString value);
+
+    void userNameChanged(QString value);
+
+    void passwordChanged(QString value);
+
+    void identifierChanged(qint64 value);
+
     void scoreChanged(float value);
 
     void initialChanged(const Student &info);
