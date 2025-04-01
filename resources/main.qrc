@@ -6,5 +6,6 @@
         <file>dialogs/reset.ico</file>
         <file>dialogs/password-hide.png</file>
         <file>dialogs/password-show.png</file>
+        <file>dialogs/copy.png</file>
     </qresource>
 </RCC>
