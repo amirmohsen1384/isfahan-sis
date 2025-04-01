@@ -5,7 +5,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17
 
 SOURCES += \
+    entityshow.cpp \
+    lessonshow.cpp \
     main.cpp \
+    personshow.cpp \
     src/data/entity.cpp \
     src/data/lesson.cpp \
     src/data/person.cpp \
@@ -21,9 +24,12 @@ SOURCES += \
     src/models/lessonlistmodel.cpp \
     src/models/teachingloadmodel.cpp \
     src/widgets/studentedit.cpp \
-    src/widgets/teacheredit.cpp
+    src/widgets/teacheredit.cpp \
+    studentshow.cpp \
+    teachershow.cpp
 
 HEADERS += \
+    entityshow.h \
     include/data/entity.h \
     include/data/lesson.h \
     include/data/teacher.h \
@@ -42,7 +48,11 @@ HEADERS += \
     include/models/lessonlistmodel.h \
     include/models/teachingloadmodel.h \
     include/widgets/studentedit.h \
-    include/widgets/teacheredit.h
+    include/widgets/teacheredit.h \
+    lessonshow.h \
+    personshow.h \
+    studentshow.h \
+    teachershow.h
 
 
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -50,6 +60,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
+    entityshow.ui \
+    lessonshow.ui \
+    personshow.ui \
+    studentshow.ui \
+    teachershow.ui \
     ui/widgets/studentedit.ui \
     ui/widgets/teacheredit.ui \
     ui/widgets/lessonedit.ui \
