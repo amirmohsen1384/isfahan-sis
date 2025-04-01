@@ -13,19 +13,17 @@ public:
     enum class State {Rejection, Probation, Normal, Honor}; Q_ENUM(State)
 
 public:
+    Student& operator=(const Student &another);
+
     explicit Student(QObject *parent = nullptr);
     Student(float score, QObject *parent = nullptr);
     Student(const Student &another, QObject *parent = nullptr);
-
-    Student& operator=(const Student &another);
 
     friend QDataStream& operator<<(QDataStream &stream, const Student &data);
     friend QDataStream& operator>>(QDataStream &stream, Student &data);
 
     virtual void commitToRecord() const override;
     static Student loadFromRecord(const Entity &value);
-
-    virtual void setIdentifier(const qint64 &value) override;
 
     float getScore() const;
     void setScore(float value);
@@ -35,8 +33,10 @@ public:
     quint8 getMinimumCredits() const;
     quint8 getMaximumCredits() const;
 
-    virtual void addCredit(Lesson &lesson) override;
-    virtual void removeCredit(Lesson &lesson) override;
+    bool enrollsIn(const Lesson &target) const;
+
+    virtual void addCredit(Lesson &target) override;
+    virtual void removeCredit(Lesson &target) override;
 
     static QDir getRoot();
     static QFileInfoList getFiles();
