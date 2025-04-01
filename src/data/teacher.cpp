@@ -34,76 +34,34 @@ Teacher Teacher::loadFromRecord(const Entity &value)
     QDataStream stream(&file);
 
     Teacher target;
-    stream >> target;
+    if((stream >> target).status() != QDataStream::Ok) {
+        return Teacher();
+    }
 
     return target;
 }
 
-void Teacher::setIdentifier(const qint64 &value)
+void Teacher::addCredit(Lesson &target)
 {
-    if(QFile::exists(Teacher::getFileName(Entity(value)))) {
+    if(target.isNull() || teaches(target)) {
         return;
     }
-
-    QFile::remove(Teacher::getFileName(*this));
-    identifier = value;
-
-    emit identifierChanged(value);
+    auto it = std::lower_bound(lessons.begin(), lessons.end(), target);
+    int index = std::distance(lessons.begin(), it);
+    lessons.insert(index, target);
+    emit lessonChanged();
 }
 
-void Teacher::addCredit(Lesson &lesson)
+void Teacher::removeCredit(Lesson &target)
 {
-    // Checks if the lesson is null
-    if(lesson.isNull()) {
+    if(target.isNull() || !teaches(target)) {
         return;
     }
-
-    // Converts the lessons into an entity
-    Entity &entity = static_cast<Entity&>(lesson);
-
-    // Searchs for the lesson in the container
-    auto it = std::lower_bound(lessons.begin(), lessons.end(), entity);
-
-    // If there's no target matching the lesson
-    if(it == lessons.end() || *it != entity) {
-
-        // Checks for time overlapping
-        LessonList container = getLessons();
-        for(Lesson temp : container) {
-            if(temp.getFinalExam() == lesson.getFinalExam()) {
-                throw OverlapException();
-            }
-        }
-
-        // Assign the teacher to the lesson
-        lesson.setTeacher(*this);
-        lesson.commitToRecord();
-
-        // Inserts the lesson to the list
-        int index = std::distance(lessons.begin(), it);
-        lessons.insert(index, entity);
-
-        emit lessonChanged();
-    }
-}
-
-void Teacher::removeCredit(Lesson &lesson)
-{
-    // Checks if the lesson is null
-    if(lesson.isNull()) {
-        return;
-    }
-
-    // Removes the lesson from the credits of enrolled students
-    StudentList students = lesson.getEnrolledStudents();
-    for(Student &target : students) {
-        target.removeCredit(lesson);
-        target.commitToRecord();
-    }
-
-    // Removes the lesson file from the disk and the list.
-    QFile::remove(Lesson::getFileName(lesson));
-    Person::removeCredit(lesson);
+    auto it = std::lower_bound(lessons.begin(), lessons.end(), target);
+    int index = std::distance(lessons.begin(), it);
+    lessons.removeAt(index);
+    lessons.squeeze();
+    emit lessonChanged();
 }
 
 QDir Teacher::getRoot()
@@ -116,11 +74,7 @@ QDir Teacher::getRoot()
 
 QFileInfoList Teacher::getFiles()
 {
-    QFileInfoList entries = Teacher::getRoot().entryInfoList(
-        {"*.tch"},
-        QDir::AllEntries | QDir::NoDotAndDotDot,
-        QDir::SortFlag::Name
-    );
+    QFileInfoList entries = Teacher::getRoot().entryInfoList({"*.tch"}, QDir::AllEntries | QDir::NoDotAndDotDot, QDir::SortFlag::Name);
     return entries;
 }
 
@@ -162,7 +116,7 @@ void Teacher::commitToRecord() const
 
     QDataStream stream(&file);
     if((stream << *this).status() != QDataStream::Ok) {
-        throw WriteFileException();
+        return;
     }
 
     return;
