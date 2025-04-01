@@ -21,11 +21,11 @@ public:
 
     QString getPassword() const;
 
+    QString getFullName() const;
+
     virtual LessonList getLessons() const;
 
     virtual quint64 getCreditCount() const;
-
-    QString getFullName() const;
 
 public slots:
     void setFirstName(const QString &value);
@@ -36,13 +36,18 @@ public slots:
 
     void setPassword(const QString &value);
 
-    virtual void addCredit(Lesson &lesson);
+    virtual void addCredit(Lesson &lesson)
+    {
+        Q_UNUSED(lesson)
+    }
 
-    virtual void removeCredit(Lesson &lesson);
+    virtual void removeCredit(Lesson &lesson)
+    {
+        Q_UNUSED(lesson)
+    }
 
     friend QDataStream& operator<<(QDataStream &stream, const Person &data);
     friend QDataStream& operator>>(QDataStream &stream, Person &data);
-    friend QDebug operator<<(QDebug debugger, const Person &data);
 
 signals:
     void firstNameChanged(const QString &firstName);

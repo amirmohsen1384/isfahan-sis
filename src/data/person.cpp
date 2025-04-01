@@ -1,7 +1,6 @@
 #include "include/data/person.h"
 #include "include/data/lesson.h"
 #include <QDataStream>
-#include <QDebug>
 #include <QFile>
 
 Person::Person(QObject *parent) : Entity{parent} {}
@@ -62,32 +61,13 @@ void Person::setPassword(const QString &value)
     emit passwordChanged(password);
 }
 
-void Person::addCredit(Lesson &lesson)
-{
-    Q_UNUSED(lesson)
-}
-
-void Person::removeCredit(Lesson &lesson)
-{
-    Entity &entity = static_cast<Entity&>(lesson);
-    auto it = std::lower_bound(lessons.begin(), lessons.end(), entity);
-    if(it != lessons.end() && *it == lesson) {
-        int index = std::distance(lessons.begin(), it);
-        lessons.removeAt(index);
-        lessons.squeeze();
-        emit lessonChanged();
-    }
-}
-
 quint64 Person::getCreditCount() const
 {
     quint64 total = 0;
-    for(const Entity &entity : lessons)
+    LessonList container = this->getLessons();
+    for(const Lesson &target : container)
     {
-        Lesson lesson = Lesson::loadFromRecord(entity);
-        if(!lesson.isNull()) {
-            total += lesson.getCreditUnit();
-        }
+        total += lesson.getCreditUnit();
     }
     return total;
 }
@@ -124,15 +104,4 @@ QDataStream& operator>>(QDataStream &stream, Person &data)
     stream >> data.userName >> data.password;
     stream >> data.lessons;
     return stream;
-}
-
-QDebug operator<<(QDebug debugger, const Person &data)
-{
-    QDebug environment = debugger.noquote();
-    environment << "Identifier:" << data.identifier << '\n';
-    environment << "First name:" << data.firstName << '\n';
-    environment << "Last name:" << data.lastName << '\n';
-    environment << "User name:" << data.userName << '\n';
-    environment << "Password:" << data.password << '\n';
-    return debugger;
 }
