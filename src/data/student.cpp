@@ -34,7 +34,7 @@ void Student::commitToRecord() const
 
     QDataStream stream(&file);
     if((stream << *this).status() != QDataStream::Ok) {
-        throw WriteFileException();
+        return;
     }
 }
 
@@ -48,25 +48,14 @@ Student Student::loadFromRecord(const Entity &value)
     if(!file.open(QFile::ReadOnly)) {
         return Student();
     }
-    QDataStream stream(&file);
 
     Student target;
-    stream >> target;
-
-    return target;
-}
-
-void Student::setIdentifier(const qint64 &value)
-{
-    if(QFile::exists(Student::getFileName(Entity(value)))) {
-        return;
+    QDataStream stream(&file);
+    if((stream >> target).status() != QDataStream::Ok) {
+        return Student();
     }
 
-    QFile::remove(Student::getFileName(*this));
-    identifier = value;
-    commitToRecord();
-
-    emit identifierChanged(value);
+    return target;
 }
 
 void Student::setScore(float value)
@@ -139,50 +128,50 @@ quint8 Student::getMaximumCredits() const
     return maximum;
 }
 
-void Student::addCredit(Lesson &lesson)
+bool Student::enrollsIn(const Lesson &target) const
 {
-    // Converts the lesson into its entity
-    Entity &entity = static_cast<Entity&>(lesson);
+    return std::binary_search(lessons.cbegin(), lessons.cend(), target);
+}
 
-    // Searchs for the lesson in the list
-    auto it = std::lower_bound(lessons.begin(), lessons.end(), entity);
+void Student::addCredit(Lesson &target)
+{
+    if(enrollsIn(target) || target.isNull()) {
+        return;
+    }
 
-    // If there's no item matching the lesson
-    if(it == lessons.end() || *it != entity) {
+    if(!target.isAbleToEnroll()) {
+        target.waitingList.enqueue(*this);
+        target.commitToRecord();
+        return;
+    }
 
-        // Checks for the ability to enroll.
-        if(!lesson.isAbleToEnroll()) {
-            throw OutOfCapacityException();
+    auto it = std::lower_bound(lessons.begin(), lessons.end(), target);
+    int index = std::distance(lessons.begin(), it);
+    lessons.insert(index, *it);
+    emit lessonChanged();
+}
+
+void Student::removeCredit(Lesson &target)
+{
+    if(target.isNull()) {
+        return;
+    }
+
+    auto it = std::lower_bound(lessons.begin(), lessons.end(), target);
+    if(it != lessons.end() && *it == target) {
+        int index = std::distance(lessons.begin(), target);
+        lessons.removeAt(index);
+        lessons.squeeze();
+
+        if(target.isAbleToEnroll() && !target.waitingList.isEmpty()) {
+            Student s = Student::loadFromRecord(target.waitingList.dequeue());
+            target.commitToRecord();
+            s.addCredit(target);
+            s.commitToRecord();
         }
-
-        // Checks for the bounds of credits and time overlapping
-        LessonList container = this->getLessons();
-        quint64 credits = 0;
-
-        for(const Lesson &temp : container) {
-            if(temp.getFinalExam() == lesson.getFinalExam()) {
-                throw OverlapException();
-            }
-            credits += temp.getCreditUnit();
-        }
-
-        // Inserts the student into the lesson's list.
-        lesson.addStudent(*this);
-        lesson.commitToRecord();
-
-        // Inserts the lesson into the student's list.
-        int index = std::distance(lessons.begin(), it);
-        lessons.insert(index, entity);
 
         emit lessonChanged();
     }
-}
-
-void Student::removeCredit(Lesson &lesson)
-{
-    lesson.removeStudent(*this);
-    lesson.commitToRecord();
-    Person::removeCredit(lesson);
 }
 
 QDir Student::getRoot()
@@ -224,7 +213,9 @@ StudentList Student::getEntities()
 
         Student student;
         QDataStream stream(&file);
-        stream >> student;
+        if((stream >> student).status() != QDataStream::Ok) {
+            continue;
+        }
 
         if(!student.isNull()) {
             result.append(student);

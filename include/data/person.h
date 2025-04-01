@@ -21,13 +21,11 @@ public:
 
     QString getPassword() const;
 
-    QPixmap getPhoto() const;
+    QString getFullName() const;
 
     virtual LessonList getLessons() const;
 
     virtual quint64 getCreditCount() const;
-
-    QString getFullName() const;
 
 public slots:
     void setFirstName(const QString &value);
@@ -38,22 +36,24 @@ public slots:
 
     void setPassword(const QString &value);
 
-    void setPhoto(const QPixmap &value);
+    virtual void addCredit(Lesson &lesson)
+    {
+        Q_UNUSED(lesson)
+    }
 
-    virtual void addCredit(Lesson &lesson);
-
-    virtual void removeCredit(Lesson &lesson);
+    virtual void removeCredit(Lesson &lesson)
+    {
+        Q_UNUSED(lesson)
+    }
 
     friend QDataStream& operator<<(QDataStream &stream, const Person &data);
     friend QDataStream& operator>>(QDataStream &stream, Person &data);
-    friend QDebug operator<<(QDebug debugger, const Person &data);
 
 signals:
     void firstNameChanged(const QString &firstName);
     void lastNameChanged(const QString &lastName);
     void userNameChanged(const QString &userName);
     void passwordChanged(const QString &password);
-    void photoChanged(const QPixmap &photo);
     void lessonChanged();
 
 protected:
@@ -62,7 +62,6 @@ protected:
     QString     userName;
     QString     password;
     EntityList  lessons;
-    QPixmap     photo;
 };
 
 QDataStream& operator<<(QDataStream &stream, const Person &data);

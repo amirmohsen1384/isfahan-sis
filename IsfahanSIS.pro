@@ -29,7 +29,7 @@ SOURCES += \
     teachershow.cpp
 
 HEADERS += \
-    entityshow.h \
+    include/data/core/queue.h \
     include/data/entity.h \
     include/data/lesson.h \
     include/data/teacher.h \
@@ -52,7 +52,8 @@ HEADERS += \
     lessonshow.h \
     personshow.h \
     studentshow.h \
-    teachershow.h
+    teachershow.h \
+    entityshow.h
 
 
 qnx: target.path = /tmp/$${TARGET}/bin

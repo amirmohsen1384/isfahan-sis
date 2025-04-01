@@ -1,8 +1,5 @@
 #include "include/data/lesson.h"
-#include "include/data/teacher.h"
-#include "include/data/student.h"
 #include "include/errors/resource.h"
-#include "include/errors/education.h"
 
 Lesson::Lesson(QObject *parent) : Entity{parent} {}
 Lesson::Lesson(const Lesson &other, QObject *parent) : Lesson{parent}
@@ -13,19 +10,18 @@ Lesson::Lesson(const Lesson &other, QObject *parent) : Lesson{parent}
 Lesson &Lesson::operator=(const Lesson &other)
 {
     static_cast<Entity&>(*this) = static_cast<const Entity&>(other);
-    enrolledStudents = other.enrolledStudents;
     totalCapacity = other.totalCapacity;
     branchNumber = other.branchNumber;
+    waitingList = other.waitingList;
     creditUnit = other.creditUnit;
     finalExam = other.finalExam;
-    teacher = other.teacher;
     name = other.name;
     return *this;
 }
 
 bool Lesson::hasTeacher() const
 {
-    return teacher.isNull();
+    return !this->getTeacher().isNull();
 }
 
 quint64 Lesson::getBranchNumber() const
@@ -38,6 +34,18 @@ quint8 Lesson::getTotalCapacity() const
     return totalCapacity;
 }
 
+QList<Student> Lesson::getEnrolledStudents() const
+{
+    StudentList container = Student::getEntities();
+    StudentList result;
+    for(const Student &s : container) {
+        if(s.enrollsIn(*this)) {
+            result.append(s);
+        }
+    }
+    return result;
+}
+
 QDateTime Lesson::getFinalExam() const
 {
     return finalExam;
@@ -45,7 +53,13 @@ QDateTime Lesson::getFinalExam() const
 
 Teacher Lesson::getTeacher() const
 {
-    return Teacher::loadFromRecord(teacher);
+    TeacherList container = Teacher::getEntities();
+    for(const Teacher &t : container) {
+        if(t.teaches(*this)) {
+            return t;
+        }
+    }
+    return Teacher();
 }
 
 StudentList Lesson::getEnrolledStudents() const
@@ -90,7 +104,7 @@ void Lesson::setBranchNumber(quint64 value)
 
 quint64 Lesson::getLeftCapacity() const
 {
-    return totalCapacity - enrolledStudents.size();
+    return totalCapacity - getEnrolledStudents().size();
 }
 
 bool Lesson::isAbleToEnroll() const
@@ -131,19 +145,6 @@ void Lesson::commitToRecord() const
     }
 }
 
-void Lesson::setIdentifier(const qint64 &value)
-{
-    if(QFile::exists(Lesson::getFileName(Entity(value)))) {
-        return;
-    }
-
-    QFile::remove(Lesson::getFileName(*this));
-    this->identifier = value;
-    commitToRecord();
-
-    emit identifierChanged(identifier);
-}
-
 Lesson Lesson::loadFromRecord(const Entity &value)
 {
     if(value.isNull()) {
@@ -158,7 +159,7 @@ Lesson Lesson::loadFromRecord(const Entity &value)
     Lesson target;
     QDataStream stream(&file);
     if((stream >> target).status() != QDataStream::Ok) {
-        throw ReadFileException();
+        return Lesson();
     }
 
     return target;
@@ -199,7 +200,7 @@ QFileInfoList Lesson::getFiles()
     return entries;
 }
 
-QDir Lesson::getDirectory()
+QDir Lesson::getRoot()
 {
     QDir directory = Entity::getRoot();
     directory.mkdir("Lessons");
@@ -207,51 +208,14 @@ QDir Lesson::getDirectory()
     return directory;
 }
 
-void Lesson::setTeacher(const Teacher &value)
-{
-    this->teacher = static_cast<const Entity&>(value);
-    emit teacherChanged(teacher);
-}
-
-void Lesson::addStudent(const Student &value)
-{
-    const auto count = value.getCreditCount();
-    const auto minimum = value.getMinimumCredits();
-    const auto maximum = value.getMaximumCredits();
-
-    QList<Lesson> lessons = value.getLessons();
-    for(const Lesson &target : lessons) {
-        if(target.getFinalExam() == getFinalExam()) {
-            throw OverlapException();
-        }
-    }
-
-    const Entity &entity = static_cast<const Entity&>(value);
-    auto it = std::lower_bound(enrolledStudents.begin(), enrolledStudents.end(), entity);
-    enrolledStudents.insert(std::distance(enrolledStudents.begin(), it), entity);
-    emit enrolledStudentsChanged();
-}
-
-void Lesson::removeStudent(const Student &value)
-{
-    const Entity &entity = static_cast<const Entity&>(value);
-    auto it = std::lower_bound(enrolledStudents.begin(), enrolledStudents.end(), entity);
-    if(it != enrolledStudents.end() && *it == *this) {
-        enrolledStudents.removeAt(std::distance(enrolledStudents.begin(), it));
-        enrolledStudents.squeeze();
-        emit enrolledStudentsChanged();
-    }
-}
-
 QDataStream &operator<<(QDataStream &stream, const Lesson &data)
 {
     stream << static_cast<const Entity&>(data);
-    stream << data.enrolledStudents;
-    stream << data.branchNumber;
-    stream << data.creditUnit;
     stream << data.totalCapacity;
+    stream << data.branchNumber;
+    stream << data.waitingList;
+    stream << data.creditUnit;
     stream << data.finalExam;
-    stream << data.teacher;
     stream << data.name;
     return stream;
 }
@@ -259,12 +223,11 @@ QDataStream &operator<<(QDataStream &stream, const Lesson &data)
 QDataStream &operator>>(QDataStream &stream, Lesson &data)
 {
     stream >> static_cast<Entity&>(data);
-    stream >> data.enrolledStudents;
-    stream >> data.branchNumber;
-    stream >> data.creditUnit;
     stream >> data.totalCapacity;
+    stream >> data.branchNumber;
+    stream >> data.waitingList;
+    stream >> data.creditUnit;
     stream >> data.finalExam;
-    stream >> data.teacher;
     stream >> data.name;
     return stream;
 }

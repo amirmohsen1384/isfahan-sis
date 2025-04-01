@@ -3,21 +3,23 @@
 
 #include <QDate>
 #include "entity.h"
+#include "include/data/student.h"
+#include "include/data/teacher.h"
+#include "include/data/core/queue.h"
 
 class Lesson;
-class Teacher;
-class Student;
-
 using LessonList = QList<Lesson>;
 
 class Lesson : public Entity
 {
     Q_OBJECT
 public:
+    Lesson& operator=(const Lesson &other);
+
     explicit Lesson(QObject *parent = nullptr);
     Lesson(const Lesson &other, QObject *parent = nullptr);
 
-    Lesson& operator=(const Lesson &other);
+    QString getName() const;
 
     bool hasTeacher() const;
 
@@ -35,9 +37,7 @@ public:
 
     quint8 getTotalCapacity() const;
 
-    QList<Student> getEnrolledStudents() const;
-
-    QString getName() const;
+    StudentList getEnrolledStudents() const;
 
 public slots:
     void setName(const QString &value);
@@ -52,8 +52,7 @@ public slots:
 
     virtual void commitToRecord() const override;
 
-    virtual void setIdentifier(const qint64 &value) override;
-
+public:
     friend QDataStream& operator<<(QDataStream &stream, const Lesson &data);
     friend QDataStream& operator>>(QDataStream &stream, Lesson &data);
     static Lesson loadFromRecord(const Entity &value);
@@ -62,34 +61,25 @@ public slots:
     static QString getFileName(const Entity &value);
     static LessonList getEntities();
     static QFileInfoList getFiles();
-    static QDir getDirectory();
+    static QDir getRoot();
 
-private slots:
-    void setTeacher(const Teacher &value);
-
-    void addStudent(const Student &value);
-
-    void removeStudent(const Student &value);
-
+private:
+    CircularQueue<Entity> waitingList;
     friend class Student;
     friend class Teacher;
 
 signals:
-    void enrolledStudentsChanged();
     void nameChanged(QString value);
-    void teacherChanged(Entity value);
     void creditUnitChanged(quint8 value);
     void branchNumberChanged(quint8 value);
     void finalExamChanged(QDateTime value);
     void totalCapacityChanged(quint64 value);
 
 private:
-    EntityList enrolledStudents;
     quint64 branchNumber = 0;
     quint8 totalCapacity;
     QDateTime finalExam;
     quint8 creditUnit;
-    Entity teacher;
     QString name;
 };
 

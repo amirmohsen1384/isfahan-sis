@@ -11,18 +11,18 @@ class Teacher : public Person
 {
     Q_OBJECT
 public:
+    Teacher& operator=(const Teacher &another);
+
     explicit Teacher(QObject *parent = nullptr);
     Teacher(const Teacher &another, QObject *parent = nullptr);
-
-    Teacher& operator=(const Teacher &another);
 
     virtual void commitToRecord() const override;
     static Teacher loadFromRecord(const Entity &value);
 
-    virtual void setIdentifier(const qint64 &value) override;
+    bool teaches(const Lesson &target) const;
 
-    virtual void addCredit(Lesson &lesson) override;
-    virtual void removeCredit(Lesson &lesson) override;
+    virtual void addCredit(Lesson &target) override;
+    virtual void removeCredit(Lesson &target) override;
 
     friend QDataStream& operator<<(QDataStream &stream, const Teacher &data);
     friend QDataStream& operator>>(QDataStream &stream, Teacher &data);
