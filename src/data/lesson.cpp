@@ -159,7 +159,7 @@ Lesson Lesson::loadFromRecord(const Entity &value)
     Lesson target;
     QDataStream stream(&file);
     if((stream >> target).status() != QDataStream::Ok) {
-        throw ReadFileException();
+        return Lesson();
     }
 
     return target;
@@ -200,7 +200,7 @@ QFileInfoList Lesson::getFiles()
     return entries;
 }
 
-QDir Lesson::getDirectory()
+QDir Lesson::getRoot()
 {
     QDir directory = Entity::getRoot();
     directory.mkdir("Lessons");

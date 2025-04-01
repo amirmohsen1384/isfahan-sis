@@ -61,7 +61,7 @@ public:
     static QString getFileName(const Entity &value);
     static LessonList getEntities();
     static QFileInfoList getFiles();
-    static QDir getDirectory();
+    static QDir getRoot();
 
 private:
     CircularQueue<Entity> waitingList;
