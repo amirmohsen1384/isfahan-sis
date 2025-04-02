@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TeacherPanel</class>
+ <widget class="QMainWindow" name="TeacherPanel">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>758</width>
+    <height>634</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="mainLayout">
+    <item row="1" column="0" colspan="6">
+     <layout class="QGridLayout" name="teachingLoadLayout">
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="lessonView">
+        <property name="font">
+         <font>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+        <property name="placeholderText">
+         <string>The lesson you clicked will be shown here.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QToolButton" name="goUpButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="toolTip">
+         <string>Go Up</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../resources/main.qrc">
+          <normaloff>:/root/dialogs/go-parent.png</normaloff>:/root/dialogs/go-parent.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>30</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QListView" name="teachingLoadView"/>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="0" colspan="6">
+     <layout class="QHBoxLayout" name="controlLayout">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="viewButton">
+        <property name="text">
+         <string>View</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="controlLeftSpacer">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="addButton">
+        <property name="toolTip">
+         <string>Add a new lesson</string>
+        </property>
+        <property name="text">
+         <string>Add</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="removeButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="toolTip">
+         <string>Remove a lesson</string>
+        </property>
+        <property name="text">
+         <string>Remove</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="controlRightSpacer">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="editButton">
+        <property name="text">
+         <string>Edit</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="0" column="0" colspan="2">
+     <widget class="QLabel" name="welcomeLabel">
+      <property name="font">
+       <font>
+        <family>Segoe Print</family>
+        <pointsize>12</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Welcome back, Teacher!</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../../resources/main.qrc"/>
+ </resources>
+ <connections/>
+</ui>
