@@ -78,12 +78,12 @@ Student StudentEdit::getDefault() const
 void StudentEdit::validateEditor() const
 {
     qint64 value = this->getIdentifier();
-    if(value == 0) {
-        throw InvalidIdentifierException();
-    }
-
     if(ui->idEdit->text().isEmpty()) {
         throw EmptyIdentifierException();
+    }
+
+    if(value <= 0) {
+        throw InvalidIdentifierException();
     }
 
     if(QFile::exists(Student::getFileName(Entity(value)))) {
