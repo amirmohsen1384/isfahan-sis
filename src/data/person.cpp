@@ -74,7 +74,17 @@ quint64 Person::getCreditCount() const
 
 QString Person::getFullName() const
 {
-    return QString("%1 %2").arg(firstName).arg(lastName);
+    QString target;
+    if(firstName.isEmpty() && !lastName.isEmpty()) {
+        target = QString("%1").arg(lastName);
+    }
+    else {
+        target.append(firstName);
+        if(!lastName.isEmpty()) {
+            target.append(QString(" %2").arg(lastName));
+        }
+    }
+    return target;
 }
 
 LessonList Person::getLessons() const
