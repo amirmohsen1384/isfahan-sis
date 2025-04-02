@@ -16,8 +16,11 @@ SOURCES += \
     src/models/core/entityitem.cpp \
     src/models/lessonlistmodel.cpp \
     src/models/teachingloadmodel.cpp \
+    src/widgets/editor/lessonedit.cpp \
     src/models/core/lecturetreemodel.cpp \
     src/widgets/editor/core/namevalidator.cpp \
+    src/widgets/editor/studentedit.cpp \
+    src/widgets/editor/teacheredit.cpp
 
 HEADERS += \
     include/data/entity.h \
@@ -34,8 +37,11 @@ HEADERS += \
     include/models/core/entityitem.h \
     include/models/lessonlistmodel.h \
     include/models/teachingloadmodel.h \
+    include/widgets/editor/lessonedit.h \
     include/models/core/lecturetreemodel.h \
     include/widgets/editor/core/namevalidator.h \
+    include/widgets/editor/studentedit.h \
+    include/widgets/editor/teacheredit.h
 
 
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -43,7 +49,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
+    ui/widgets/editor/teacheredit.ui \
+    ui/widgets/editor/studentedit.ui \
     ui/screens/loginscreen.ui \
+    ui/widgets/editor/lessonedit.ui
 
 RESOURCES += \
     resources/main.qrc
