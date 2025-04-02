@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LessonEdit</class>
+ <widget class="QWidget" name="LessonEdit">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>438</width>
+    <height>299</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>8</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="mainLayout">
+   <item>
+    <widget class="QGroupBox" name="identifierLayout">
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="title">
+      <string>Identifier</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="identifierLabel">
+        <property name="text">
+         <string>ID Number:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+        <property name="buddy">
+         <cstring>identifierEdit</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="identifierEdit">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <bold>false</bold>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QToolButton" name="identifierResetButton">
+        <property name="toolTip">
+         <string>Reset ID Number</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../resources/main.qrc">
+          <normaloff>:/root/dialogs/reset.ico</normaloff>:/root/dialogs/reset.ico</iconset>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="generalLayout">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="title">
+      <string>General</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="3" column="0">
+       <widget class="QLabel" name="finalExamLabel">
+        <property name="text">
+         <string>Final Exam:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+        <property name="buddy">
+         <cstring>finalExamEdit</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="creditUnitLabel">
+        <property name="text">
+         <string>Credit Unit:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+        <property name="buddy">
+         <cstring>creditUnitEdit</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3" colspan="2">
+       <widget class="QLineEdit" name="nameEdit">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <bold>false</bold>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="5">
+       <widget class="QToolButton" name="finalExamResetButton">
+        <property name="toolTip">
+         <string>Reset Final Exam</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../resources/main.qrc">
+          <normaloff>:/root/dialogs/reset.ico</normaloff>:/root/dialogs/reset.ico</iconset>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QToolButton" name="nameResetButton">
+        <property name="toolTip">
+         <string>Reset Name</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../resources/main.qrc">
+          <normaloff>:/root/dialogs/reset.ico</normaloff>:/root/dialogs/reset.ico</iconset>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="branchNumberLabel">
+        <property name="text">
+         <string>Branch Number:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+        <property name="buddy">
+         <cstring>branchNumberEdit</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3" colspan="2">
+       <widget class="QLineEdit" name="branchNumberEdit">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <bold>false</bold>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="totalCapacityLabel">
+        <property name="text">
+         <string>Total Capacity: </string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+        <property name="buddy">
+         <cstring>totalCapacityEdit</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="5">
+       <widget class="QToolButton" name="totalCapacityResetButton">
+        <property name="toolTip">
+         <string>Reset Total Capacity</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../resources/main.qrc">
+          <normaloff>:/root/dialogs/reset.ico</normaloff>:/root/dialogs/reset.ico</iconset>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="5">
+       <widget class="QToolButton" name="creditUnitResetButton">
+        <property name="toolTip">
+         <string>Reset Credit Unit</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../resources/main.qrc">
+          <normaloff>:/root/dialogs/reset.ico</normaloff>:/root/dialogs/reset.ico</iconset>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="3" colspan="2">
+       <widget class="QSpinBox" name="creditUnitEdit">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="maximum">
+         <number>100</number>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3" colspan="2">
+       <widget class="QSpinBox" name="totalCapacityEdit">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="maximum">
+         <number>100</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="5">
+       <widget class="QToolButton" name="branchNumberResetButton">
+        <property name="toolTip">
+         <string>Reset Branch Number</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../resources/main.qrc">
+          <normaloff>:/root/dialogs/reset.ico</normaloff>:/root/dialogs/reset.ico</iconset>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="3" colspan="2">
+       <widget class="QDateTimeEdit" name="finalExamEdit">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="showGroupSeparator" stdset="0">
+         <bool>false</bool>
+        </property>
+        <property name="calendarPopup">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="nameLabel">
+        <property name="text">
+         <string>Name:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+        <property name="buddy">
+         <cstring>nameEdit</cstring>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>identifierEdit</tabstop>
+  <tabstop>nameEdit</tabstop>
+  <tabstop>branchNumberEdit</tabstop>
+  <tabstop>totalCapacityEdit</tabstop>
+  <tabstop>finalExamEdit</tabstop>
+  <tabstop>creditUnitEdit</tabstop>
+  <tabstop>identifierResetButton</tabstop>
+  <tabstop>nameResetButton</tabstop>
+  <tabstop>branchNumberResetButton</tabstop>
+  <tabstop>totalCapacityResetButton</tabstop>
+  <tabstop>finalExamResetButton</tabstop>
+  <tabstop>creditUnitResetButton</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../../resources/main.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>nameResetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>LessonEdit</receiver>
+   <slot>resetName()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>404</x>
+     <y>121</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>427</x>
+     <y>88</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>totalCapacityResetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>LessonEdit</receiver>
+   <slot>resetTotalCapacity()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>404</x>
+     <y>201</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>427</x>
+     <y>172</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>finalExamResetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>LessonEdit</receiver>
+   <slot>resetFinalExam()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>404</x>
+     <y>238</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>427</x>
+     <y>244</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>creditUnitResetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>LessonEdit</receiver>
+   <slot>resetCreditUnit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>404</x>
+     <y>274</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>427</x>
+     <y>282</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>branchNumberResetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>LessonEdit</receiver>
+   <slot>resetBranchNumber()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>404</x>
+     <y>162</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>427</x>
+     <y>78</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>identifierResetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>LessonEdit</receiver>
+   <slot>resetIdentifier()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>404</x>
+     <y>48</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>427</x>
+     <y>8</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>resetName()</slot>
+  <slot>resetTotalCapacity()</slot>
+  <slot>resetFinalExam()</slot>
+  <slot>resetCreditUnit()</slot>
+  <slot>resetBranchNumber()</slot>
+  <slot>resetIdentifier()</slot>
+ </slots>
+</ui>

@@ -1,30 +1,20 @@
 #include "include/widgets/editor/lessonedit.h"
 #include "ui_lessonedit.h"
-#include <QIntValidator>
 
-LessonEdit::LessonEdit(const Lesson &lesson, QWidget *parent) : LessonEdit(parent)
+LessonEdit::LessonEdit(const Lesson &container, QWidget *parent) : LessonEdit(parent)
 {
-    setInitial(lesson);
+    setDefault(container);
 }
 
-LessonEdit::LessonEdit(QWidget *parent) : EntityEdit(parent), ui(new Ui::LessonEdit)
+LessonEdit::LessonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::LessonEdit)
 {
     ui->setupUi(this);
-    EntityEdit::initialize(ui->entity);
-
     QIntValidator *validator = new QIntValidator(this);
-    ui->branchNumberEdit->setValidator(validator);
     validator->setBottom(1);
 
-    connect(this, &LessonEdit::initialChanged, this, &LessonEdit::resetLesson);
-    connect(ui->nameEdit, &QLineEdit::textChanged, this, &LessonEdit::nameChanged);
-    connect(ui->creditUnitEdit, &QSpinBox::valueChanged, this, &LessonEdit::creditUnitChanged);
-    connect(ui->totalCapacityEdit, &QSpinBox::valueChanged, this, &LessonEdit::totalCapacityChanged);
-    connect(ui->finalExamEdit, &QDateTimeEdit::dateTimeChanged, this, &LessonEdit::finalExamChanged);
-    connect(ui->branchNumberEdit, &QLineEdit::textChanged, [this](const QString &value)
-    {
-        emit branchNumberChanged(value.toInt());
-    });
+    ui->identifierEdit->setValidator(validator);
+    ui->branchNumberEdit->setValidator(validator);
+    connect(this, &LessonEdit::defaultChanged, this, &LessonEdit::resetLesson);
 }
 
 LessonEdit::~LessonEdit()
@@ -37,19 +27,14 @@ QString LessonEdit::getName() const
     return ui->nameEdit->text();
 }
 
+qint64 LessonEdit::getIdentifier() const
+{
+    return ui->identifierEdit->text().toLongLong();
+}
+
 int LessonEdit::getTotalCapacity() const
 {
     return ui->totalCapacityEdit->value();
-}
-
-int LessonEdit::getCreditUnit() const
-{
-    return ui->creditUnitEdit->value();
-}
-
-int LessonEdit::getBranchNumber() const
-{
-    return ui->branchNumberEdit->text().toInt();
 }
 
 QDateTime LessonEdit::getFinalExam() const
@@ -57,21 +42,31 @@ QDateTime LessonEdit::getFinalExam() const
     return ui->finalExamEdit->dateTime();
 }
 
-Lesson LessonEdit::getInformation() const
+int LessonEdit::getBranchNumber() const
 {
-    Lesson lesson = initial;
-    lesson.setName(getName());
-    lesson.setFinalExam(getFinalExam());
-    lesson.setCreditUnit(getCreditUnit());
-    lesson.setIdentifier(getIdentifier());
-    lesson.setBranchNumber(getBranchNumber());
-    lesson.setTotalCapacity(getTotalCapacity());
-    return lesson;
+    return ui->branchNumberEdit->text().toInt();
 }
 
-Lesson LessonEdit::getInitial() const
+int LessonEdit::getCreditUnit() const
 {
-    return initial;
+    return ui->creditUnitEdit->value();
+}
+
+Lesson LessonEdit::getDefault() const
+{
+    return container;
+}
+
+Lesson LessonEdit::getData() const
+{
+    Lesson data = container;
+    data.setName(this->getName());
+    data.setBranchNumber(this->getBranchNumber());
+    data.setFinalExam(this->getFinalExam());
+    data.setCreditUnit(this->getCreditUnit());
+    data.setIdentifier(this->getIdentifier());
+    data.setTotalCapacity(this->getTotalCapacity());
+    return data;
 }
 
 void LessonEdit::setName(const QString &value)
@@ -84,68 +79,79 @@ void LessonEdit::setTotalCapacity(int value)
     ui->totalCapacityEdit->setValue(value);
 }
 
+void LessonEdit::setFinalExam(const QDateTime &data)
+{
+    ui->finalExamEdit->setDateTime(data);
+}
+
+void LessonEdit::setIdentifier(qint64 value)
+{
+    ui->identifierEdit->setText(QString::number(value));
+}
+
+void LessonEdit::setBranchNumber(int value)
+{
+    ui->identifierEdit->setText(QString::number(value));
+}
+
 void LessonEdit::setCreditUnit(int value)
 {
     ui->creditUnitEdit->setValue(value);
 }
 
-void LessonEdit::setBranchNumber(int value)
+void LessonEdit::setDefault(const Lesson &value)
 {
-    ui->branchNumberEdit->setText(QString::number(value));
+    container = value;
+    emit defaultChanged(value);
 }
 
-void LessonEdit::setFinalExam(const QDateTime &value)
-{
-    ui->finalExamEdit->setDateTime(value);
-}
-
-void LessonEdit::setInformation(const Lesson &value)
+void LessonEdit::setData(const Lesson &value)
 {
     setName(value.getName());
-    setFinalExam(value.getFinalExam());
-    setIdentifier(value.getIdentifier());
-    setCreditUnit(value.getCreditUnit());
     setBranchNumber(value.getBranchNumber());
+    setFinalExam(value.getFinalExam());
+    setCreditUnit(value.getCreditUnit());
+    setIdentifier(value.getIdentifier());
     setTotalCapacity(value.getTotalCapacity());
-}
-
-void LessonEdit::setInitial(const Lesson &initial)
-{
-    this->initial = initial;
-    emit initialChanged(this->initial);
 }
 
 void LessonEdit::resetName()
 {
-    setName(initial.getName());
+    setName(container.getName());
 }
 
 void LessonEdit::resetTotalCapacity()
 {
-    setTotalCapacity(initial.getTotalCapacity());
-}
-
-void LessonEdit::resetCreditUnit()
-{
-    setCreditUnit(initial.getCreditUnit());
-}
-
-void LessonEdit::resetBranchNumber()
-{
-    setBranchNumber(initial.getBranchNumber());
+    setTotalCapacity(container.getTotalCapacity());
 }
 
 void LessonEdit::resetFinalExam()
 {
-    setFinalExam(initial.getFinalExam());
+    setFinalExam(container.getFinalExam());
+}
+
+void LessonEdit::resetIdentifier()
+{
+    qint64 value = container.getIdentifier();
+    setIdentifier(container.isNull() ? 1 : value);
+}
+
+void LessonEdit::resetBranchNumber()
+{
+    setBranchNumber(container.getBranchNumber());
+}
+
+void LessonEdit::resetCreditUnit()
+{
+    setCreditUnit(container.getCreditUnit());
 }
 
 void LessonEdit::resetLesson()
 {
     resetName();
-    resetTotalCapacity();
-    resetCreditUnit();
     resetBranchNumber();
-    resetIdentifier();
+    resetCreditUnit();
     resetFinalExam();
+    resetTotalCapacity();
+    resetIdentifier();
 }
