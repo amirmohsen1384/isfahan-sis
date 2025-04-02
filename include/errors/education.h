@@ -6,6 +6,7 @@
 
 class OverlapException : public std::exception
 {
+public:
     inline const char* what() const noexcept override {
         return "Final exam dates overlap.";
     }
@@ -13,6 +14,7 @@ class OverlapException : public std::exception
 
 class CreditsOutOfBoundException : public std::exception
 {
+public:
     inline const char* what() const noexcept override {
         return "The count of enrolled credits is out of bounds.";
     }
@@ -20,6 +22,7 @@ class CreditsOutOfBoundException : public std::exception
 
 class UserOverflowException : public std::exception
 {
+public:
     inline const char* what() const noexcept override {
         return "Only one user can enter the application at a time.";
     }
@@ -27,6 +30,7 @@ class UserOverflowException : public std::exception
 
 class AuthorizationException : public std::exception
 {
+public:
     inline const char* what() const noexcept override {
         return "The username or password is incorrect.";
     }
@@ -34,6 +38,7 @@ class AuthorizationException : public std::exception
 
 class OutOfCapacityException : public std::exception
 {
+public:
     inline const char* what() const noexcept override {
         return "The lesson is out of capacity.";
     }
@@ -41,6 +46,7 @@ class OutOfCapacityException : public std::exception
 
 class InvalidIdentifierException : public std::exception
 {
+public:
     inline const char* what() const noexcept override {
         return "The identifier is invalid.";
     }
@@ -48,6 +54,7 @@ class InvalidIdentifierException : public std::exception
 
 class EmptyIdentifierException : public std::exception
 {
+public:
     inline const char* what() const noexcept override {
         return "You have not entered any identifiers.";
     }
@@ -55,6 +62,7 @@ class EmptyIdentifierException : public std::exception
 
 class EmptyFirstNameException : public std::exception
 {
+public:
     inline const char* what() const noexcept override {
         return "You have not entered the first name!";
     }
@@ -62,6 +70,7 @@ class EmptyFirstNameException : public std::exception
 
 class EmptyLastNameException : public std::exception
 {
+public:
     inline const char* what() const noexcept override {
         return "You have not entered the last name!";
     }
@@ -69,6 +78,7 @@ class EmptyLastNameException : public std::exception
 
 class EmptyUserNameException : public std::exception
 {
+public:
     inline const char* what() const noexcept override {
         return "You have not entered the user name.";
     }
@@ -76,6 +86,7 @@ class EmptyUserNameException : public std::exception
 
 class EmptyPasswordException : public std::exception
 {
+public:
     inline const char* what() const noexcept override {
         return "You have not entered your password.";
     }
@@ -83,6 +94,7 @@ class EmptyPasswordException : public std::exception
 
 class InvalidPasswordException : public std::exception
 {
+public:
     inline const char* what() const noexcept override {
         return "You have entered an invalid password.";
     }
@@ -90,6 +102,7 @@ class InvalidPasswordException : public std::exception
 
 class EmptyLessonNameException : public std::exception
 {
+public:
     inline const char* what() const noexcept override {
         return "You have not entered the name of the lesson.";
     }
