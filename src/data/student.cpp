@@ -165,9 +165,9 @@ void Student::removeCredit(Lesson &target)
 
         if(target.isAbleToEnroll() && !target.waitingList.isEmpty()) {
             Student s = Student::loadFromRecord(target.waitingList.dequeue());
-            target.commitToRecord();
             s.addCredit(target);
             s.commitToRecord();
+            target.commitToRecord();
         }
 
         emit lessonChanged();
