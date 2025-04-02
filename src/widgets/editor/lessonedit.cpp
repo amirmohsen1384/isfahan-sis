@@ -1,4 +1,5 @@
 #include "include/widgets/editor/lessonedit.h"
+#include "include/errors/education.h"
 #include "ui_lessonedit.h"
 
 LessonEdit::LessonEdit(const Lesson &container, QWidget *parent) : LessonEdit(parent)
@@ -67,6 +68,30 @@ Lesson LessonEdit::getData() const
     data.setIdentifier(this->getIdentifier());
     data.setTotalCapacity(this->getTotalCapacity());
     return data;
+}
+
+void LessonEdit::validateEditor() const
+{
+    qint64 value = this->getIdentifier();
+    if(value == 0) {
+        throw InvalidIdentifierException();
+    }
+
+    if(ui->identifierEdit->text().isEmpty()) {
+        throw EmptyIdentifierException();
+    }
+
+    if(QFile::exists(Lesson::getFileName(Entity(value)))) {
+        throw InvalidIdentifierException();
+    }
+
+    if(ui->nameEdit->text().isEmpty()) {
+        throw EmptyLessonNameException();
+    }
+
+    if(ui->branchNumberEdit->text().isEmpty()) {
+        throw EmptyBranchNumberException();
+    }
 }
 
 void LessonEdit::setName(const QString &value)

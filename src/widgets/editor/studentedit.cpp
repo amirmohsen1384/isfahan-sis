@@ -1,5 +1,6 @@
 #include "include/widgets/editor/core/namevalidator.h"
 #include "include/widgets/editor/studentedit.h"
+#include "include/errors/education.h"
 #include "ui_studentedit.h"
 
 StudentEdit::StudentEdit(const Student &info, QWidget *parent) : StudentEdit(parent)
@@ -72,6 +73,43 @@ Student StudentEdit::getContainer() const
 Student StudentEdit::getDefault() const
 {
     return container;
+}
+
+void StudentEdit::validateEditor() const
+{
+    qint64 value = this->getIdentifier();
+    if(value == 0) {
+        throw InvalidIdentifierException();
+    }
+
+    if(ui->idEdit->text().isEmpty()) {
+        throw EmptyIdentifierException();
+    }
+
+    if(QFile::exists(Student::getFileName(Entity(value)))) {
+        throw InvalidIdentifierException();
+    }
+
+    if(ui->firstNameEdit->text().isEmpty()) {
+        throw EmptyFirstNameException();
+    }
+
+    if(ui->lastNameEdit->text().isEmpty()) {
+        throw EmptyLastNameException();
+    }
+
+    if(ui->userNameEdit->text().isEmpty()) {
+        throw EmptyUserNameException();
+    }
+
+    if(this->getPassword().isEmpty()) {
+        throw EmptyPasswordException();
+    }
+
+    QRegularExpression regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_])[A-Za-z\\d\\W_]{8,}$");
+    if(!regex.match(this->getPassword()).hasMatch()) {
+        throw InvalidPasswordException();
+    }
 }
 
 void StudentEdit::setFirstName(const QString &value)

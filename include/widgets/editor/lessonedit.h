@@ -26,6 +26,8 @@ public:
     Lesson getDefault() const;
     Lesson getData() const;
 
+    void validateEditor() const;
+
 public slots:
     void setName(const QString &value);
     void setTotalCapacity(int value);

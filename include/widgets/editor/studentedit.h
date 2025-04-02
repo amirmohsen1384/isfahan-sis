@@ -26,6 +26,8 @@ public:
     Student getContainer() const;
     Student getDefault() const;
 
+    void validateEditor() const;
+
 public slots:
     void setFirstName(const QString &value);
     void setLastName(const QString &value);

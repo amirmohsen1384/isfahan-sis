@@ -24,6 +24,8 @@ public:
     Teacher getContainer() const;
     Teacher getDefault() const;
 
+    void validateEditor() const;
+
 public slots:
     void setFirstName(const QString &value);
     void setLastName(const QString &value);
