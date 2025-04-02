@@ -23,7 +23,8 @@ SOURCES += \
     src/dialogs/accountdialog.cpp \
     src/widgets/editor/studentedit.cpp \
     src/widgets/editor/teacheredit.cpp \
-    src/widgets/views/teacherview.cpp
+    src/widgets/views/teacherview.cpp \
+    src/widgets/views/studentview.cpp
 
 HEADERS += \
     include/dialogs/accountdialog.h \
@@ -47,7 +48,8 @@ HEADERS += \
     include/widgets/editor/studentedit.h \
     include/widgets/editor/teacheredit.h \
     include/widgets/views/lessonview.h \
-    include/widgets/views/teacherview.h
+    include/widgets/views/teacherview.h \
+    include/widgets/views/studentview.h
 
 
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -55,6 +57,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
+    ui/widgets/views/studentview.ui \
     ui/widgets/views/teacherview.ui \
     ui/widgets/views/lessonview.ui \
     ui/dialogs/accountdialog.ui \
