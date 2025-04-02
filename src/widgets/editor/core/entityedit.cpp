@@ -1,4 +1,4 @@
-#include "include/widgets/core/entityedit.h"
+#include "include/widgets/editor/core/entityedit.h"
 #include "ui_entityedit.h"
 
 qint64 EntityEdit::generateRandomNumber() const
@@ -23,14 +23,14 @@ EntityEdit::EntityEdit(QWidget *parent) : QWidget(parent), ui(new Ui::EntityEdit
     connect(ui->identifierEdit, &QLineEdit::textChanged, this, &EntityEdit::validateIdentifier);
     connect(this, &EntityEdit::identifierAccepted, [this](qint64 value)
     {
-        Q_UNUSED(value)
         ui->identifierEdit->setStyleSheet("color: black");
+        emit identifierChanged(value);
     });
     connect(this, &EntityEdit::identifierRejected, [this]()
     {
         ui->identifierEdit->setStyleSheet("color: red");
     });
-    connect(this, &EntityEdit::entitiesChanged, [this]()
+    connect(this, &EntityEdit::forbiddenEntitiesChanged, [this]()
     {
         validateIdentifier(ui->identifierEdit->text());
     });
@@ -103,5 +103,5 @@ void EntityEdit::setInitial(qint64 value)
 void EntityEdit::setForbiddenEntities(const EntityList &entities)
 {
     this->container = entities;
-    emit entitiesChanged(this->container);
+    emit forbiddenEntitiesChanged(this->container);
 }

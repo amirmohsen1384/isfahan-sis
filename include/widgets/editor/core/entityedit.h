@@ -20,25 +20,32 @@ public:
     explicit EntityEdit(QWidget *parent = nullptr);
     ~EntityEdit();
 
-    qint64 getInitial() const;
     qint64 getIdentifier() const;
     EntityList getForbiddenEntities() const;
 
 public slots:
     void resetIdentifier();
-    void setInitial(qint64 value);
     void setIdentifier(qint64 value);
     void setForbiddenEntities(const EntityList &entities);
 
+signals:
+    void identifierChanged(qint64 value);
+    void forbiddenEntitiesChanged(const EntityList &entity);
+
 private slots:
-    void setRandomIdentifier(const Qt::CheckState &state);
     void validateIdentifier(const QString &text);
+    void setRandomIdentifier(const Qt::CheckState &state);
+
+protected:
+    qint64 getInitial() const;
+
+protected slots:
+    void setInitial(qint64 value);
 
 signals:
-    void identifierRejected();
-    void initialChanged(qint64 value);
     void identifierAccepted(qint64 value);
-    void entitiesChanged(const EntityList &entity);
+    void initialChanged(qint64 value);
+    void identifierRejected();
 
 private:
     qint64 initial;

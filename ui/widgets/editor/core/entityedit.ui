@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>443</width>
-    <height>79</height>
+    <width>459</width>
+    <height>83</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QGridLayout" name="mainLayout">
    <item row="0" column="1">
     <widget class="QLineEdit" name="identifierEdit"/>
    </item>
@@ -48,7 +48,7 @@
       <string>...</string>
      </property>
      <property name="icon">
-      <iconset resource="../../../resources/main.qrc">
+      <iconset resource="../../../../resources/main.qrc">
        <normaloff>:/root/dialogs/reset.ico</normaloff>:/root/dialogs/reset.ico</iconset>
      </property>
      <property name="iconSize">
@@ -65,7 +65,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../../resources/main.qrc"/>
+  <include location="../../../../resources/main.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -91,8 +91,8 @@
    <slot>resetIdentifier()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>411</x>
-     <y>21</y>
+     <x>447</x>
+     <y>32</y>
     </hint>
     <hint type="destinationlabel">
      <x>420</x>
