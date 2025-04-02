@@ -5,6 +5,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17
 
 SOURCES += \
+    src/dialogs/accountdialog.cpp \
     main.cpp \
     src/data/entity.cpp \
     src/data/lesson.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
     src/widgets/editor/teacheredit.cpp
 
 HEADERS += \
+    include/dialogs/accountdialog.h \
     include/data/entity.h \
     include/data/lesson.h \
     include/data/teacher.h \
@@ -49,6 +51,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
+    ui/dialogs/accountdialog.ui \
     ui/widgets/editor/teacheredit.ui \
     ui/widgets/editor/studentedit.ui \
     ui/screens/loginscreen.ui \
