@@ -1,20 +1,25 @@
-#include "include/widgets/teacheredit.h"
+#include "teacheredit.h"
 #include "ui_teacheredit.h"
+#include "include/widgets/editor/core/namevalidator.h"
 
-TeacherEdit::TeacherEdit(const Teacher &initial, QWidget *parent) : TeacherEdit(parent)
+TeacherEdit::TeacherEdit(const Teacher &info, QWidget *parent) : TeacherEdit(parent)
 {
-    setInitial(initial);
+    setDefault(info);
 }
 
 TeacherEdit::TeacherEdit(QWidget *parent) : QWidget(parent), ui(new Ui::TeacherEdit)
 {
     ui->setupUi(this);
-    connect(this, &TeacherEdit::initialChanged, this, &TeacherEdit::resetProperties);
-    connect(ui->infoEditor, &PersonEdit::firstNameChanged, this, &TeacherEdit::firstNameChanged);
-    connect(ui->infoEditor, &PersonEdit::lastNameChanged, this, &TeacherEdit::lastNameChanged);
-    connect(ui->infoEditor, &PersonEdit::userNameChanged, this, &TeacherEdit::userNameChanged);
-    connect(ui->infoEditor, &PersonEdit::passwordChanged, this, &TeacherEdit::passwordChanged);
-    connect(ui->infoEditor, &PersonEdit::identifierChanged, this, &TeacherEdit::identifierChanged);
+    togglePasswordShow(true);
+    connect(this, &TeacherEdit::defaultChanged, this, &TeacherEdit::resetTeacher);
+
+    NameValidator *validator = new NameValidator(this);
+    ui->firstNameEdit->setValidator(validator);
+    ui->lastNameEdit->setValidator(validator);
+
+    QIntValidator *idValidator = new QIntValidator;
+    ui->idEdit->setValidator(idValidator);
+    idValidator->setBottom(1);
 }
 
 TeacherEdit::~TeacherEdit()
@@ -24,103 +29,135 @@ TeacherEdit::~TeacherEdit()
 
 QString TeacherEdit::getFirstName() const
 {
-    return ui->infoEditor->getFirstName();
+    return ui->firstNameEdit->text();
 }
 
 QString TeacherEdit::getLastName() const
 {
-    return ui->infoEditor->getLastName();
+    return ui->lastNameEdit->text();
 }
 
 QString TeacherEdit::getUserName() const
 {
-    return ui->infoEditor->getUserName();
+    return ui->userNameEdit->text();
 }
 
 QString TeacherEdit::getPassword() const
 {
-    return ui->infoEditor->getLastName();
+    return ui->passwordEdit->text();
 }
 
 qint64 TeacherEdit::getIdentifier() const
 {
-    return ui->infoEditor->getIdentifier();
+    return ui->idEdit->text().toLongLong();
 }
 
-Teacher TeacherEdit::getInitial() const
+Teacher TeacherEdit::getContainer() const
 {
-    return initial;
-}
-
-Teacher TeacherEdit::getInformation() const
-{
-    Teacher result = initial;
-    static_cast<Person>(result) = ui->infoEditor->getInformation();
+    Teacher result = container;
+    result.setFirstName(this->getFirstName());
+    result.setLastName(this->getLastName());
+    result.setUserName(this->getUserName());
+    result.setPassword(this->getPassword());
+    result.setIdentifier(this->getIdentifier());
     return result;
+}
+
+Teacher TeacherEdit::getDefault() const
+{
+    return container;
 }
 
 void TeacherEdit::setFirstName(const QString &value)
 {
-    ui->infoEditor->setFirstName(value);
+    ui->firstNameEdit->setText(value);
 }
 
 void TeacherEdit::setLastName(const QString &value)
 {
-    ui->infoEditor->setLastName(value);
+    ui->lastNameEdit->setText(value);
 }
 
 void TeacherEdit::setUserName(const QString &value)
 {
-    ui->infoEditor->setUserName(value);
+    ui->userNameEdit->setText(value);
 }
 
 void TeacherEdit::setPassword(const QString &value)
 {
-    ui->infoEditor->setPassword(value);
+    ui->passwordEdit->setText(value);
 }
 
 void TeacherEdit::setIdentifier(qint64 value)
 {
-    ui->infoEditor->setIdentifier(value);
+    ui->idEdit->setText(QString::number(value < 1 ? 1 : value));
 }
 
-void TeacherEdit::setInitial(const Teacher &value)
+void TeacherEdit::setContainer(const Teacher &value)
 {
-    initial = value;
-    emit initialChanged(value);
+    setFirstName(value.getFirstName());
+    setLastName(value.getLastName());
+    setUserName(value.getUserName());
+    setPassword(value.getPassword());
+    setIdentifier(value.getIdentifier());
 }
 
-void TeacherEdit::setInformation(const Teacher &value)
+void TeacherEdit::setDefault(const Teacher &value)
 {
-    ui->infoEditor->setInformation(value);
+    container = value;
+    emit defaultChanged(value);
 }
 
 void TeacherEdit::resetFirstName()
 {
-    ui->infoEditor->resetFirstName();
+    setFirstName(container.getFirstName());
 }
 
 void TeacherEdit::resetLastName()
 {
-    ui->infoEditor->resetLastName();
+    setLastName(container.getLastName());
 }
 
 void TeacherEdit::resetUserName()
 {
-    ui->infoEditor->resetUserName();
+    setUserName(container.getUserName());
 }
 
 void TeacherEdit::resetPassword()
 {
-    ui->infoEditor->resetPassword();
+    setPassword(container.getPassword());
 }
 
 void TeacherEdit::resetIdentifier()
 {
-    ui->infoEditor->resetIdentifier();
+    qint64 value = container.getIdentifier();
+    setIdentifier(container.isNull() ? 1 : value);
 }
 
-void TeacherEdit::resetProperties()
+void TeacherEdit::resetTeacher()
 {
-    ui->infoEditor->setInitial(initial);
+    resetFirstName();
+    resetLastName();
+    resetUserName();
+    resetPassword();
+    resetIdentifier();
+    if(!container.isNull()) {
+        setWindowTitle(QString("%1 - Teacher Editor").arg(container.getFullName()));
+    }
+}
+
+void TeacherEdit::togglePasswordShow(bool value)
+{
+    if(value)
+    {
+        ui->showPasswordButton->setIcon(QIcon(":/root/dialogs/password-hide.png"));
+        ui->passwordEdit->setEchoMode(QLineEdit::Password);
+        ui->showPasswordButton->setToolTip("Show Password");
+    }
+    else
+    {
+        ui->showPasswordButton->setIcon(QIcon(":/root/dialogs/password-show.png"));
+        ui->passwordEdit->setEchoMode(QLineEdit::Normal);
+        ui->showPasswordButton->setToolTip("Hide Password");
+    }
 }

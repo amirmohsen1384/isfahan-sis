@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TeacherEdit</class>
+ <widget class="QWidget" name="TeacherEdit">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>457</width>
+    <height>323</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QGroupBox" name="identifierGroup">
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="title">
+      <string>Identifier</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="idLabel">
+        <property name="text">
+         <string>ID Number:</string>
+        </property>
+        <property name="buddy">
+         <cstring>idEdit</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="idEdit">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <bold>false</bold>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QToolButton" name="idResetButton">
+        <property name="toolTip">
+         <string>Reset ID Number</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="resources/main.qrc">
+          <normaloff>:/root/dialogs/reset.ico</normaloff>:/root/dialogs/reset.ico</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="nameGroup">
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="title">
+      <string>Name</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="firstNameLabel">
+        <property name="text">
+         <string>First Name:</string>
+        </property>
+        <property name="buddy">
+         <cstring>firstNameEdit</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="firstNameEdit">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <bold>false</bold>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QToolButton" name="firstNameResetButton">
+        <property name="toolTip">
+         <string>Reset First Name</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="resources/main.qrc">
+          <normaloff>:/root/dialogs/reset.ico</normaloff>:/root/dialogs/reset.ico</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lastNameLabel">
+        <property name="text">
+         <string>Last Name:</string>
+        </property>
+        <property name="buddy">
+         <cstring>lastNameEdit</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="lastNameEdit">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <bold>false</bold>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QToolButton" name="lastNameResetButton">
+        <property name="toolTip">
+         <string>Reset Last Name</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="resources/main.qrc">
+          <normaloff>:/root/dialogs/reset.ico</normaloff>:/root/dialogs/reset.ico</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="accountGroup">
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="title">
+      <string>Account</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="1" column="0">
+       <widget class="QLabel" name="passwordLabel">
+        <property name="text">
+         <string>Password:</string>
+        </property>
+        <property name="buddy">
+         <cstring>passwordEdit</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QToolButton" name="passwordResetButton">
+        <property name="toolTip">
+         <string>Reset Password</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="resources/main.qrc">
+          <normaloff>:/root/dialogs/reset.ico</normaloff>:/root/dialogs/reset.ico</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="passwordEdit">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::EchoMode::Password</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="userNameLabel">
+        <property name="text">
+         <string>User Name:</string>
+        </property>
+        <property name="buddy">
+         <cstring>userNameEdit</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QToolButton" name="userNameResetButton">
+        <property name="toolTip">
+         <string>Reset User Name</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="resources/main.qrc">
+          <normaloff>:/root/dialogs/reset.ico</normaloff>:/root/dialogs/reset.ico</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QToolButton" name="showPasswordButton">
+        <property name="toolTip">
+         <string>Toggle Password Show</string>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset resource="resources/main.qrc">
+          <normaloff>:/root/dialogs/password-show.png</normaloff>:/root/dialogs/password-show.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" colspan="2">
+       <widget class="QLineEdit" name="userNameEdit">
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+          <bold>false</bold>
+         </font>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>idEdit</tabstop>
+  <tabstop>firstNameEdit</tabstop>
+  <tabstop>lastNameEdit</tabstop>
+  <tabstop>userNameEdit</tabstop>
+  <tabstop>passwordEdit</tabstop>
+  <tabstop>idResetButton</tabstop>
+  <tabstop>firstNameResetButton</tabstop>
+  <tabstop>lastNameResetButton</tabstop>
+  <tabstop>userNameResetButton</tabstop>
+  <tabstop>passwordResetButton</tabstop>
+  <tabstop>showPasswordButton</tabstop>
+ </tabstops>
+ <resources>
+  <include location="resources/main.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>idResetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TeacherEdit</receiver>
+   <slot>resetIdentifier()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>414</x>
+     <y>53</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>453</x>
+     <y>14</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>firstNameResetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TeacherEdit</receiver>
+   <slot>resetFirstName()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>413</x>
+     <y>124</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>452</x>
+     <y>84</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lastNameResetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TeacherEdit</receiver>
+   <slot>resetLastName()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>424</x>
+     <y>161</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>452</x>
+     <y>206</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>userNameResetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TeacherEdit</receiver>
+   <slot>resetUserName()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>429</x>
+     <y>250</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>449</x>
+     <y>320</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>passwordResetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TeacherEdit</receiver>
+   <slot>resetPassword()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>421</x>
+     <y>295</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>454</x>
+     <y>293</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>showPasswordButton</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>TeacherEdit</receiver>
+   <slot>togglePasswordShow(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>379</x>
+     <y>285</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>328</x>
+     <y>318</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>resetIdentifier()</slot>
+  <slot>resetFirstName()</slot>
+  <slot>resetLastName()</slot>
+  <slot>resetUserName()</slot>
+  <slot>resetPassword()</slot>
+  <slot>togglePasswordShow(bool)</slot>
+ </slots>
+</ui>
