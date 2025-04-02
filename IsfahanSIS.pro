@@ -7,6 +7,7 @@ CONFIG += c++17
 SOURCES += \
     entityshow.cpp \
     lessonshow.cpp \
+    src/screens/loginscreen.cpp \
     main.cpp \
     personshow.cpp \
     src/data/entity.cpp \
@@ -50,6 +51,7 @@ HEADERS += \
     include/widgets/studentedit.h \
     include/widgets/teacheredit.h \
     lessonshow.h \
+    include/screens/loginscreen.h \
     personshow.h \
     studentshow.h \
     teachershow.h \
@@ -66,6 +68,7 @@ FORMS += \
     personshow.ui \
     studentshow.ui \
     teachershow.ui \
+    ui/screens/loginscreen.ui \
     ui/widgets/studentedit.ui \
     ui/widgets/teacheredit.ui \
     ui/widgets/lessonedit.ui \
