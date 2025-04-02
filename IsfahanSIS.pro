@@ -5,7 +5,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++17
 
 SOURCES += \
-    src/dialogs/accountdialog.cpp \
     main.cpp \
     src/data/entity.cpp \
     src/data/lesson.cpp \
@@ -20,6 +19,8 @@ SOURCES += \
     src/widgets/editor/lessonedit.cpp \
     src/models/core/lecturetreemodel.cpp \
     src/widgets/editor/core/namevalidator.cpp \
+    src/widgets/views/lessonview.cpp \
+    src/dialogs/accountdialog.cpp \
     src/widgets/editor/studentedit.cpp \
     src/widgets/editor/teacheredit.cpp
 
@@ -43,7 +44,8 @@ HEADERS += \
     include/models/core/lecturetreemodel.h \
     include/widgets/editor/core/namevalidator.h \
     include/widgets/editor/studentedit.h \
-    include/widgets/editor/teacheredit.h
+    include/widgets/editor/teacheredit.h \
+    include/widgets/views/lessonview.h
 
 
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -51,6 +53,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
+    ui/widgets/views/lessonview.ui \
     ui/dialogs/accountdialog.ui \
     ui/widgets/editor/teacheredit.ui \
     ui/widgets/editor/studentedit.ui \
