@@ -39,5 +39,67 @@ class OutOfCapacityException : public std::exception
     }
 };
 
+class InvalidIdentifierException : public std::exception
+{
+    inline const char* what() const noexcept override {
+        return "The identifier is invalid.";
+    }
+};
+
+class EmptyIdentifierException : public std::exception
+{
+    inline const char* what() const noexcept override {
+        return "You have not entered any identifiers.";
+    }
+};
+
+class EmptyFirstNameException : public std::exception
+{
+    inline const char* what() const noexcept override {
+        return "You have not entered the first name!";
+    }
+};
+
+class EmptyLastNameException : public std::exception
+{
+    inline const char* what() const noexcept override {
+        return "You have not entered the last name!";
+    }
+};
+
+class EmptyUserNameException : public std::exception
+{
+    inline const char* what() const noexcept override {
+        return "You have not entered the user name.";
+    }
+};
+
+class EmptyPasswordException : public std::exception
+{
+    inline const char* what() const noexcept override {
+        return "You have not entered your password.";
+    }
+};
+
+class InvalidPasswordException : public std::exception
+{
+    inline const char* what() const noexcept override {
+        return "You have entered an invalid password.";
+    }
+};
+
+class EmptyLessonNameException : public std::exception
+{
+    inline const char* what() const noexcept override {
+        return "You have not entered the name of the lesson.";
+    }
+};
+
+class EmptyBranchNumberException : public std::exception
+{
+    inline const char* what() const noexcept override {
+        return "You have not entered the branch number of the lesson.";
+    }
+};
 
 #endif // EDUCATION_H
