@@ -2,6 +2,7 @@
 #define LESSON_H
 
 #include <QDate>
+#include <QQueue>
 #include "entity.h"
 #include "include/data/core/queue.h"
 
@@ -64,7 +65,7 @@ public:
     static QDir getRoot();
 
 private:
-    CircularQueue<Entity> waitingList;
+    QQueue<Entity> waitingList;
     friend class Student;
     friend class Teacher;
 
@@ -77,9 +78,9 @@ signals:
 
 private:
     quint64 branchNumber = 0;
-    quint8 totalCapacity;
-    QDateTime finalExam;
-    quint8 creditUnit;
+    quint8 totalCapacity = 0;
+    QDateTime finalExam = QDateTime::currentDateTime();
+    quint8 creditUnit = 0;
     QString name;
 };
 
