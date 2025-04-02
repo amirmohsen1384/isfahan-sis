@@ -2,6 +2,7 @@
 #define STUDENT_H
 
 #include "person.h"
+#include "lesson.h"
 
 class Student;
 using StudentList = QList<Student>;

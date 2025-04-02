@@ -159,7 +159,7 @@ void Student::removeCredit(Lesson &target)
 
     auto it = std::lower_bound(lessons.begin(), lessons.end(), target);
     if(it != lessons.end() && *it == target) {
-        int index = std::distance(lessons.begin(), target);
+        int index = std::distance(lessons.begin(), it);
         lessons.removeAt(index);
         lessons.squeeze();
 

@@ -5,7 +5,7 @@ LessonListModel::LessonListModel(QObject *parent) : QAbstractTableModel(parent)
 {
     updateList();
     updateInspector();
-    inspector.addPath(Lesson::getDirectory().absolutePath());
+    inspector.addPath(Lesson::getRoot().absolutePath());
     connect(&inspector, &QFileSystemWatcher::fileChanged, this, &LessonListModel::updateList);
     connect(&inspector, &QFileSystemWatcher::directoryChanged, this, &LessonListModel::updateList);
     connect(&inspector, &QFileSystemWatcher::directoryChanged, this, &LessonListModel::updateInspector);

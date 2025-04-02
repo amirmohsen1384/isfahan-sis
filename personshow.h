@@ -30,12 +30,6 @@ public slots:
     void setUserName(const QString &value);
     void setPassword(const QString &value);
 
-protected slots:
-    void resetFirstName();
-    void resetLastName();
-    void resetUserName();
-    void resetPassword();
-
 signals:
     void firstNameChanged(QString value);
     void lastNameChanged(QString value);

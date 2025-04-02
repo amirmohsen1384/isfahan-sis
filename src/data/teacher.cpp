@@ -41,6 +41,11 @@ Teacher Teacher::loadFromRecord(const Entity &value)
     return target;
 }
 
+bool Teacher::teaches(const Lesson &target) const
+{
+    return std::binary_search(lessons.cbegin(), lessons.cend(), target);
+}
+
 void Teacher::addCredit(Lesson &target)
 {
     if(target.isNull() || teaches(target)) {

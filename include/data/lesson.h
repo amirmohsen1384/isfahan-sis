@@ -3,11 +3,11 @@
 
 #include <QDate>
 #include "entity.h"
-#include "include/data/student.h"
-#include "include/data/teacher.h"
 #include "include/data/core/queue.h"
 
 class Lesson;
+class Student;
+class Teacher;
 using LessonList = QList<Lesson>;
 
 class Lesson : public Entity
@@ -37,7 +37,7 @@ public:
 
     quint8 getTotalCapacity() const;
 
-    StudentList getEnrolledStudents() const;
+    QList<Student> getEnrolledStudents() const;
 
 public slots:
     void setName(const QString &value);

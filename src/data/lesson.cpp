@@ -1,5 +1,7 @@
 #include "include/data/lesson.h"
 #include "include/errors/resource.h"
+#include "include/data/student.h"
+#include "include/data/teacher.h"
 
 Lesson::Lesson(QObject *parent) : Entity{parent} {}
 Lesson::Lesson(const Lesson &other, QObject *parent) : Lesson{parent}
@@ -62,18 +64,6 @@ Teacher Lesson::getTeacher() const
     return Teacher();
 }
 
-StudentList Lesson::getEnrolledStudents() const
-{
-    StudentList result;
-    for(Entity s : enrolledStudents) {
-        Student target = Student::loadFromRecord(s);
-        if(!target.isNull()) {
-            result.append(target);
-        }
-    }
-    return result;
-}
-
 QString Lesson::getName() const
 {
     return name;
@@ -126,7 +116,7 @@ void Lesson::setFinalExam(const QDateTime &value)
 
 QString Lesson::getFileName(const Entity &value)
 {
-    QDir root = Lesson::getDirectory();
+    QDir root = Lesson::getRoot();
     return root.absoluteFilePath(QString("%1.lss").arg(value.getIdentifier()));
 }
 
@@ -191,7 +181,7 @@ LessonList Lesson::getEntities()
 
 QFileInfoList Lesson::getFiles()
 {
-    QDir root = Lesson::getDirectory();
+    QDir root = Lesson::getRoot();
     QFileInfoList entries = root.entryInfoList(
         {"*.lss"},
         QDir::NoDotAndDotDot | QDir::AllEntries,

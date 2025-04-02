@@ -2,7 +2,7 @@
 #include "lessonshow.h"
 #include "ui_lessonshow.h"
 
-LessonShow::LessonShow(QWidget *parent) : QWidget(parent)
+LessonShow::LessonShow(QWidget *parent) : EntityShow(parent)
 {
     ui = new Ui::LessonShow;
     initialize(this);
@@ -53,11 +53,6 @@ void LessonShow::setName(const QString &value)
     initial.setName(value);
 }
 
-void LessonShow::setTeacher(const Entity &value)
-{
-    initial.setTeacher(value);
-}
-
 void LessonShow::setBranchNumber(quint64 value)
 {
     initial.setBranchNumber(value);
@@ -101,9 +96,6 @@ void LessonShow::initialize(QWidget *target)
 
     connect(&initial, &Lesson::creditUnitChanged, this, &LessonShow::resetCreditUnit);
     connect(&initial, &Lesson::creditUnitChanged, this, &LessonShow::creditUnitChanged);
-
-    connect(&initial, &Lesson::teacherChanged, this, &LessonShow::resetTeacherName);
-    connect(&initial, &Lesson::teacherChanged, this, &LessonShow::teacherNameChanged);
 
     connect(&initial, &Lesson::totalCapacityChanged, this, &LessonShow::resetCapacity);
 

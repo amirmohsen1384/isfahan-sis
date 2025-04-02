@@ -32,8 +32,6 @@ public:
 public slots:
     void setName(const QString &value);
 
-    void setTeacher(const Entity &value);
-
     void setBranchNumber(quint64 value);
 
     void setFinalExam(const QDateTime &time);

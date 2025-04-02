@@ -67,7 +67,7 @@ quint64 Person::getCreditCount() const
     LessonList container = this->getLessons();
     for(const Lesson &target : container)
     {
-        total += lesson.getCreditUnit();
+        total += target.getCreditUnit();
     }
     return total;
 }
