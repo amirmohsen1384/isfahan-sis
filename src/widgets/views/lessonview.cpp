@@ -1,7 +1,7 @@
 #include <QClipboard>
-#include "lessonview.h"
 #include "ui_lessonview.h"
 #include "include/data/teacher.h"
+#include "include/widgets/views/lessonview.h"
 
 LessonView::LessonView(const Lesson &lesson, QWidget *parent) : LessonView(parent)
 {
