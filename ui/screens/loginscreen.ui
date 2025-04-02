@@ -272,7 +272,7 @@
    <sender>showPasswordButton</sender>
    <signal>clicked(bool)</signal>
    <receiver>LoginScreen</receiver>
-   <slot>setPasswordVisible(bool)</slot>
+   <slot>togglePasswordShow(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>577</x>
@@ -300,9 +300,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>loginButton</sender>
+   <signal>clicked()</signal>
+   <receiver>LoginScreen</receiver>
+   <slot>authorize()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>374</x>
+     <y>352</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>533</x>
+     <y>460</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>setPasswordVisible(bool)</slot>
+  <slot>togglePasswordShow(bool)</slot>
   <slot>openAccountDialog()</slot>
+  <slot>authorize()</slot>
  </slots>
 </ui>
