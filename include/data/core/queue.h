@@ -36,9 +36,9 @@ protected:
 
 private:
     T* _container = nullptr;
-    size_t _length;
-    size_t _front;
-    size_t _rear;
+    int _length;
+    int _front;
+    int _rear;
 };
 
 template <typename T>
