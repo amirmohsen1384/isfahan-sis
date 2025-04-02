@@ -15,6 +15,9 @@ public:
     explicit LoginScreen(QWidget *parent = nullptr);
     ~LoginScreen();
 
+public slots:
+    void openAccountDialog();
+
 private:
     Ui::LoginScreen *ui;
 };

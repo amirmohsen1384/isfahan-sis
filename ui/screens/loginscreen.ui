@@ -15,20 +15,20 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="2" column="0" rowspan="2">
-     <spacer name="mainLeftSpacer">
+    <item row="5" column="1">
+     <spacer name="mainBottomSpacer">
       <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
+       <enum>Qt::Orientation::Vertical</enum>
       </property>
       <property name="sizeHint" stdset="0">
        <size>
-        <width>134</width>
-        <height>20</height>
+        <width>20</width>
+        <height>120</height>
        </size>
       </property>
      </spacer>
     </item>
-    <item row="2" column="1">
+    <item row="3" column="1">
      <widget class="QGroupBox" name="loginLayout">
       <property name="font">
        <font>
@@ -103,7 +103,46 @@
       </layout>
      </widget>
     </item>
-    <item row="3" column="1">
+    <item row="1" column="1">
+     <spacer name="mainTopSpacer">
+      <property name="orientation">
+       <enum>Qt::Orientation::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>121</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="3" column="2" rowspan="2">
+     <spacer name="mainRightSpacer">
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>134</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="3" column="0" rowspan="2">
+     <spacer name="mainLeftSpacer">
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>134</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="4" column="1">
      <layout class="QGridLayout" name="controlLayout">
       <item row="0" column="0">
        <spacer name="controlTopLeftSpacer">
@@ -190,46 +229,7 @@
       </item>
      </layout>
     </item>
-    <item row="1" column="1">
-     <spacer name="mainTopSpacer">
-      <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>121</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="4" column="1">
-     <spacer name="mainBottomSpacer">
-      <property name="orientation">
-       <enum>Qt::Orientation::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>120</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="2" column="2" rowspan="2">
-     <spacer name="mainRightSpacer">
-      <property name="orientation">
-       <enum>Qt::Orientation::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>134</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="0" column="1">
+    <item row="2" column="1">
      <widget class="QLabel" name="title">
       <property name="font">
        <font>
@@ -284,8 +284,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>createAccountButton</sender>
+   <signal>clicked()</signal>
+   <receiver>LoginScreen</receiver>
+   <slot>openAccountDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>333</x>
+     <y>380</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>78</x>
+     <y>449</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>setPasswordVisible(bool)</slot>
+  <slot>openAccountDialog()</slot>
  </slots>
 </ui>
