@@ -7,5 +7,6 @@
         <file>dialogs/password-hide.png</file>
         <file>dialogs/password-show.png</file>
         <file>dialogs/copy.png</file>
+        <file>dialogs/go-parent.png</file>
     </qresource>
 </RCC>
