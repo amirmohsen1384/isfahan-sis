@@ -1,6 +1,7 @@
 #include <iostream>
 #include <random>
 #include <stdexcept>
+#include <QDataStream>
 
 template<typename T>
 class CircularQueue {
@@ -21,6 +22,12 @@ public:
 
     T& dequeue();
     void enqueue(T const& data);
+
+    template<typename R>
+    friend QDataStream& operator<<(QDataStream &stream, const CircularQueue<R> &data);
+
+    template<typename R>
+    friend QDataStream& operator>>(QDataStream &stream, CircularQueue<R> &data);
 
 protected:
     inline virtual size_t maximumSize() const {
@@ -68,4 +75,28 @@ void CircularQueue<T>::enqueue(T const &data)
     size_t index = (++_rear % maximumSize());
     _container[index] = data;
     _length++;
+}
+
+template<typename R>
+QDataStream& operator<<(QDataStream &stream, const CircularQueue<R> &data)
+{
+    stream << data._length;
+    stream << data._front;
+    stream << data._rear;
+    for(int i = 0; i < data._length; ++i) {
+        stream << data._container[i];
+    }
+    return stream;
+}
+
+template<typename R>
+QDataStream& operator>>(QDataStream &stream, CircularQueue<R> &data)
+{
+    stream >> data._length;
+    stream >> data._front;
+    stream >> data._rear;
+    for(int i = 0; i < data._length; ++i) {
+        stream >> data._container[i];
+    }
+    return stream;
 }
