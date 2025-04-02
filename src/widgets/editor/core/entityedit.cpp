@@ -11,9 +11,24 @@ qint64 EntityEdit::generateRandomNumber() const
     return target;
 }
 
-EntityEdit::EntityEdit(QWidget *parent) : QWidget(parent), ui(new Ui::EntityEdit)
+EntityEdit::EntityEdit(QWidget *parent) : QWidget(parent)
 {
-    ui->setupUi(this);
+    ui = new Ui::EntityEdit;
+}
+
+EntityEdit::~EntityEdit()
+{
+    delete ui;
+}
+
+qint64 EntityEdit::getInitial() const
+{
+    return initial;
+}
+
+void EntityEdit::initialize(QWidget *target)
+{
+    ui->setupUi(target);
     generator = QRandomGenerator::global();
 
     validator = new QIntValidator(this);
@@ -34,16 +49,6 @@ EntityEdit::EntityEdit(QWidget *parent) : QWidget(parent), ui(new Ui::EntityEdit
     {
         validateIdentifier(ui->identifierEdit->text());
     });
-}
-
-EntityEdit::~EntityEdit()
-{
-    delete ui;
-}
-
-qint64 EntityEdit::getInitial() const
-{
-    return initial;
 }
 
 qint64 EntityEdit::getIdentifier() const

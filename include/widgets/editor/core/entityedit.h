@@ -38,6 +38,7 @@ private slots:
 
 protected:
     qint64 getInitial() const;
+    virtual void initialize(QWidget *target);
 
 protected slots:
     void setInitial(qint64 value);
