@@ -11,6 +11,7 @@ TeacherView::TeacherView(QWidget *parent) : QWidget(parent), ui(new Ui::TeacherV
 {
     ui->setupUi(this);
     connect(ui->copyButton, &QToolButton::clicked, this, &TeacherView::copyIDNumber);
+    connect(this, &TeacherView::teacherChanged, this, &TeacherView::resetTeacher);
 }
 
 TeacherView::~TeacherView()
