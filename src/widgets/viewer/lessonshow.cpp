@@ -1,5 +1,5 @@
+#include "include/widgets/viewer/lessonshow.h"
 #include "include/data/teacher.h"
-#include "lessonshow.h"
 #include "ui_lessonshow.h"
 
 LessonShow::LessonShow(QWidget *parent) : EntityShow(parent)

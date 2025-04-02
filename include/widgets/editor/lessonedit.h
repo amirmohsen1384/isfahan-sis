@@ -2,13 +2,14 @@
 #define LESSONEDIT_H
 
 #include <QWidget>
+#include "core/entityedit.h"
 #include "include/data/lesson.h"
 
 namespace Ui {
 class LessonEdit;
 }
 
-class LessonEdit : public QWidget
+class LessonEdit : public EntityEdit
 {
     Q_OBJECT
 public:
@@ -16,43 +17,39 @@ public:
     explicit LessonEdit(QWidget *parent = nullptr);
     ~LessonEdit();
 
-    int getCapacity() const;
     QString getName() const;
     int getCreditUnit() const;
     int getBranchNumber() const;
-    qint64 getIdentifier() const;
+    int getTotalCapacity() const;
     QDateTime getFinalExam() const;
 
-    Lesson getInformation() const;
     Lesson getInitial() const;
+    Lesson getInformation() const;
 
 public slots:
-    void setName(const QString &value);
-    void setCapacity(int value);
-    void setCreditUnit(int value);
-    void setBranchNumber(int value);
-    void setIdentifier(qint64 value);
     void setFinalExam(const QDateTime &value);
-    void setInformation(const Lesson &value);
+    void setName(const QString &value);
+    void setTotalCapacity(int value);
+    void setBranchNumber(int value);
+    void setCreditUnit(int value);
 
+    void setInformation(const Lesson &value);
     void setInitial(const Lesson &initial);
 
     void resetName();
-    void resetCapacity();
+    void resetFinalExam();
     void resetCreditUnit();
     void resetBranchNumber();
-    void resetIdentifier();
-    void resetFinalExam();
-    void resetProperties();
+    void resetTotalCapacity();
+
+    void resetLesson();
 
 signals:
     void nameChanged(QString value);
-    void capacityChanged(int value);
     void creditUnitChanged(int value);
     void branchNumberChanged(int value);
-    void identifierChanged(qint64 value);
+    void totalCapacityChanged(int value);
     void finalExamChanged(QDateTime value);
-
     void initialChanged(const Lesson &value);
 
 private:

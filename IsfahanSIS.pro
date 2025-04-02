@@ -17,9 +17,6 @@ SOURCES += \
     src/widgets/viewer/teachershow.cpp \
     src/widgets/viewer/lessonshow.cpp \
     src/widgets/editor/lessonedit.cpp \
-    src/widgets/editor/studentedit.cpp \
-    src/widgets/editor/teacheredit.cpp \
-    src/widgets/editor/core/personedit.cpp \
     src/widgets/editor/core/entityedit.cpp \
     src/widgets/editor/core/namevalidator.cpp \
     src/screens/loginscreen.cpp \
@@ -42,14 +39,11 @@ HEADERS += \
     include/widgets/editor/core/namevalidator.h \
     include/widgets/editor/lessonedit.h \
     include/widgets/editor/core/entityedit.h \
-    include/widgets/editor/core/personedit.h \
     include/models/enrolledmodel.h \
     include/models/core/entityitem.h \
     include/models/core/lecturetreemodel.h \
     include/models/lessonlistmodel.h \
     include/models/teachingloadmodel.h \
-    include/widgets/editor/studentedit.h \
-    include/widgets/editor/teacheredit.h \
     include/widgets/viewer/lessonshow.h \
     include/screens/loginscreen.h \
     include/widgets/viewer/core/personshow.h \
@@ -69,11 +63,8 @@ FORMS += \
     ui/widgets/viewer/studentshow.ui \
     ui/widgets/viewer/teachershow.ui \
     ui/screens/loginscreen.ui \
-    ui/widgets/editor/studentedit.ui \
-    ui/widgets/editor/teacheredit.ui \
     ui/widgets/editor/lessonedit.ui \
-    ui/widgets/editor/core/entityedit.ui \
-    ui/widgets/editor/core/personedit.ui
+    ui/widgets/editor/core/entityedit.ui
 
 RESOURCES += \
     resources/main.qrc

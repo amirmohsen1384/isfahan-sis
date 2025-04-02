@@ -13,52 +13,52 @@ qint64 EntityEdit::generateRandomNumber() const
 
 EntityEdit::EntityEdit(QWidget *parent) : QWidget(parent)
 {
-    ui = new Ui::EntityEdit;
+    uiEntity = new Ui::EntityEdit;
 }
 
 EntityEdit::~EntityEdit()
 {
-    delete ui;
+    delete uiEntity;
 }
 
-qint64 EntityEdit::getInitial() const
+qint64 EntityEdit::getInitialEntity() const
 {
-    return initial;
+    return initialEntity;
 }
 
 void EntityEdit::initialize(QWidget *target)
 {
-    ui->setupUi(target);
+    uiEntity->setupUi(target);
     generator = QRandomGenerator::global();
 
     validator = new QIntValidator(this);
     validator->setBottom(1);
-    ui->identifierEdit->setValidator(validator);
+    uiEntity->identifierEdit->setValidator(validator);
 
-    connect(ui->identifierEdit, &QLineEdit::textChanged, this, &EntityEdit::validateIdentifier);
+    connect(uiEntity->identifierEdit, &QLineEdit::textChanged, this, &EntityEdit::validateIdentifier);
     connect(this, &EntityEdit::identifierAccepted, [this](qint64 value)
     {
-        ui->identifierEdit->setStyleSheet("color: black");
+        uiEntity->identifierEdit->setStyleSheet("color: black");
         emit identifierChanged(value);
     });
     connect(this, &EntityEdit::identifierRejected, [this]()
     {
-        ui->identifierEdit->setStyleSheet("color: red");
+        uiEntity->identifierEdit->setStyleSheet("color: red");
     });
     connect(this, &EntityEdit::forbiddenEntitiesChanged, [this]()
     {
-        validateIdentifier(ui->identifierEdit->text());
+        validateIdentifier(uiEntity->identifierEdit->text());
     });
 }
 
 qint64 EntityEdit::getIdentifier() const
 {
-    return ui->identifierEdit->text().toLongLong();
+    return uiEntity->identifierEdit->text().toLongLong();
 }
 
 void EntityEdit::setIdentifier(qint64 value)
 {
-    ui->identifierEdit->setText(QString::number(value));
+    uiEntity->identifierEdit->setText(QString::number(value));
 }
 
 void EntityEdit::setRandomIdentifier(const Qt::CheckState &state)
@@ -66,13 +66,13 @@ void EntityEdit::setRandomIdentifier(const Qt::CheckState &state)
     switch(state) {
     case Qt::Checked: {
         qint64 value = generateRandomNumber();
-        ui->identifierEdit->setDisabled(true);
+        uiEntity->identifierEdit->setDisabled(true);
         setIdentifier(value);
         break;
     }
     case Qt::Unchecked: {
-        ui->identifierEdit->setDisabled(false);
-        ui->identifierEdit->setText({});
+        uiEntity->identifierEdit->setDisabled(false);
+        uiEntity->identifierEdit->setText({});
         break;
     }
     }
@@ -96,13 +96,13 @@ EntityList EntityEdit::getForbiddenEntities() const
 
 void EntityEdit::resetIdentifier()
 {
-    setIdentifier(initial);
+    setIdentifier(initialEntity);
 }
 
-void EntityEdit::setInitial(qint64 value)
+void EntityEdit::setInitialEntity(qint64 value)
 {
-    initial = value;
-    emit initialChanged(value);
+    initialEntity = value;
+    emit initialEntityChanged(value);
 }
 
 void EntityEdit::setForbiddenEntities(const EntityList &entities)

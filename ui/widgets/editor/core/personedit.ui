@@ -67,7 +67,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../../../resources/main.qrc">
+         <iconset resource="../../../../resources/main.qrc">
           <normaloff>:/root/dialogs/reset.ico</normaloff>:/root/dialogs/reset.ico</iconset>
         </property>
         <property name="iconSize">
@@ -106,7 +106,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../../../resources/main.qrc">
+         <iconset resource="../../../../resources/main.qrc">
           <normaloff>:/root/dialogs/reset.ico</normaloff>:/root/dialogs/reset.ico</iconset>
         </property>
         <property name="iconSize">
@@ -155,7 +155,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../../../resources/main.qrc">
+         <iconset resource="../../../../resources/main.qrc">
           <normaloff>:/root/dialogs/reset.ico</normaloff>:/root/dialogs/reset.ico</iconset>
         </property>
         <property name="iconSize">
@@ -223,7 +223,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../../../resources/main.qrc">
+         <iconset resource="../../../../resources/main.qrc">
           <normaloff>:/root/dialogs/password-show.png</normaloff>:/root/dialogs/password-show.png</iconset>
         </property>
         <property name="iconSize">
@@ -255,7 +255,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
-       <widget class="EntityEdit" name="entityEdit" native="true">
+       <widget class="QWidget" name="entityEdit" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -274,17 +274,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>EntityEdit</class>
-   <extends>QWidget</extends>
-   <header location="global">include/widgets/core/entityedit.h</header>
-   <container>1</container>
-   <slots>
-    <slot>identifierChanged(qint64)</slot>
-   </slots>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>firstNameEdit</tabstop>
   <tabstop>lastNameEdit</tabstop>
@@ -296,7 +285,7 @@
   <tabstop>showPasswordButton</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../resources/main.qrc"/>
+  <include location="../../../../resources/main.qrc"/>
  </resources>
  <connections>
   <connection>

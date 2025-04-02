@@ -1,7 +1,7 @@
 #ifndef LESSONSHOW_H
 #define LESSONSHOW_H
 
-#include "entityshow.h"
+#include "core/entityshow.h"
 #include "include/data/lesson.h"
 
 namespace Ui {

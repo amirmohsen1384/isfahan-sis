@@ -1,141 +1,118 @@
-#include "include/widgets/core/namevalidator.h"
-#include "include/widgets/core/personedit.h"
+#include "include/widgets/editor/core/namevalidator.h"
+#include "include/widgets/editor/core/personedit.h"
 #include "ui_personedit.h"
 
-PersonEdit::PersonEdit(const Person &initial, QWidget *parent) : PersonEdit(parent)
+PersonEdit::PersonEdit(QWidget *parent) : EntityEdit(parent)
 {
-    setInitial(initial);
+    ui = new Ui::PersonEdit;
 }
-
-PersonEdit::PersonEdit(QWidget *parent) : QWidget(parent), ui(new Ui::PersonEdit)
-{
-    ui->setupUi(this);
-    connect(ui->entityEdit, &EntityEdit::identifierAccepted, this, &PersonEdit::identifierChanged);
-    connect(ui->firstNameEdit, &QLineEdit::textChanged, this, &PersonEdit::firstNameChanged);
-    connect(ui->lastNameEdit, &QLineEdit::textChanged, this, &PersonEdit::lastNameChanged);
-    connect(ui->userNameEdit, &QLineEdit::textChanged, this, &PersonEdit::userNameChanged);
-    connect(ui->passwordEdit, &QLineEdit::textChanged, this, &PersonEdit::passwordChanged);
-    connect(this, &PersonEdit::initialChanged, this, &PersonEdit::resetProperties);
-
-    NameValidator *validator = new NameValidator(this);
-    ui->firstNameEdit->setValidator(validator);
-    ui->lastNameEdit->setValidator(validator);
-}
-
 PersonEdit::~PersonEdit()
 {
     delete ui;
-}
-
-Person PersonEdit::getInformation() const
-{
-    Person target = initial;
-    target.setFirstName(ui->firstNameEdit->text());
-    target.setLastName(ui->lastNameEdit->text());
-    target.setUserName(ui->userNameEdit->text());
-    target.setPassword(ui->passwordEdit->text());
-    target.setIdentifier(ui->entityEdit->getIdentifier());
-    return target;
 }
 
 QString PersonEdit::getFirstName() const
 {
     return ui->firstNameEdit->text();
 }
-
 QString PersonEdit::getLastName() const
 {
     return ui->lastNameEdit->text();
 }
-
 QString PersonEdit::getUserName() const
 {
     return ui->userNameEdit->text();
 }
-
 QString PersonEdit::getPassword() const
 {
     return ui->passwordEdit->text();
 }
 
-qint64 PersonEdit::getIdentifier() const
+Person PersonEdit::getInformationForPerson() const
 {
-    return ui->entityEdit->getIdentifier();
+    Person target = initialPerson;
+    target.setIdentifier(getIdentifier());
+    target.setFirstName(getFirstName());
+    target.setLastName(getLastName());
+    target.setUserName(getUserName());
+    target.setPassword(getPassword());
+    return target;
 }
 
-Person PersonEdit::getInitial() const
+Person PersonEdit::getInitialPerson() const
 {
-    return initial;
+    return initialPerson;
 }
 
 void PersonEdit::setFirstName(const QString &value)
 {
     ui->firstNameEdit->setText(value);
 }
-
 void PersonEdit::setLastName(const QString &value)
 {
     ui->lastNameEdit->setText(value);
 }
-
 void PersonEdit::setUserName(const QString &value)
 {
     ui->userNameEdit->setText(value);
 }
-
 void PersonEdit::setPassword(const QString &value)
 {
     ui->passwordEdit->setText(value);
 }
 
-void PersonEdit::setIdentifier(const qint64 &value)
+void PersonEdit::setInformationForPerson(const Person &value)
 {
-    ui->entityEdit->setIdentifier(value);
-}
-
-void PersonEdit::setInformation(const Person &value)
-{
+    setIdentifier(value.getIdentifier());
     setFirstName(value.getFirstName());
     setLastName(value.getLastName());
     setUserName(value.getUserName());
     setPassword(value.getPassword());
-    setIdentifier(value.getIdentifier());
 }
 
-void PersonEdit::setInitial(const Person &value)
+void PersonEdit::initialize(QWidget *target)
 {
-    this->initial = value;
-    emit initialChanged(initial);
+    ui->setupUi(target);
+    connect(ui->firstNameEdit, &QLineEdit::textChanged, this, &PersonEdit::firstNameChanged);
+    connect(ui->lastNameEdit, &QLineEdit::textChanged, this, &PersonEdit::lastNameChanged);
+    connect(ui->userNameEdit, &QLineEdit::textChanged, this, &PersonEdit::userNameChanged);
+    connect(ui->passwordEdit, &QLineEdit::textChanged, this, &PersonEdit::passwordChanged);
+    connect(this, &PersonEdit::initialPersonChanged, this, &PersonEdit::resetPerson);
+    NameValidator *validator = new NameValidator(this);
+    ui->firstNameEdit->setValidator(validator);
+    ui->lastNameEdit->setValidator(validator);
+    EntityEdit::initialize(ui->entityEdit);
 }
 
-void PersonEdit::resetIdentifier()
+void PersonEdit::setInitialPerson(const Person &value)
 {
-    ui->entityEdit->resetIdentifier();
+    this->initialPerson = value;
+    emit initialPersonChanged(initialPerson);
 }
 
 void PersonEdit::resetFirstName()
 {
-    ui->firstNameEdit->setText(initial.getFirstName());
+    ui->firstNameEdit->setText(initialPerson.getFirstName());
 }
 
 void PersonEdit::resetLastName()
 {
-    ui->lastNameEdit->setText(initial.getLastName());
+    ui->lastNameEdit->setText(initialPerson.getLastName());
 }
 
 void PersonEdit::resetUserName()
 {
-    ui->userNameEdit->setText(initial.getUserName());
+    ui->userNameEdit->setText(initialPerson.getUserName());
 }
 
 void PersonEdit::resetPassword()
 {
-    ui->passwordEdit->setText(initial.getPassword());
+    ui->passwordEdit->setText(initialPerson.getPassword());
 }
 
-void PersonEdit::resetProperties()
+void PersonEdit::resetPerson()
 {
-    ui->entityEdit->resetIdentifier();
+    resetIdentifier();
     resetFirstName();
     resetLastName();
     resetUserName();

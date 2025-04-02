@@ -32,26 +32,26 @@ signals:
     void identifierChanged(qint64 value);
     void forbiddenEntitiesChanged(const EntityList &entity);
 
-private slots:
+public slots:
     void validateIdentifier(const QString &text);
     void setRandomIdentifier(const Qt::CheckState &state);
 
 protected:
-    qint64 getInitial() const;
+    qint64 getInitialEntity() const;
     virtual void initialize(QWidget *target);
 
 protected slots:
-    void setInitial(qint64 value);
+    void setInitialEntity(qint64 value);
 
 signals:
+    void initialEntityChanged(qint64 value);
     void identifierAccepted(qint64 value);
-    void initialChanged(qint64 value);
     void identifierRejected();
 
 private:
-    qint64 initial;
-    Ui::EntityEdit *ui;
+    qint64 initialEntity;
     EntityList container;
+    Ui::EntityEdit *uiEntity;
     QIntValidator *validator;
     QRandomGenerator *generator;
 };
