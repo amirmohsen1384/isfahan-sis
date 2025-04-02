@@ -1,4 +1,4 @@
-#include "include/widgets/core/namevalidator.h"
+#include "include/widgets/editor/core/namevalidator.h"
 
 QValidator::State NameValidator::validate(QString &input, int &pos) const {
     if(input.isEmpty()) {
