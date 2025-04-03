@@ -17,7 +17,6 @@ public:
     virtual QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     virtual int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     virtual int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    virtual Qt::ItemFlags flags(const QModelIndex &index) const override;
     virtual QModelIndex parent(const QModelIndex &index) const override;
 
 protected slots:
