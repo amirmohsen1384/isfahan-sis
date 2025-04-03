@@ -7,6 +7,7 @@ EnrolledModel::EnrolledModel(const Teacher &teacher, QObject *parent) : Enrolled
 
 EnrolledModel::EnrolledModel(QObject *parent) : LectureTreeModel(parent)
 {
+    setupModel();
     connect(this, &EnrolledModel::teacherChanged, this, &EnrolledModel::setupModel);
 }
 
