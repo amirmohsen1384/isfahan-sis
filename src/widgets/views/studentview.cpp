@@ -1,5 +1,6 @@
 #include "include/widgets/views/studentview.h"
 #include "ui_studentview.h"
+#include <QClipboard>
 
 StudentView::StudentView(const Student &container, QWidget *parent) : StudentView(parent)
 {
