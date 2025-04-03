@@ -17,21 +17,6 @@
    <layout class="QGridLayout" name="mainLayout">
     <item row="1" column="0" colspan="6">
      <layout class="QGridLayout" name="teachingLoadLayout">
-      <item row="0" column="1">
-       <widget class="QLineEdit" name="lessonView">
-        <property name="font">
-         <font>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-        <property name="placeholderText">
-         <string>The lesson you clicked will be shown here.</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="0">
        <widget class="QToolButton" name="goUpButton">
         <property name="enabled">
@@ -58,8 +43,33 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="lessonView">
+        <property name="font">
+         <font>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+        <property name="placeholderText">
+         <string>The lesson you clicked will be shown here.</string>
+        </property>
+       </widget>
+      </item>
       <item row="1" column="0" colspan="2">
-       <widget class="QListView" name="teachingLoadView"/>
+       <widget class="QTableView" name="tableView">
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+        </property>
+        <property name="gridStyle">
+         <enum>Qt::PenStyle::NoPen</enum>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -68,13 +78,6 @@
       <property name="leftMargin">
        <number>0</number>
       </property>
-      <item>
-       <widget class="QPushButton" name="viewButton">
-        <property name="text">
-         <string>View</string>
-        </property>
-       </widget>
-      </item>
       <item>
        <spacer name="controlLeftSpacer">
         <property name="orientation">
@@ -89,7 +92,24 @@
        </spacer>
       </item>
       <item>
+       <widget class="QPushButton" name="viewButton">
+        <property name="font">
+         <font>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>View</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="addButton">
+        <property name="font">
+         <font>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="toolTip">
          <string>Add a new lesson</string>
         </property>
@@ -103,11 +123,28 @@
         <property name="enabled">
          <bool>false</bool>
         </property>
+        <property name="font">
+         <font>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="toolTip">
          <string>Remove a lesson</string>
         </property>
         <property name="text">
          <string>Remove</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="editButton">
+        <property name="font">
+         <font>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Edit</string>
         </property>
        </widget>
       </item>
@@ -123,13 +160,6 @@
          </size>
         </property>
        </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="editButton">
-        <property name="text">
-         <string>Edit</string>
-        </property>
-       </widget>
       </item>
      </layout>
     </item>
@@ -153,5 +183,25 @@
  <resources>
   <include location="../../resources/main.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>addButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TeacherPanel</receiver>
+   <slot>addLesson()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>323</x>
+     <y>613</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>691</x>
+     <y>628</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>addLesson()</slot>
+ </slots>
 </ui>
