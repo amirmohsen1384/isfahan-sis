@@ -42,6 +42,7 @@ QModelIndex LectureTreeModel::parent(const QModelIndex &index) const
         return {};
     } else {
         EntityItem *item = static_cast<EntityItem*>(index.internalPointer());
+
         return item->parent != nullptr ? createIndex(item->parent->row(), 0, item->parent) : QModelIndex{};
     }
 }
@@ -62,7 +63,7 @@ int LectureTreeModel::rowCount(const QModelIndex &parent) const
     } else {
         item = static_cast<EntityItem*>(parent.internalPointer());
     }
-    return item->childCount();
+    return item == nullptr ? 0 : item->childCount();
 }
 
 Qt::ItemFlags LectureTreeModel::flags(const QModelIndex &index) const
@@ -81,5 +82,5 @@ int LectureTreeModel::columnCount(const QModelIndex &parent) const
     } else {
         item = static_cast<EntityItem*>(parent.internalPointer());
     }
-    return item->columnCount();
+    return item == nullptr ? 0 : item->childCount();
 }
