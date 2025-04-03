@@ -69,7 +69,7 @@ void EnrolledModel::setupModel()
             parent->appendChild(child);
         }
 
-        root->appendChild(parent);
+        root->children.append(parent);
     }
 
     endResetModel();
