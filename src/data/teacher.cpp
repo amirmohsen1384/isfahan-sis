@@ -62,10 +62,20 @@ void Teacher::removeCredit(Lesson &target)
     if(target.isNull() || !teaches(target)) {
         return;
     }
+
     auto it = std::lower_bound(lessons.begin(), lessons.end(), target);
     int index = std::distance(lessons.begin(), it);
     lessons.removeAt(index);
     lessons.squeeze();
+
+    StudentList container = target.getEnrolledStudents();
+    for(Student &s : container) {
+        s.removeCredit(target);
+        s.commitToRecord();
+    }
+
+    QFile::remove(Lesson::getFileName(target));
+
     emit lessonChanged();
 }
 
