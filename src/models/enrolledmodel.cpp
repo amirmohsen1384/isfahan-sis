@@ -19,12 +19,20 @@ QVariant EnrolledModel::data(const QModelIndex &index, int role) const
     else if(role == Qt::UserRole) {
         QModelIndex target = this->index(index.row(), 1, index.parent());
         Entity entity(target.data().toLongLong());
-        if(index.parent().isValid()) {
-            return QVariant::fromValue(Student::loadFromRecord(entity));
+
+        Student student = Student::loadFromRecord(entity);
+        if(student.isNull()) {
+            Lesson lesson = Lesson::loadFromRecord(entity);
+            if(lesson.isNull()) {
+                return {};
+            }
+            else {
+                return QVariant::fromValue(lesson);
+            }
+        } else {
+            return QVariant::fromValue(student);
         }
-        else {
-            return QVariant::fromValue(Lesson::loadFromRecord(entity));
-        }
+
     }
     else if(role != Qt::DisplayRole) {
         return {};
