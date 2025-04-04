@@ -10,6 +10,7 @@ class Lesson;
 class Student;
 class Teacher;
 using LessonList = QList<Lesson>;
+using EntityQueue = QQueue<Entity>;
 
 class Lesson : public Entity
 {
@@ -65,7 +66,7 @@ public:
     static QDir getRoot();
 
 private:
-    QQueue<Entity> waitingList;
+    EntityQueue waitingList;
     friend class Student;
     friend class Teacher;
 
