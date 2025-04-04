@@ -39,7 +39,7 @@ qint64 Entity::getIdentifier() const
 
 bool Entity::isNull() const
 {
-    return identifier == -1;
+    return identifier < 0;
 }
 
 QDataStream& operator<<(QDataStream &stream, const Entity &data)
