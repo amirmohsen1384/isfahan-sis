@@ -6,26 +6,316 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>780</width>
+    <height>651</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>800</width>
-     <height>26</height>
-    </rect>
-   </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="mainLayout">
+    <item>
+     <layout class="QHBoxLayout" name="welcomeLayout">
+      <item>
+       <widget class="QLabel" name="welcomeLabel">
+        <property name="font">
+         <font>
+          <family>Segoe Print</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Welcome back, Student</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="editProfileButton">
+        <property name="toolTip">
+         <string>Edit Your Profile</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../resources/main.qrc">
+          <normaloff>:/root/dialogs/edit.png</normaloff>:/root/dialogs/edit.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="viewProfileButton">
+        <property name="toolTip">
+         <string>View Your Profile</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../resources/main.qrc">
+          <normaloff>:/root/dialogs/show.png</normaloff>:/root/dialogs/show.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="lessonLayout">
+      <item>
+       <widget class="QLabel" name="title">
+        <property name="font">
+         <font>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Here you can recognize a list of your registered lessons:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTableView" name="registeredLessonsView"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="controlLayout">
+      <item>
+       <spacer name="controlLeftSpacer">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="addLessonButton">
+        <property name="font">
+         <font>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string>Register</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../resources/main.qrc">
+          <normaloff>:/root/dialogs/add.png</normaloff>:/root/dialogs/add.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="removeLessonButton">
+        <property name="font">
+         <font>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string>Unregister</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../resources/main.qrc">
+          <normaloff>:/root/dialogs/delete.png</normaloff>:/root/dialogs/delete.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="showLessonButton">
+        <property name="font">
+         <font>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string>View</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../resources/main.qrc">
+          <normaloff>:/root/dialogs/show.png</normaloff>:/root/dialogs/show.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="controlRightSpacer">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
- <connections/>
+ <resources>
+  <include location="../../resources/main.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>viewProfileButton</sender>
+   <signal>clicked()</signal>
+   <receiver>StudentPanel</receiver>
+   <slot>viewProfile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>741</x>
+     <y>38</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>771</x>
+     <y>81</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editProfileButton</sender>
+   <signal>clicked()</signal>
+   <receiver>StudentPanel</receiver>
+   <slot>editProfile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>690</x>
+     <y>30</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>619</x>
+     <y>57</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>removeLessonButton</sender>
+   <signal>clicked()</signal>
+   <receiver>StudentPanel</receiver>
+   <slot>removeLesson()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>382</x>
+     <y>621</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>518</x>
+     <y>638</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>registeredLessonsView</sender>
+   <signal>activated(QModelIndex)</signal>
+   <receiver>StudentPanel</receiver>
+   <slot>viewLesson()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>411</x>
+     <y>243</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>424</x>
+     <y>41</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>showLessonButton</sender>
+   <signal>clicked()</signal>
+   <receiver>StudentPanel</receiver>
+   <slot>viewLesson()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>429</x>
+     <y>613</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>551</x>
+     <y>607</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>viewProfile()</slot>
+  <slot>editProfile()</slot>
+  <slot>removeLesson()</slot>
+  <slot>viewLesson()</slot>
+ </slots>
 </ui>

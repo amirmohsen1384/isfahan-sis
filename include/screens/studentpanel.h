@@ -2,6 +2,7 @@
 #define STUDENTPANEL_H
 
 #include <QMainWindow>
+#include "include/models/studentmodel.h"
 
 namespace Ui { class StudentPanel; }
 
@@ -9,12 +10,27 @@ class StudentPanel : public QMainWindow
 {
     Q_OBJECT
 public:
+    explicit StudentPanel(const Student &student, QWidget *parent = nullptr);
     explicit StudentPanel(QWidget *parent = nullptr);
 
-signals:
+protected:
+    void closeEvent(QCloseEvent *event) override;
+
+public slots:
+    void removeLesson();
+    void viewLesson();
+    void resetPanel();
+
+    void viewProfile();
+    void editProfile();
+
+private slots:
+    void toggleControlButtons();
 
 private:
-    Ui::StudentPanel *ui;
+    StudentModel resource;
+    Ui::StudentPanel *ui = nullptr;
+    Student &target = resource.getContainer();
 };
 
 #endif // STUDENTPANEL_H
