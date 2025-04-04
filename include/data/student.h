@@ -27,7 +27,6 @@ public:
     static Student loadFromRecord(const Entity &value);
 
     float getScore() const;
-    void setScore(float value);
 
     Student::State getState() const;
     
@@ -36,19 +35,26 @@ public:
 
     bool enrollsIn(const Lesson &target) const;
 
-    virtual void addCredit(Lesson &target) override;
-    virtual void removeCredit(Lesson &target) override;
+    LessonList getWaitingLessons() const;
 
     static QDir getRoot();
     static QFileInfoList getFiles();
     static StudentList getEntities();
     static QString getFileName(const Entity &entity);
 
+public slots:
+    void setScore(float value);
+
+    virtual void addCredit(Lesson &target) override;
+    virtual void removeCredit(Lesson &target) override;
+
 signals:
     void scoreChanged(float score);
+    void lessonQueueChanged();
 
 private:
     float score = 0.00;
+    EntityQueue queue;
 };
 
 QDataStream& operator<<(QDataStream &stream, const Student &data);

@@ -133,6 +133,18 @@ bool Student::enrollsIn(const Lesson &target) const
     return std::binary_search(lessons.cbegin(), lessons.cend(), target);
 }
 
+LessonList Student::getWaitingLessons() const
+{
+    LessonList container;
+    for(const Entity &entity : queue) {
+        Lesson l = Lesson::loadFromRecord(entity);
+        if(!l.isNull()) {
+            container.append(l);
+        }
+    }
+    return container;
+}
+
 void Student::addCredit(Lesson &target)
 {
     if(enrollsIn(target) || target.isNull()) {
@@ -142,7 +154,18 @@ void Student::addCredit(Lesson &target)
     if(!target.isAbleToEnroll()) {
         target.waitingList.enqueue(*this);
         target.commitToRecord();
+        queue.enqueue(target);
+        emit lessonQueueChanged();
         return;
+
+    } else {
+        auto it = std::lower_bound(queue.begin(), queue.end(), target);
+        if(it != queue.end() && *it == target) {
+            int index = std::distance(queue.begin(), it);
+            queue.removeAt(index);
+            queue.squeeze();
+            emit lessonQueueChanged();
+        }
     }
 
     auto it = std::lower_bound(lessons.begin(), lessons.end(), target);
@@ -165,9 +188,9 @@ void Student::removeCredit(Lesson &target)
 
         if(target.isAbleToEnroll() && !target.waitingList.isEmpty()) {
             Student s = Student::loadFromRecord(target.waitingList.dequeue());
+            target.commitToRecord();
             s.addCredit(target);
             s.commitToRecord();
-            target.commitToRecord();
         }
 
         emit lessonChanged();
