@@ -32,6 +32,7 @@ protected:
 
 private:
     Teacher target;
+    friend class TeacherPanel;
 };
 
 #endif // ENROLLEDMODEL_H
