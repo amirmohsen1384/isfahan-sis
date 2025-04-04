@@ -27,7 +27,7 @@ void TeacherEditDialog::accept()
 {
     QMessageBox message(this);
     message.setWindowTitle("Error");
-    message.setIcon(QMessageBox::Warning);
+    message.setIcon(QMessageBox::Critical);
     try {
         ui->mainEditor->validateEditor();
         QDialog::accept();
