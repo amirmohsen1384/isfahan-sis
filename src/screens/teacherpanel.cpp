@@ -93,6 +93,7 @@ void TeacherPanel::viewEntity()
         if(!target.isNull()) {
             dialog.setWindowTitle(QString("%1 - Student View").arg(target.getFullName()));
             StudentView viewer(target, &dialog);
+            viewer.setPasswordVisible(false);
             dialog.exec();
         }
     }
