@@ -8,5 +8,9 @@
         <file>dialogs/password-show.png</file>
         <file>dialogs/copy.png</file>
         <file>dialogs/go-parent.png</file>
+        <file>dialogs/add.png</file>
+        <file>dialogs/delete.png</file>
+        <file>dialogs/edit.png</file>
+        <file>dialogs/show.png</file>
     </qresource>
 </RCC>
