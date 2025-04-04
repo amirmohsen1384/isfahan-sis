@@ -15,7 +15,7 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    Student& container();
+    Student& getContainer();
 
 public slots:
     void refresh();

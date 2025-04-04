@@ -11,6 +11,7 @@
 StudentModel::StudentModel(const Student &data, QObject *parent) : StudentModel(parent)
 {
     container = data;
+    refresh();
 }
 
 StudentModel::StudentModel(QObject *parent) : QAbstractTableModel(parent)
@@ -61,7 +62,7 @@ QVariant StudentModel::headerData(int section, Qt::Orientation orientation, int 
     }
 }
 
-Student &StudentModel::container()
+Student &StudentModel::getContainer()
 {
     return container;
 }
@@ -101,7 +102,7 @@ QVariant StudentModel::data(const QModelIndex &index, int role) const
             return {};
         }
 
-        const int row = index.row();
+        int row = index.row();
         if(row >= 0 && row < resource.size()) {
             // light green
             return QColor(200, 250, 180);
@@ -120,7 +121,7 @@ QVariant StudentModel::data(const QModelIndex &index, int role) const
     }
 
     Lesson target;
-    const int row = index.row();
+    int row = index.row();
     if(row >= 0 && row < resource.size()) {
         target = resource.at(row);
         if(index.column() == STATUS_COLUMN) {
