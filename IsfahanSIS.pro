@@ -13,6 +13,7 @@ SOURCES += \
     src/data/student.cpp \
     src/dialogs/lessoneditdialog.cpp \
     src/dialogs/teachereditdialog.cpp \
+    src/models/studentmodel.cpp \
     src/screens/loginscreen.cpp \
     src/models/enrolledmodel.cpp \
     src/models/core/entityitem.cpp \
@@ -43,6 +44,7 @@ HEADERS += \
     include/errors/education.h \
     include/errors/resource.h \
     include/errors/general.h \
+    include/models/studentmodel.h \
     include/screens/loginscreen.h \
     include/models/enrolledmodel.h \
     include/models/core/entityitem.h \
