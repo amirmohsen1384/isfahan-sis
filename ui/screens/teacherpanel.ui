@@ -62,8 +62,15 @@
         <property name="styleSheet">
          <string notr="true"/>
         </property>
-        <property name="text">
-         <string>Edit Profile</string>
+        <property name="icon">
+         <iconset resource="../../resources/main.qrc">
+          <normaloff>:/root/dialogs/edit.png</normaloff>:/root/dialogs/edit.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
         </property>
         <property name="flat">
          <bool>true</bool>
@@ -82,8 +89,15 @@
         <property name="styleSheet">
          <string notr="true"/>
         </property>
-        <property name="text">
-         <string>View Profie</string>
+        <property name="icon">
+         <iconset resource="../../resources/main.qrc">
+          <normaloff>:/root/dialogs/show.png</normaloff>:/root/dialogs/show.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
         </property>
         <property name="flat">
          <bool>true</bool>
@@ -188,7 +202,7 @@
          <string>Add a new lesson</string>
         </property>
         <property name="text">
-         <string>Add</string>
+         <string/>
         </property>
         <property name="icon">
          <iconset resource="../../resources/main.qrc">
@@ -219,7 +233,7 @@
          <string>Remove a lesson</string>
         </property>
         <property name="text">
-         <string>Remove</string>
+         <string/>
         </property>
         <property name="icon">
          <iconset resource="../../resources/main.qrc">
@@ -243,8 +257,11 @@
           <bold>true</bold>
          </font>
         </property>
+        <property name="toolTip">
+         <string>View the information of a lesson or student</string>
+        </property>
         <property name="text">
-         <string>View</string>
+         <string/>
         </property>
         <property name="icon">
          <iconset resource="../../resources/main.qrc">
