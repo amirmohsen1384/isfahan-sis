@@ -84,7 +84,7 @@ void StudentView::resetScore()
     switch(container.getState()) {
     case Student::State::Honor: {
         ui->stateLabel->setText("Honored Student");
-        ui->stateLabel->setStyleSheet("color: dark-green");
+        ui->stateLabel->setStyleSheet("color: rgb(40, 140, 70)");
         break;
     }
     case Student::State::Normal: {
@@ -94,7 +94,7 @@ void StudentView::resetScore()
     }
     case Student::State::Probation: {
         ui->stateLabel->setText("Probated Student");
-        ui->stateLabel->setStyleSheet("color: dark-red");
+        ui->stateLabel->setStyleSheet("color: rgb(130, 20, 20)");
         break;
     }
     case Student::State::Rejection: {
