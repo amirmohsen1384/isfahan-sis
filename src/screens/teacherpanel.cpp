@@ -17,6 +17,7 @@ TeacherPanel::TeacherPanel(QWidget *parent) : QMainWindow(parent), ui(new Ui::Te
     ui->setupUi(this);
     ui->tableView->setModel(&model);
     ui->viewButton->setVisible(false);
+    ui->removeButton->setVisible(false);
     connect(&teacher, &Teacher::lessonChanged, [&]() { toggleControlButtons(); });
     ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     connect(&model, &EnrolledModel::teacherChanged, this, &TeacherPanel::resetTeacher);
@@ -29,6 +30,7 @@ TeacherPanel::~TeacherPanel()
 void TeacherPanel::closeEvent(QCloseEvent *event)
 {
     event->accept();
+    teacher.commitToRecord();
     QGuiApplication::exit(EXIT_SUCCESS);
 }
 
@@ -169,11 +171,11 @@ void TeacherPanel::resetTeacher()
 void TeacherPanel::toggleControlButtons()
 {
     ui->viewButton->setVisible(ui->tableView->currentIndex().isValid() && model.rowCount() > 0);
-    ui->removeButton->setEnabled(model.rowCount() > 0 && ui->tableView->currentIndex().isValid());
+    ui->removeButton->setVisible(model.rowCount() > 0 && ui->tableView->currentIndex().isValid());
 }
 
 void TeacherPanel::toggleControlButtons(const QModelIndex &index)
 {
-    ui->removeButton->setEnabled(index.isValid());
+    ui->removeButton->setVisible(index.isValid());
     ui->viewButton->setVisible(index.isValid());
 }
