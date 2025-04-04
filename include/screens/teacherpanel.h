@@ -13,7 +13,7 @@ class TeacherPanel : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit TeacherPanel(Teacher &target, QWidget *parent = nullptr);
+    explicit TeacherPanel(const Teacher &target, QWidget *parent = nullptr);
     explicit TeacherPanel(QWidget *parent = nullptr);
 
     Teacher getTeacher() const;

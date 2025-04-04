@@ -8,7 +8,7 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 
-TeacherPanel::TeacherPanel(Teacher &target, QWidget *parent) : TeacherPanel(parent)
+TeacherPanel::TeacherPanel(const Teacher &target, QWidget *parent) : TeacherPanel(parent)
 {
     setTeacher(target);
 }
