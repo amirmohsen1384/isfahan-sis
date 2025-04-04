@@ -11,11 +11,14 @@ SOURCES += \
     src/data/person.cpp \
     src/data/teacher.cpp \
     src/data/student.cpp \
+    src/dialogs/lessoneditdialog.cpp \
+    src/dialogs/teachereditdialog.cpp \
     src/screens/loginscreen.cpp \
     src/models/enrolledmodel.cpp \
     src/models/core/entityitem.cpp \
     src/models/lessonlistmodel.cpp \
     src/models/teachingloadmodel.cpp \
+    src/screens/studentpanel.cpp \
     src/widgets/editor/lessonedit.cpp \
     src/models/core/lecturetreemodel.cpp \
     src/widgets/editor/core/namevalidator.cpp \
@@ -35,6 +38,8 @@ HEADERS += \
     include/data/person.h \
     include/data/student.h \
     include/data/core/queue.h \
+    include/dialogs/lessoneditdialog.h \
+    include/dialogs/teachereditdialog.h \
     include/errors/education.h \
     include/errors/resource.h \
     include/errors/general.h \
@@ -43,6 +48,7 @@ HEADERS += \
     include/models/core/entityitem.h \
     include/models/lessonlistmodel.h \
     include/models/teachingloadmodel.h \
+    include/screens/studentpanel.h \
     include/widgets/editor/lessonedit.h \
     include/models/core/lecturetreemodel.h \
     include/widgets/editor/core/namevalidator.h \
@@ -59,6 +65,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
+    ui/dialogs/lessoneditdialog.ui \
+    ui/dialogs/teachereditdialog.ui \
+    ui/screens/studentpanel.ui \
     ui/screens/teacherpanel.ui \
     ui/widgets/views/studentview.ui \
     ui/widgets/views/teacherview.ui \
