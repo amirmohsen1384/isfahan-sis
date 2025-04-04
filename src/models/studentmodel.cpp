@@ -116,6 +116,17 @@ QVariant StudentModel::data(const QModelIndex &index, int role) const
 
         return {};
     }
+    else if(role != Qt::UserRole) {
+        int row = index.row();
+        if(row >= 0 && row < resource.size()) {
+            return QVariant::fromValue(resource.at(row));
+        }
+
+        row -= resource.size();
+        if(row >= 0 && row < waiting.size()) {
+            return QVariant::fromValue(waiting.at(row));
+        }
+    }
     else if(role != Qt::DisplayRole) {
         return {};
     }
