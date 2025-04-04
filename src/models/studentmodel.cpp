@@ -75,14 +75,14 @@ void StudentModel::refresh()
 
 int StudentModel::columnCount(const QModelIndex &parent) const
 {
-    if (!parent.isValid()) {
+    if (parent.isValid()) {
         return 0;
     }
     return 6;
 }
 int StudentModel::rowCount(const QModelIndex &parent) const
 {
-    if (!parent.isValid()) {
+    if (parent.isValid()) {
         return 0;
     }
     return container.getLessons().size() + container.getWaitingLessons().size();
@@ -116,7 +116,7 @@ QVariant StudentModel::data(const QModelIndex &index, int role) const
 
         return {};
     }
-    else if(role != Qt::UserRole) {
+    else if(role == Qt::UserRole) {
         int row = index.row();
         if(row >= 0 && row < resource.size()) {
             return QVariant::fromValue(resource.at(row));
@@ -126,6 +126,9 @@ QVariant StudentModel::data(const QModelIndex &index, int role) const
         if(row >= 0 && row < waiting.size()) {
             return QVariant::fromValue(waiting.at(row));
         }
+    }
+    else if(role == Qt::TextAlignmentRole) {
+        return Qt::AlignCenter;
     }
     else if(role != Qt::DisplayRole) {
         return {};
@@ -147,8 +150,6 @@ QVariant StudentModel::data(const QModelIndex &index, int role) const
             return "In Queue";
         }
 
-    } else {
-        return {};
     }
 
     switch(index.column()) {

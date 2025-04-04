@@ -106,7 +106,19 @@
        </widget>
       </item>
       <item>
-       <widget class="QTableView" name="registeredLessonsView"/>
+       <widget class="QTableView" name="registeredLessonsView">
+        <property name="font">
+         <font>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Plain</enum>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -311,11 +323,28 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>registeredLessonsView</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>StudentPanel</receiver>
+   <slot>toggleControlButtons()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>281</x>
+     <y>249</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>354</x>
+     <y>35</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>viewProfile()</slot>
   <slot>editProfile()</slot>
   <slot>removeLesson()</slot>
   <slot>viewLesson()</slot>
+  <slot>toggleControlButtons()</slot>
  </slots>
 </ui>

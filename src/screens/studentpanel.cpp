@@ -21,6 +21,7 @@ StudentPanel::StudentPanel(QWidget *parent) : QMainWindow{parent}, ui(new Ui::St
     ui->removeLessonButton->setVisible(false);
     ui->registeredLessonsView->setModel(&resource);
     connect(&target, &Student::lessonChanged, this, &StudentPanel::toggleControlButtons);
+    ui->registeredLessonsView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     connect(&target, &Student::lessonQueueChanged, this, &StudentPanel::toggleControlButtons);
 }
 
@@ -38,7 +39,8 @@ void StudentPanel::removeLesson()
     message.setIcon(QMessageBox::Warning);
     message.setText("Would you like to remove a lesson?");
     message.setInformativeText("This operation cannot be reverted.");
-    if(message.exec() == QDialog::Accepted) {
+    message.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    if(message.exec() == QMessageBox::Yes) {
         const QModelIndex &index = ui->registeredLessonsView->currentIndex();
         Lesson data = qvariant_cast<Lesson>(index.data(Qt::UserRole));
         if(!data.isNull()) {
@@ -55,7 +57,7 @@ void StudentPanel::viewLesson()
     const QModelIndex &index = ui->registeredLessonsView->currentIndex();
     const Lesson &data = qvariant_cast<Lesson>(index.data(Qt::UserRole));
     if(!data.isNull()) {
-        LessonView viewer(data, dialog);
+        LessonView viewer(data, &dialog);
         dialog.exec();
     }
 }
