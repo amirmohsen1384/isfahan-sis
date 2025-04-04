@@ -1,7 +1,7 @@
-#include "include/data/lesson.h"
 #include "include/errors/resource.h"
 #include "include/data/student.h"
 #include "include/data/teacher.h"
+#include "include/data/lesson.h"
 
 Lesson::Lesson(QObject *parent) : Entity{parent} {}
 Lesson::Lesson(const Lesson &other, QObject *parent) : Lesson{parent}
@@ -12,12 +12,12 @@ Lesson::Lesson(const Lesson &other, QObject *parent) : Lesson{parent}
 Lesson &Lesson::operator=(const Lesson &other)
 {
     static_cast<Entity&>(*this) = static_cast<const Entity&>(other);
-    totalCapacity = other.totalCapacity;
-    branchNumber = other.branchNumber;
+    setTotalCapacity(other.totalCapacity);
+    setBranchNumber(other.branchNumber);
     waitingList = other.waitingList;
-    creditUnit = other.creditUnit;
-    finalExam = other.finalExam;
-    name = other.name;
+    setCreditUnit(other.creditUnit);
+    setFinalExam(other.finalExam);
+    setName(other.name);
     return *this;
 }
 

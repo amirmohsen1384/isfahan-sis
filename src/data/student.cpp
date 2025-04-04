@@ -17,8 +17,9 @@ Student::Student(const Student &another, QObject *parent) : Student{parent}
 Student& Student::operator=(const Student &another)
 {
     static_cast<Person&>(*this) = static_cast<const Person&>(another);
-    score = another.score;
+    setScore(another.score);
     queue = another.queue;
+    emit lessonQueueChanged();
     return *this;
 }
 
@@ -171,7 +172,7 @@ void Student::addCredit(Lesson &target)
 
     auto it = std::lower_bound(lessons.begin(), lessons.end(), target);
     int index = std::distance(lessons.begin(), it);
-    lessons.insert(index, *it);
+    lessons.insert(index, target);
     emit lessonChanged();
 }
 
