@@ -45,7 +45,7 @@ void TeachingLoadModel::setupModel()
             parent->appendChild(item);
         }
 
-        root->appendChild(parent);
+        root->children.append(parent);
     }
 
     endResetModel();
