@@ -48,6 +48,15 @@ QList<Student> Lesson::getEnrolledStudents() const
     return result;
 }
 
+QList<Student> Lesson::getWaitingStudents() const
+{
+    StudentList container;
+    for(const Entity &e : waitingList) {
+        container.append(Student::loadFromRecord(e));
+    }
+    return container;
+}
+
 QDateTime Lesson::getFinalExam() const
 {
     return finalExam;

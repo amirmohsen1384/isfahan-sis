@@ -39,6 +39,8 @@ public:
 
     quint8 getTotalCapacity() const;
 
+    QList<Student> getWaitingStudents() const;
+
     QList<Student> getEnrolledStudents() const;
 
 public slots:
@@ -78,9 +80,9 @@ signals:
     void totalCapacityChanged(quint64 value);
 
 private:
+    QDateTime finalExam = QDateTime::currentDateTime();
     quint64 branchNumber = 0;
     quint8 totalCapacity = 0;
-    QDateTime finalExam = QDateTime::currentDateTime();
     quint8 creditUnit = 0;
     QString name;
 };
