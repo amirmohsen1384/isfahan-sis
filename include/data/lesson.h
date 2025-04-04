@@ -61,14 +61,11 @@ public:
     friend QDataStream& operator>>(QDataStream &stream, Lesson &data);
     static Lesson loadFromRecord(const Entity &value);
 
-
     static QString getFileName(const Entity &value);
     static LessonList getEntities();
     static QFileInfoList getFiles();
     static QDir getRoot();
 
-private:
-    EntityQueue waitingList;
     friend class Student;
     friend class Teacher;
 
@@ -83,6 +80,7 @@ private:
     QDateTime finalExam = QDateTime::currentDateTime();
     quint64 branchNumber = 0;
     quint8 totalCapacity = 0;
+    EntityQueue waitingList;
     quint8 creditUnit = 0;
     QString name;
 };

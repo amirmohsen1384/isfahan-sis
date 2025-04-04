@@ -18,6 +18,7 @@ Student& Student::operator=(const Student &another)
 {
     static_cast<Person&>(*this) = static_cast<const Person&>(another);
     score = another.score;
+    queue = another.queue;
     return *this;
 }
 
@@ -214,12 +215,14 @@ QDataStream& operator<<(QDataStream &stream, const Student &data)
 {
     stream << static_cast<const Person&>(data);
     stream << data.score;
+    stream << data.queue;
     return stream;
 }
 QDataStream& operator>>(QDataStream &stream, Student &data)
 {
     stream >> static_cast<Person&>(data);
     stream >> data.score;
+    stream >> data.queue;
     return stream;
 }
 
