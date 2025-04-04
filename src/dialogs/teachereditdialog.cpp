@@ -34,7 +34,7 @@ void TeacherEditDialog::accept()
     }
     catch(InvalidIdentifierException const &exception) {
         message.setText("You have entered an invalid ID number.");
-        message.setInformativeText("ID number should be unique and differ from other lessons.");
+        message.setInformativeText("ID number should be unique and differ from other teachers.");
         message.exec();
     }
     catch(InvalidPasswordException const &exception) {
