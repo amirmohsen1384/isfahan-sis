@@ -13,9 +13,84 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>true</bool>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="mainLayout">
-    <item row="1" column="0" colspan="6">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="titleLayout">
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="welcomeLabel">
+        <property name="font">
+         <font>
+          <family>Segoe Print</family>
+          <pointsize>12</pointsize>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Welcome back, Teacher!</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="titleSpacer">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="editProfileButton">
+        <property name="font">
+         <font>
+          <bold>true</bold>
+          <underline>true</underline>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>Edit Profile</string>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="viewProfileButton">
+        <property name="font">
+         <font>
+          <bold>true</bold>
+          <underline>true</underline>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>View Profie</string>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
      <layout class="QGridLayout" name="teachingLoadLayout">
       <item row="0" column="0">
        <widget class="QToolButton" name="goUpButton">
@@ -60,11 +135,20 @@
       </item>
       <item row="1" column="0" colspan="2">
        <widget class="QTableView" name="tableView">
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="selectionMode">
-         <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+         <enum>QAbstractItemView::SelectionMode::NoSelection</enum>
         </property>
         <property name="selectionBehavior">
          <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+        </property>
+        <property name="verticalScrollMode">
+         <enum>QAbstractItemView::ScrollMode::ScrollPerItem</enum>
         </property>
         <property name="gridStyle">
          <enum>Qt::PenStyle::NoPen</enum>
@@ -73,7 +157,7 @@
       </item>
      </layout>
     </item>
-    <item row="2" column="0" colspan="6">
+    <item>
      <layout class="QHBoxLayout" name="controlLayout">
       <property name="leftMargin">
        <number>0</number>
@@ -90,18 +174,6 @@
          </size>
         </property>
        </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="viewButton">
-        <property name="font">
-         <font>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>View</string>
-        </property>
-       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="addButton">
@@ -137,14 +209,14 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="editButton">
+       <widget class="QPushButton" name="viewButton">
         <property name="font">
          <font>
           <bold>true</bold>
          </font>
         </property>
         <property name="text">
-         <string>Edit</string>
+         <string>View</string>
         </property>
        </widget>
       </item>
@@ -162,20 +234,6 @@
        </spacer>
       </item>
      </layout>
-    </item>
-    <item row="0" column="0" colspan="2">
-     <widget class="QLabel" name="welcomeLabel">
-      <property name="font">
-       <font>
-        <family>Segoe Print</family>
-        <pointsize>12</pointsize>
-        <bold>false</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Welcome back, Teacher!</string>
-      </property>
-     </widget>
     </item>
    </layout>
   </widget>
@@ -200,8 +258,127 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>removeButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TeacherPanel</receiver>
+   <slot>removeEntity()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>400</x>
+     <y>607</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>661</x>
+     <y>611</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>goUpButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TeacherPanel</receiver>
+   <slot>goUp()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>31</x>
+     <y>63</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>364</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tableView</sender>
+   <signal>activated(QModelIndex)</signal>
+   <receiver>TeacherPanel</receiver>
+   <slot>goDown(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>435</x>
+     <y>247</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>731</x>
+     <y>22</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tableView</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>TeacherPanel</receiver>
+   <slot>toggleControlButtons(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>539</x>
+     <y>435</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>584</x>
+     <y>31</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>viewButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TeacherPanel</receiver>
+   <slot>viewEntity()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>517</x>
+     <y>616</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>626</x>
+     <y>598</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>editProfileButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TeacherPanel</receiver>
+   <slot>editProfile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>582</x>
+     <y>38</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>752</x>
+     <y>54</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>viewProfileButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TeacherPanel</receiver>
+   <slot>viewProfile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>693</x>
+     <y>36</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>751</x>
+     <y>95</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>addLesson()</slot>
+  <slot>removeEntity()</slot>
+  <slot>goUp()</slot>
+  <slot>goDown(QModelIndex)</slot>
+  <slot>toggleControlButtons(QModelIndex)</slot>
+  <slot>viewEntity()</slot>
+  <slot>editProfile()</slot>
+  <slot>viewProfile()</slot>
  </slots>
 </ui>

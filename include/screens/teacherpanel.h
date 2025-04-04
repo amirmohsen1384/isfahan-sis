@@ -13,27 +13,43 @@ class TeacherPanel : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit TeacherPanel(const Teacher &teacher, QWidget *parent = nullptr);
+    explicit TeacherPanel(Teacher &target, QWidget *parent = nullptr);
     explicit TeacherPanel(QWidget *parent = nullptr);
-    ~TeacherPanel();
 
     Teacher getTeacher() const;
+    ~TeacherPanel();
+
+protected:
+    virtual void closeEvent(QCloseEvent *event) override;
+
+public slots:
+    void goUp();
+    void goDown(const QModelIndex &index);
 
 public slots:
     void addLesson();
+    void viewEntity();
+    void removeEntity();
 
-    void setTeacher(const Teacher &teacher);
+public slots:
+    void viewProfile();
+    void editProfile();
 
 public slots:
     void resetTeacher();
+    void setTeacher(const Teacher &teacher);
+
+private slots:
+    void toggleControlButtons();
+    void toggleControlButtons(const QModelIndex &index);
 
 signals:
     void teacherChanged(const Teacher &teacher);
 
 private:
-    Teacher teacher;
     EnrolledModel model;
     Ui::TeacherPanel *ui;
+    Teacher &teacher = model.target;
 };
 
 #endif // TEACHERPANEL_H
