@@ -12,6 +12,7 @@ SOURCES += \
     src/data/teacher.cpp \
     src/data/student.cpp \
     src/dialogs/lessoneditdialog.cpp \
+    src/dialogs/studenteditdialog.cpp \
     src/dialogs/teachereditdialog.cpp \
     src/models/studentmodel.cpp \
     src/screens/loginscreen.cpp \
@@ -40,6 +41,7 @@ HEADERS += \
     include/data/student.h \
     include/data/core/queue.h \
     include/dialogs/lessoneditdialog.h \
+    include/dialogs/studenteditdialog.h \
     include/dialogs/teachereditdialog.h \
     include/errors/education.h \
     include/errors/resource.h \
@@ -68,6 +70,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 FORMS += \
     ui/dialogs/lessoneditdialog.ui \
+    ui/dialogs/studenteditdialog.ui \
     ui/dialogs/teachereditdialog.ui \
     ui/screens/studentpanel.ui \
     ui/screens/teacherpanel.ui \
