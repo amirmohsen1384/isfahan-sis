@@ -13,14 +13,8 @@ class LoginScreen : public QMainWindow
 {
     Q_OBJECT
 public:
-    enum class AuthorizedUser {None, Student, Teacher};
-
     explicit LoginScreen(QWidget *parent = nullptr);
     ~LoginScreen();
-
-    LoginScreen::AuthorizedUser getResult() const;
-    Teacher getAuthorizedTeacher() const;
-    Student getAuthorizedStudent() const;
 
 public slots:
     bool authorize();
@@ -28,9 +22,6 @@ public slots:
     void togglePasswordShow(bool value);
 
 private:
-    AuthorizedUser result = AuthorizedUser::None;
-    Teacher authorizedTeacher;
-    Student authorizedStudent;
     Ui::LoginScreen *ui;
 };
 

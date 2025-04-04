@@ -1,5 +1,7 @@
 #include "include/dialogs/accountdialog.h"
+#include "include/screens/teacherpanel.h"
 #include "include/screens/loginscreen.h"
+#include "include/screens/studentpanel.h"
 #include "ui_loginscreen.h"
 #include <QMessageBox>
 
@@ -11,21 +13,6 @@ LoginScreen::LoginScreen(QWidget *parent) : QMainWindow(parent), ui(new Ui::Logi
 LoginScreen::~LoginScreen()
 {
     delete ui;
-}
-
-LoginScreen::AuthorizedUser LoginScreen::getResult() const
-{
-    return result;
-}
-
-Teacher LoginScreen::getAuthorizedTeacher() const
-{
-    return authorizedTeacher;
-}
-
-Student LoginScreen::getAuthorizedStudent() const
-{
-    return authorizedStudent;
 }
 
 bool LoginScreen::authorize()
@@ -46,8 +33,9 @@ bool LoginScreen::authorize()
     TeacherList teachers = Teacher::getEntities();
     for(const Teacher &target : teachers) {
         if(target.getUserName() == username && target.getPassword() == password) {
-            result = AuthorizedUser::Teacher;
-            authorizedTeacher = target;
+            TeacherPanel *panel = new TeacherPanel(target, this);
+            panel->show();
+            this->hide();
             return true;
         }
     }
@@ -55,8 +43,9 @@ bool LoginScreen::authorize()
     StudentList students = Student::getEntities();
     for(const Student &target : students) {
         if(target.getUserName() == username && target.getPassword() == password) {
-            result = AuthorizedUser::Student;
-            authorizedStudent = target;
+            StudentPanel *panel = new StudentPanel(target, this);
+            panel->show();
+            this->hide();
             return true;
         }
     }
