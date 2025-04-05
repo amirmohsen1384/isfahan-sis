@@ -11,6 +11,7 @@ SOURCES += \
     src/data/person.cpp \
     src/data/teacher.cpp \
     src/data/student.cpp \
+    src/dialogs/creditdialog.cpp \
     src/dialogs/lessoneditdialog.cpp \
     src/dialogs/studenteditdialog.cpp \
     src/dialogs/teachereditdialog.cpp \
@@ -40,6 +41,7 @@ HEADERS += \
     include/data/person.h \
     include/data/student.h \
     include/data/core/queue.h \
+    include/dialogs/creditdialog.h \
     include/dialogs/lessoneditdialog.h \
     include/dialogs/studenteditdialog.h \
     include/dialogs/teachereditdialog.h \
@@ -69,6 +71,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
+    ui/dialogs/creditdialog.ui \
     ui/dialogs/lessoneditdialog.ui \
     ui/dialogs/studenteditdialog.ui \
     ui/dialogs/teachereditdialog.ui \
