@@ -1,15 +1,24 @@
 #ifndef EDUCATION_H
 #define EDUCATION_H
 
+#include "include/data/lesson.h"
 #include <exception>
 #include "general.h"
 
 class OverlapException : public std::exception
 {
 public:
+    OverlapException(const Lesson &initOne, const Lesson &initTwo) : one(initOne), two(initTwo) {}
     inline const char* what() const noexcept override {
-        return "Final exam dates overlap.";
+        return QString("The final exam of %1 is significantly in conflict with %2.")
+            .arg(one.getName())
+            .arg(two.getName())
+            .toStdString()
+            .data();
     }
+private:
+    Lesson one;
+    Lesson two;
 };
 
 class CreditsOutOfBoundException : public std::exception
@@ -39,9 +48,15 @@ public:
 class OutOfCapacityException : public std::exception
 {
 public:
+    OutOfCapacityException(const Lesson &initial) : target(initial) {}
     inline const char* what() const noexcept override {
-        return "The lesson is out of capacity.";
+        return QString("The lesson, \"%1\" is out of capacity.")
+            .arg(target.getName())
+            .toStdString()
+            .data();
     }
+private:
+    Lesson target;
 };
 
 class InvalidIdentifierException : public std::exception
