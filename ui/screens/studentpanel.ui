@@ -115,6 +115,9 @@
         <property name="frameShadow">
          <enum>QFrame::Shadow::Plain</enum>
         </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+        </property>
         <property name="selectionBehavior">
          <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
         </property>
@@ -339,6 +342,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>addLessonButton</sender>
+   <signal>clicked()</signal>
+   <receiver>StudentPanel</receiver>
+   <slot>addLesson()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>333</x>
+     <y>614</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>232</x>
+     <y>640</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>viewProfile()</slot>
@@ -346,5 +365,6 @@
   <slot>removeLesson()</slot>
   <slot>viewLesson()</slot>
   <slot>toggleControlButtons()</slot>
+  <slot>addLesson()</slot>
  </slots>
 </ui>

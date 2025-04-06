@@ -2,6 +2,7 @@
 #define STUDENTPANEL_H
 
 #include <QMainWindow>
+#include <QItemSelectionModel>
 #include "include/models/studentmodel.h"
 
 namespace Ui { class StudentPanel; }
@@ -24,11 +25,14 @@ public slots:
     void viewProfile();
     void editProfile();
 
+    void addLesson();
+
 private slots:
     void toggleControlButtons();
 
 private:
     StudentModel resource;
+    QItemSelectionModel *selection;
     Ui::StudentPanel *ui = nullptr;
     Student &target = resource.getContainer();
 };

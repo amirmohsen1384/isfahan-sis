@@ -1,6 +1,7 @@
 #include "include/widgets/views/studentview.h"
 #include "include/dialogs/studenteditdialog.h"
 #include "include/widgets/views/lessonview.h"
+#include "include/dialogs/creditdialog.h"
 #include "include/screens/studentpanel.h"
 #include "ui_studentpanel.h"
 #include <QRandomGenerator>
@@ -20,9 +21,9 @@ StudentPanel::StudentPanel(QWidget *parent) : QMainWindow{parent}, ui(new Ui::St
     ui->showLessonButton->setVisible(false);
     ui->removeLessonButton->setVisible(false);
     ui->registeredLessonsView->setModel(&resource);
-    connect(&target, &Student::lessonChanged, this, &StudentPanel::toggleControlButtons);
+    selection = ui->registeredLessonsView->selectionModel();
     ui->registeredLessonsView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    connect(&target, &Student::lessonQueueChanged, this, &StudentPanel::toggleControlButtons);
+    connect(selection, &QItemSelectionModel::currentChanged, this, &StudentPanel::toggleControlButtons);
 }
 
 void StudentPanel::closeEvent(QCloseEvent *event)
@@ -99,8 +100,15 @@ void StudentPanel::editProfile()
     }
 }
 
+void StudentPanel::addLesson()
+{
+    CreditDialog dialog(target, this);
+    dialog.exec();
+    target.commitToRecord();
+}
+
 void StudentPanel::toggleControlButtons()
 {
-    ui->showLessonButton->setVisible(ui->registeredLessonsView->currentIndex().isValid() && resource.rowCount() > 0);
-    ui->removeLessonButton->setVisible(resource.rowCount() > 0 && ui->registeredLessonsView->currentIndex().isValid());
+    ui->showLessonButton->setVisible(resource.rowCount() > 0 && !selection->selection().isEmpty());
+    ui->removeLessonButton->setVisible(resource.rowCount() > 0 && !selection->selection().isEmpty());
 }
