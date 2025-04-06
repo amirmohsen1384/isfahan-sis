@@ -18,8 +18,11 @@ TeacherPanel::TeacherPanel(QWidget *parent) : QMainWindow(parent), ui(new Ui::Te
     ui->tableView->setModel(&model);
     ui->viewButton->setVisible(false);
     ui->removeButton->setVisible(false);
-    connect(&teacher, &Teacher::lessonChanged, [&]() { toggleControlButtons(); });
+
+    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    connect(&teacher, &Teacher::lessonChanged, [&]() { toggleControlButtons(); });
     connect(&model, &EnrolledModel::teacherChanged, this, &TeacherPanel::resetTeacher);
 }
 TeacherPanel::~TeacherPanel()
