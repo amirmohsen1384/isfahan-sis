@@ -164,6 +164,24 @@ Lesson Lesson::loadFromRecord(const Entity &value)
     return target;
 }
 
+int Lesson::getTotalCredit(const LessonList &container)
+{
+    int result = 0;
+    for(const Lesson &target : container) {
+        result += target.getCreditUnit();
+    }
+    return result;
+}
+
+int Lesson::getTotalCredit(const EntityList &container)
+{
+    int result = 0;
+    for(const Entity &entity : container) {
+        result += Lesson::loadFromRecord(entity).getCreditUnit();
+    }
+    return result;
+}
+
 LessonList Lesson::getEntities()
 {
     LessonList result;

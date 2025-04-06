@@ -64,13 +64,7 @@ void Person::setPassword(const QString &value)
 
 quint64 Person::getCreditCount() const
 {
-    quint64 total = 0;
-    LessonList container = this->getLessons();
-    for(const Lesson &target : container)
-    {
-        total += target.getCreditUnit();
-    }
-    return total;
+    return Lesson::getTotalCredit(lessons);
 }
 
 QString Person::getFullName() const

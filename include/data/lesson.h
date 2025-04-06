@@ -61,6 +61,9 @@ public:
     friend QDataStream& operator>>(QDataStream &stream, Lesson &data);
     static Lesson loadFromRecord(const Entity &value);
 
+    static int getTotalCredit(const LessonList &container);
+    static int getTotalCredit(const EntityList &container);
+
     static QString getFileName(const Entity &value);
     static LessonList getEntities();
     static QFileInfoList getFiles();
