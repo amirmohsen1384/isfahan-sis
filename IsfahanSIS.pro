@@ -25,6 +25,7 @@ SOURCES += \
     src/widgets/editor/lessonedit.cpp \
     src/models/core/lecturetreemodel.cpp \
     src/widgets/editor/core/namevalidator.cpp \
+    src/widgets/views/creditview.cpp \
     src/widgets/views/lessonview.cpp \
     src/dialogs/accountdialog.cpp \
     src/widgets/editor/studentedit.cpp \
@@ -60,6 +61,7 @@ HEADERS += \
     include/widgets/editor/core/namevalidator.h \
     include/widgets/editor/studentedit.h \
     include/widgets/editor/teacheredit.h \
+    include/widgets/views/creditview.h \
     include/widgets/views/lessonview.h \
     include/widgets/views/teacherview.h \
     include/widgets/views/studentview.h \
@@ -77,6 +79,7 @@ FORMS += \
     ui/dialogs/teachereditdialog.ui \
     ui/screens/studentpanel.ui \
     ui/screens/teacherpanel.ui \
+    ui/widgets/views/creditview.ui \
     ui/widgets/views/studentview.ui \
     ui/widgets/views/teacherview.ui \
     ui/widgets/views/lessonview.ui \
