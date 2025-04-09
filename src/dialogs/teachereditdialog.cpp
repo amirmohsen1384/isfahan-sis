@@ -30,16 +30,15 @@ void TeacherEditDialog::accept()
     message.setIcon(QMessageBox::Critical);
     try {
         ui->mainEditor->validateEditor();
+        Teacher init = ui->mainEditor->getDefault();
+        QFile::remove(Teacher::getFileName(init));
         QDialog::accept();
-    }
-    catch(InvalidIdentifierException const &exception) {
-        message.setText("You have entered an invalid ID number.");
-        message.setInformativeText("ID number should be unique and differ from other teachers.");
-        message.exec();
     }
     catch(InvalidPasswordException const &exception) {
         message.setText("This password cannot be accepted");
-        message.setInformativeText("A valid password contains at least one uppercase and lowercase letter, one number, and one non-letter character.");
+        message.setInformativeText("A valid password contains at least "
+                                   "one uppercase, lowercase letter, "
+                                   "one number, and one non-letter character.");
         message.exec();
     }
     catch(std::exception const &exception) {

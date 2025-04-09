@@ -166,16 +166,12 @@ void TeacherEdit::togglePasswordShow(bool value)
 void TeacherEdit::validateEditor() const
 {
     qint64 value = this->getIdentifier();
-    if(value == 0) {
+    if(value <= 0) {
         throw InvalidIdentifierException();
     }
 
     if(ui->idEdit->text().isEmpty()) {
         throw EmptyIdentifierException();
-    }
-
-    if(QFile::exists(Teacher::getFileName(Entity(value)))) {
-        throw InvalidIdentifierException();
     }
 
     if(ui->firstNameEdit->text().isEmpty()) {
