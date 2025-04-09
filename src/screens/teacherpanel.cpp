@@ -18,10 +18,7 @@ TeacherPanel::TeacherPanel(QWidget *parent) : QMainWindow(parent), ui(new Ui::Te
     ui->tableView->setModel(&model);
     ui->viewButton->setVisible(false);
     ui->removeButton->setVisible(false);
-
-    ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
     connect(&teacher, &Teacher::lessonChanged, [&]() { toggleControlButtons(); });
     connect(&model, &EnrolledModel::teacherChanged, this, &TeacherPanel::resetTeacher);
 }
@@ -77,10 +74,6 @@ void TeacherPanel::addLesson()
 void TeacherPanel::viewEntity()
 {
     const QModelIndex &index = ui->tableView->currentIndex();
-    if(!index.isValid()) {
-        QMessageBox::critical(this, "Error", "The entity cannot be viewed.");
-        return;
-    }
     QDialog dialog(this);
     dialog.setModal(true);
     const QVariant data = index.data(Qt::UserRole);

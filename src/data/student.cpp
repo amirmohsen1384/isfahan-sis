@@ -188,14 +188,32 @@ void Student::removeCredit(Lesson &target)
         lessons.removeAt(index);
         lessons.squeeze();
 
+        this->commitToRecord();
         if(target.isAbleToEnroll() && !target.waitingList.isEmpty()) {
             Student s = Student::loadFromRecord(target.waitingList.dequeue());
             target.commitToRecord();
             s.addCredit(target);
             s.commitToRecord();
         }
-
         emit lessonChanged();
+
+    } else {
+        auto it = std::lower_bound(queue.begin(), queue.end(), target);
+        if(it != queue.end() && *it == target) {
+            int index = std::distance(queue.begin(), it);
+            queue.removeAt(index);
+            queue.squeeze();
+
+            auto it = std::lower_bound(target.waitingList.begin(), target.waitingList.end(), target);
+            if(it != target.waitingList.end() && *it == target) {
+                int index = std::distance(target.waitingList.begin(), it);
+                target.waitingList.removeAt(index);
+                target.waitingList.squeeze();
+            }
+
+            emit lessonQueueChanged();
+        }
+
     }
 }
 
