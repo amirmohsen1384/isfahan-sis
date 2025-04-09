@@ -86,10 +86,6 @@ void StudentEdit::validateEditor() const
         throw InvalidIdentifierException();
     }
 
-    if(QFile::exists(Student::getFileName(Entity(value)))) {
-        throw InvalidIdentifierException();
-    }
-
     if(ui->firstNameEdit->text().isEmpty()) {
         throw EmptyFirstNameException();
     }

@@ -44,13 +44,11 @@ void StudentEditDialog::accept()
     message.setIcon(QMessageBox::Critical);
     try {
         ui->mainEditor->validateEditor();
+        Entity t(ui->mainEditor->getIdentifier());
+        Student s = Student::loadFromRecord(t);
+        QFile::remove(Student::getFileName(s));
         QDialog::accept();
 
-    }
-    catch(InvalidIdentifierException const &exception) {
-        message.setText("You have entered an invalid ID number.");
-        message.setInformativeText("ID number should be unique and differ from other students.");
-        message.exec();
     }
     catch(InvalidPasswordException const &exception) {
         message.setText("This password cannot be accepted");
